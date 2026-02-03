@@ -24,7 +24,7 @@ class Tests_GetPluginDirectory extends Test_Case {
 	 * Test _get_plugin_directory() should return the plugin's root directory.
 	 */
 	public function test__get_plugin_directory_should_run_plugin_directory() {
-		$this->assertStringEndsWith( 'starter-plugin', _get_plugin_directory() );
+		$this->assertStringEndsWith( 'custom-functionality', _get_plugin_directory() );
 		$this->assertSame( rtrim( get_plugin_root_dir(), DIRECTORY_SEPARATOR ), _get_plugin_directory() );
 	}
 }

@@ -23,6 +23,6 @@ class Tests_GetPluginUrl extends Test_Case {
 	 * Test _get_plugin_url() should return the plugin's URL.
 	 */
 	public function test__get_plugin_url_should_run_plugin_url() {
-		$this->assertStringEndsWith( 'plugins/starter-plugin', _get_plugin_url() );
+		$this->assertStringEndsWith( 'plugins/custom-functionality', _get_plugin_url() );
 	}
 }

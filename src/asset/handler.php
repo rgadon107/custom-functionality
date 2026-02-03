@@ -25,8 +25,8 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_script' );
  */
 function enqueue_plugin_script() {
 	$file = _is_in_development_mode()
-		? '/assets/dist/starter-plugin.min.js'
-		: '/assets/scripts/starter-plugin.js';
+		? '/assets/dist/custom-functionality.min.js'
+		: '/assets/scripts/custom-functionality.js';
 
 	wp_enqueue_script(
 		'starter_plugin_script',
@@ -47,8 +47,8 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_css' );
  */
 function enqueue_plugin_css() {
 	$file = _is_in_development_mode()
-		? '/assets/dist/starter-plugin.min.css'
-		: '/assets/styles/starter-plugin.css';
+		? '/assets/dist/custom-functionality.min.css'
+		: '/assets/styles/custom-functionality.css';
 
 	wp_enqueue_style(
 		'plugin_starter_styles',
