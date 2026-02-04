@@ -39,6 +39,9 @@ function _get_plugin_directory() {
  *  Registers the plugin with WordPress activation, deactivation, and uninstall hooks.
  *
  *  Note: Remove this function if using the 'central-hub' plugin instead to flush rewrites.
+ *  Note: Activate this function if the plugin registers custom post types, taxonomies, endpoints, or custom rewrites;
+ * ** then keep the hooks and declare the function.  If it’s just “custom functions/scripts/styles” with no routing changes,
+ * ** then deactivate ( or remove ) the rewrite hooks (no need to flush).
  *
  *  @since 1.0.0
  *
@@ -49,6 +52,22 @@ function register_plugin() {
 	register_activation_hook( __FILE__, __NAMESPACE__ . '\delete_rewrite_rules' );
 	register_deactivation_hook( __FILE__, __NAMESPACE__ . '\delete_rewrite_rules' );
 	register_uninstall_hook( __FILE__, __NAMESPACE__ . '\delete_rewrite_rules' );
+}
+
+/**
+ * Clear/refresh WordPress rewrite rules (permalinks routing). See comments above
+ *  on when to activate.
+ *
+ * Runs on activation/deactivation/uninstall via hook registrations above.
+ *
+ * @since 1.0.0
+ *
+ * @return void
+ */
+function delete_rewrite_rules() {
+	if ( function_exists( 'flush_rewrite_rules' ) ) {
+		flush_rewrite_rules();
+	}
 }
 
 /**
@@ -80,7 +99,7 @@ function _get_plugin_url() {
  * @return bool
  */
 function _is_in_development_mode() {
-	return defined( WP_DEBUG ) && WP_DEBUG === true;
+	return defined( 'WP_DEBUG' ) && WP_DEBUG === true;
 }
 
 /**
@@ -92,7 +111,7 @@ function _is_in_development_mode() {
  */
 function autoload_files() {
 	$files = [
-		'hooks.php',
+		'hooks.php'
 	];
 
 	foreach ( $files as $file ) {
