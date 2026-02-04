@@ -47,12 +47,12 @@ function _get_plugin_directory() {
  *
  *  @return void
  */
-//function register_plugin() {
-//
-//	register_activation_hook( __FILE__, __NAMESPACE__ . '\delete_rewrite_rules' );
-//	register_deactivation_hook( __FILE__, __NAMESPACE__ . '\delete_rewrite_rules' );
-//	register_uninstall_hook( __FILE__, __NAMESPACE__ . '\delete_rewrite_rules' );
-//}
+function register_plugin() {
+
+	register_activation_hook( __FILE__, __NAMESPACE__ . '\delete_rewrite_rules' );
+	register_deactivation_hook( __FILE__, __NAMESPACE__ . '\delete_rewrite_rules' );
+	register_uninstall_hook( __FILE__, __NAMESPACE__ . '\delete_rewrite_rules' );
+}
 
 /**
  * Clear/refresh WordPress rewrite rules (permalinks routing). See comments above
@@ -64,11 +64,11 @@ function _get_plugin_directory() {
  *
  * @return void
  */
-//function delete_rewrite_rules() {
-//	if ( function_exists( 'flush_rewrite_rules' ) ) {
-//		flush_rewrite_rules();
-//	}
-//}
+function delete_rewrite_rules() {
+	if ( function_exists( 'flush_rewrite_rules' ) ) {
+		flush_rewrite_rules();
+	}
+}
 
 /**
  * Gets this plugin's URL.
@@ -99,7 +99,7 @@ function _get_plugin_url() {
  * @return bool
  */
 function _is_in_development_mode() {
-	return defined( 'WP_DEBUG ) && WP_DEBUG === true;
+	return defined( 'WP_DEBUG' ) && WP_DEBUG === true;
 }
 
 /**
@@ -111,7 +111,7 @@ function _is_in_development_mode() {
  */
 function autoload_files() {
 	$files = [
-		'hooks.php',
+		'hooks.php'
 	];
 
 	foreach ( $files as $file ) {
