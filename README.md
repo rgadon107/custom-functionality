@@ -6,7 +6,7 @@ A custom functionality plugin for WordPress. Holds custom callbacks, views, styl
 
 ## Starter WordPress Plugin
 
-This plugin is designed using aWordPress plugin boilerplate that emphasizes code quality.
+This plugin is designed using a WordPress plugin boilerplate that emphasizes code quality.
 
 This boilerplate provides you with a solid foundation to rapidly start your custom plugin development project.  It's fully compliant with PHPCS and WPCS coding standards. It's modular in design. Emphasis is given to SOLID principles.  Validators are built right into the plugin, pre-configured and pre-wired for you to use.
 
