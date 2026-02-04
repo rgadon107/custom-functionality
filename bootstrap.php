@@ -1,26 +1,26 @@
 <?php
 /**
- * Starter Plugin
+ * Custom Functionality Plugin
  *
- * @package     spiralWebDb\StarterPlugin
+ * @package     rgadon107\CustomFunctionalityPlugin
  * @author      Robert A Gadon
  * @license     GPL-2.0+
  *
  * @wordpress-plugin
- * Plugin Name:     Starter Plugin
- * Plugin URI:      https://github.com/spiralWebDb/starter-plugin
- * Description:     A WordPress plugin boilerplate that emphasizes code quality and provides you a quick start to your custom plugin development project.
+ * Plugin Name:     Custom Functionality
+ * Plugin URI:      https://github.com/rgadon107/custom-functionality
+ * Description:     A plugin that contains custom functions, scripts, and styles to modify the behavior of WordPress. Built off the `starter-plugin` package developed for KnowTheCode.io.
  * Version:         1.0.0
- * Requires WP:     5.0
- * Requires PHP:    5.6
+ * Requires WP:     6.9
+ * Requires PHP:    8.2
  * Author:          Robert A Gadon
- * Author URI:      https://spiralWebDb.com
+ * Author URI:      https://github.com/rgadon107/custom-functionality
  * Text Domain:     custom-functionality
  * License:         GPL-2.0+
  * License URI:     http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-namespace spiralWebDb\StarterPlugin;
+namespace rgadon107\CustomFunctionalityPlugin;
 
 /**
  * Gets this plugin's absolute directory path.
@@ -92,7 +92,7 @@ function _is_in_development_mode() {
  */
 function autoload_files() {
 	$files = [
-		// add the list of files to load here.
+		'hooks.php',
 	];
 
 	foreach ( $files as $file ) {
@@ -111,7 +111,7 @@ function launch() {
 	autoload_files();
 
 // Uncomment 'Custom\register_plugin()' below if using `central-hub` plugin to flush rewrites.
-// Remove call to 'spiralWebDb\StarterPlugin\register_plugin()' when using 'central-hub'.
+// Remove a call to 'rgadon107\CustomFunctionalityPlugin\register_plugin()' when using 'central-hub'.
 //	Custom\register_plugin( __FILE__ );
 	register_plugin();
 }

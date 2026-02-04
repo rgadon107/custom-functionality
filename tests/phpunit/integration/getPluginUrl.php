@@ -2,20 +2,20 @@
 /**
  * Tests _get_plugin_url().
  *
- * @package     spiralWebDb\StarterPlugin\Tests\PHP\Integration
+ * @package     rgadon107\CustomFunctionalityPlugin\Tests\PHP\Integration
  * @since       1.0.0
- * @link        https://github.com/rgadon107/starter-plugin
+ * @link        https://github.com/rgadon107/custom-functionality
  * @license     GNU-2.0+
  */
 
-namespace spiralWebDb\StarterPlugin\Tests\PHP\Integration;
+namespace rgadon107\CustomFunctionalityPlugin\Tests\PHP\Integration;
 
-use function spiralWebDb\StarterPlugin\_get_plugin_url;
+use function rgadon107\CustomFunctionalityPlugin\_get_plugin_url;
 
 /**
  * Class Tests_GetPluginUrl
  *
- * @package spiralWebDb\StarterPlugin\Tests\PHP\Integration
+ * @package rgadon107\CustomFunctionalityPlugin\Tests\PHP\Integration
  */
 class Tests_GetPluginUrl extends Test_Case {
 

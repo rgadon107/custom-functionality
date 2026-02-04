@@ -2,13 +2,13 @@
 /**
  * Shared functionality for all test suites.
  *
- * @package     spiralWebDb\StarterPlugin\Tests\PHP
+ * @package     rgadon107\CustomFunctionalityPlugin\Tests\PHP
  * @since       1.0.0
- * @link        https://github.com/spiralWebDb/starter-plugin
+ * @link        https://github.com/rgadon107/custom-functionality
  * @license     GNU-2.0+
  */
 
-namespace spiralWebDb\StarterPlugin\Tests\PHP;
+namespace rgadon107\CustomFunctionalityPlugin\Tests\PHP;
 
 if ( version_compare( phpversion(), '5.6.0', '<' ) ) {
 	die( 'Whoops, PHP 5.6 or higher is required.' );

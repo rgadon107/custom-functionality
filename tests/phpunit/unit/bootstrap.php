@@ -2,15 +2,15 @@
 /**
  * Bootstraps the Plugin's Unit Tests.
  *
- * @package     spiralWebDb\StarterPlugin\Tests\PHP\Unit
+ * @package     rgadon107\CustomFunctionalityPlugin\Tests\PHP\Unit
  * @since       1.0.0
- * @link        https://github.com/rgadon107/starter-plugin
+ * @link        https://github.com/rgadon107/custom-functionality
  * @license     GNU-2.0+
  */
 
-namespace spiralWebDb\StarterPlugin\Tests\PHP\Unit;
+namespace rgadon107\CustomFunctionalityPlugin\Tests\PHP\Unit;
 
-use function spiralWebDb\StarterPlugin\Tests\PHP\load_composer_autoloader;
+use function rgadon107\CustomFunctionalityPlugin\Tests\PHP\load_composer_autoloader;
 
 /**
  * Gets the unit test's root directory.
