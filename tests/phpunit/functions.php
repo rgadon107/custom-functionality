@@ -10,8 +10,8 @@
 
 namespace rgadon107\CustomFunctionalityPlugin\Tests\PHP;
 
-if ( version_compare( phpversion(), '5.6.0', '<' ) ) {
-	die( 'Whoops, PHP 5.6 or higher is required.' );
+if ( version_compare( phpversion(), '7.4', '<' ) ) {
+	die( 'Whoops, PHP 7.4 or higher is required.' );
 }
 
 /**
