@@ -2,22 +2,22 @@
 /**
  * Test Case for the Plugin's Unit Tests.
  *
- * @package     spiralWebDb\StarterPlugin\Tests\PHP\Unit
+ * @package     rgadon107\CustomFunctionalityPlugin\Tests\PHP\Unit
  * @since       1.0.0
- * @link        https://github.com/rgadon107/starter-plugin
+ * @link        https://github.com/rgadon107/custom-functionality
  * @license     GNU-2.0+
  */
 
-namespace spiralWebDb\StarterPlugin\Tests\PHP\Unit;
+namespace rgadon107\CustomFunctionalityPlugin\Tests\PHP\Unit;
 
 use Brain\Monkey;
-use spiralWebDb\StarterPlugin\Tests\PHP\Test_Case_Trait;
+use rgadon107\CustomFunctionalityPlugin\Tests\PHP\Test_Case_Trait;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Abstract Class Test_Case
  *
- * @package spiralWebDb\StarterPlugin\Tests\PHP\Unit
+ * @package rgadon107\CustomFunctionalityPlugin\Tests\PHP\Unit
  */
 abstract class Test_Case extends TestCase {
 

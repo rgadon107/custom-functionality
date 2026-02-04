@@ -2,18 +2,18 @@
 /**
  * Asset Handler.
  *
- * @package     spiralWebDb\StarterPlugin\Asset
+ * @package     rgadon107\CustomFunctionalityPlugin\Asset
  * @since       1.0.0
  * @author      hellofromTonya
  * @link        https://knowthecode.io
  * @license     GNU-2.0+
  */
 
-namespace spiralWebDb\StarterPlugin\Asset;
+namespace rgadon107\CustomFunctionalityPlugin\Asset;
 
-use function spiralWebDb\StarterPlugin\_get_plugin_directory;
-use function spiralWebDb\StarterPlugin\_get_plugin_url;
-use function spiralWebDb\StarterPlugin\_is_in_development_mode;
+use function rgadon107\CustomFunctionalityPlugin\_get_plugin_directory;
+use function rgadon107\CustomFunctionalityPlugin\_get_plugin_url;
+use function rgadon107\CustomFunctionalityPlugin\_is_in_development_mode;
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_script' );
 /**

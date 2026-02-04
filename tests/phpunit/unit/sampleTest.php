@@ -4,18 +4,18 @@
  *
  * NOTE: Delete this file once there is at least one integration test.
  *
- * @package     spiralWebDb\StarterPlugin\Tests\PHP\Unit
+ * @package     rgadon107\CustomFunctionalityPlugin\Tests\PHP\Unit
  * @since       1.0.0
- * @link        https://github.com/rgadon107/starter-plugin
+ * @link        https://github.com/rgadon107/custom-functionality
  * @license     GNU-2.0+
  */
 
-namespace spiralWebDb\StarterPlugin\Tests\PHP\Unit;
+namespace rgadon107\CustomFunctionalityPlugin\Tests\PHP\Unit;
 
 /**
  * Class Tests_SampleTest
  *
- * @package spiralWebDb\StarterPlugin\Tests\PHP\Unit
+ * @package rgadon107\CustomFunctionalityPlugin\Tests\PHP\Unit
  */
 class Tests_SampleTest extends Test_Case {
 

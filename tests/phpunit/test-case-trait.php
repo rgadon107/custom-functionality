@@ -2,18 +2,18 @@
 /**
  * Test Case Traits for the Plugin's test suites.
  *
- * @package     spiralWebDb\StarterPlugin\Tests\PHP
+ * @package     rgadon107\CustomFunctionalityPlugin\Tests\PHP
  * @since       1.0.0
- * @link        https://github.com/rgadon107/starter-plugin
+ * @link        https://github.com/rgadon107/custom-functionality
  * @license     GNU-2.0+
  */
 
-namespace spiralWebDb\StarterPlugin\Tests\PHP;
+namespace rgadon107\CustomFunctionalityPlugin\Tests\PHP;
 
 /**
  * Test_Case_Trait
  *
- * @package spiralWebDb\StarterPlugin\Tests\Unit
+ * @package rgadon107\CustomFunctionalityPlugin\Tests\Unit
  */
 trait Test_Case_Trait {
 
