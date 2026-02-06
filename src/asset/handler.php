@@ -13,7 +13,6 @@ namespace rgadon107\CustomFunctionalityPlugin\Asset;
 
 use function rgadon107\CustomFunctionalityPlugin\_get_plugin_directory;
 use function rgadon107\CustomFunctionalityPlugin\_get_plugin_url;
-use function rgadon107\CustomFunctionalityPlugin\_is_in_development_mode;
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_script' );
 /**
@@ -23,13 +22,28 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_script' );
  *
  * @return void
  */
-function enqueue_plugin_script() {
-	$file = _is_in_development_mode()
-		? '/assets/dist/custom-functionality.min.js'
-		: '/assets/scripts/custom-functionality.js';
+function enqueue_plugin_script(): void {
+
+	$events_page_id         = 16223;
+	$awards_banquet_page_id = 10424;
+
+	if ( is_page( [ $events_page_id, $awards_banquet_page_id ] ) ) {
+
+		$file = '/assets/scripts/nf-convert-checkbox-field-value.js';
+
+		wp_enqueue_script(
+			'nf-convert-checkbox-field-value',
+			_get_plugin_url() . $file,
+			[ 'jquery' ],
+			_get_asset_version( $file ),
+			true
+		);
+	}
+
+	$file = '/assets/scripts/nf-prevent-early-form-submit-while-using-return-key.js';
 
 	wp_enqueue_script(
-		'starter_plugin_script',
+		'nf-prevent-early-form-submit-while-using-return-key',
 		_get_plugin_url() . $file,
 		[ 'jquery' ],
 		_get_asset_version( $file ),
@@ -45,16 +59,15 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_css' );
  *
  * @return void
  */
-function enqueue_plugin_css() {
-	$file = _is_in_development_mode()
-		? '/assets/dist/custom-functionality.min.css'
-		: '/assets/styles/custom-functionality.css';
+function enqueue_plugin_css(): void {
+	$file = '/assets/styles/custom-styles.css';
 
 	wp_enqueue_style(
 		'plugin_starter_styles',
 		_get_plugin_url() . $file,
 		[],
-		_get_asset_version( $file )
+		_get_asset_version( $file ),
+		'all'
 	);
 }
 
