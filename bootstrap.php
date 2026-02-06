@@ -31,7 +31,8 @@ namespace rgadon107\CustomFunctionalityPlugin;
  *
  * @return string
  */
-function _get_plugin_directory() {
+function _get_plugin_directory(): string
+{
 	return __DIR__;
 }
 
@@ -47,7 +48,8 @@ function _get_plugin_directory() {
  *
  *  @return void
  */
-function register_plugin() {
+function register_plugin(): void
+{
 
 	register_activation_hook( __FILE__, __NAMESPACE__ . '\delete_rewrite_rules' );
 	register_deactivation_hook( __FILE__, __NAMESPACE__ . '\delete_rewrite_rules' );
@@ -63,8 +65,9 @@ function register_plugin() {
  * @since 1.0.0
  *
  * @return void
+ * @noinspection PhpUnused
  */
-function delete_rewrite_rules() {
+function delete_rewrite_rules(): void	{
 	if ( function_exists( 'flush_rewrite_rules' ) ) {
 		flush_rewrite_rules();
 	}
@@ -79,7 +82,7 @@ function delete_rewrite_rules() {
  *
  * @return string
  */
-function _get_plugin_url() {
+function _get_plugin_url(): string	{
 	static $plugin_url;
 
 	if ( empty( $plugin_url ) ) {
@@ -98,7 +101,7 @@ function _get_plugin_url() {
  *
  * @return bool
  */
-function _is_in_development_mode() {
+function _is_in_development_mode(): bool	{
 	return defined( 'WP_DEBUG' ) && WP_DEBUG === true;
 }
 
@@ -109,9 +112,10 @@ function _is_in_development_mode() {
  *
  * @return void
  */
-function autoload_files() {
+function autoload_files(): void	{
 	$files = [
-		'hooks.php'
+		'hooks.php',
+		'asset/handler.php',
 	];
 
 	foreach ( $files as $file ) {
@@ -126,7 +130,7 @@ function autoload_files() {
  *
  * @return void
  */
-function launch() {
+function launch(): void	{
 	autoload_files();
 
 // Uncomment 'Custom\register_plugin()' below if using `central-hub` plugin to flush rewrites.
