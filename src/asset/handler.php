@@ -51,26 +51,6 @@ function enqueue_plugin_script(): void {
 	);
 }
 
-add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_css' );
-/**
- * Enqueues the plugin's stylesheet.
- *
- * @since 1.0.0
- *
- * @return void
- */
-function enqueue_plugin_css(): void {
-	$file = '/assets/styles/custom-styles.css';
-
-	wp_enqueue_style(
-		'plugin_starter_styles',
-		_get_plugin_url() . $file,
-		[],
-		_get_asset_version( $file ),
-		'all'
-	);
-}
-
 /**
  * Get's the asset file's version number by using it's modification timestamp.
  *
