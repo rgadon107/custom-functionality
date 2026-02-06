@@ -2,17 +2,17 @@
 /**
  * Asset Handler.
  *
- * @package     rgadon107\CustomFunctionalityPlugin\Asset
+ * @package     gardenClubOfMpls\CustomFunctionalityPlugin\Asset
  * @since       1.0.0
- * @author      hellofromTonya
- * @link        https://knowthecode.io
+ * @author      Robert Gadon
+ * @link       	https://github.com/rgadon107/custom-functionality
  * @license     GNU-2.0+
  */
 
-namespace rgadon107\CustomFunctionalityPlugin\Asset;
+namespace gardenClubOfMpls\CustomFunctionalityPlugin\Asset;
 
-use function rgadon107\CustomFunctionalityPlugin\_get_plugin_directory;
-use function rgadon107\CustomFunctionalityPlugin\_get_plugin_url;
+use function gardenClubOfMpls\CustomFunctionalityPlugin\_get_plugin_directory;
+use function gardenClubOfMpls\CustomFunctionalityPlugin\_get_plugin_url;
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_script' );
 /**

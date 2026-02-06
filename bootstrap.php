@@ -20,7 +20,7 @@
  * License URI:     http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-namespace rgadon107\CustomFunctionalityPlugin;
+namespace gardenClubOfMpls\CustomFunctionalityPlugin;
 
 /**
  * Gets this plugin's absolute directory path.
