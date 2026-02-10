@@ -31,8 +31,7 @@ namespace gardenClubOfMpls\CustomFunctionalityPlugin;
  *
  * @return string
  */
-function _get_plugin_directory(): string
-{
+function _get_plugin_directory(): string	{
 	return __DIR__;
 }
 

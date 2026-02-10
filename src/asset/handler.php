@@ -14,7 +14,7 @@ namespace gardenClubOfMpls\CustomFunctionalityPlugin\Asset;
 use function gardenClubOfMpls\CustomFunctionalityPlugin\_get_plugin_directory;
 use function gardenClubOfMpls\CustomFunctionalityPlugin\_get_plugin_url;
 
-add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_script' );
+add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_scripts' );
 /**
  * Enqueues the plugin's script(s).
  *
@@ -22,17 +22,17 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_script' );
  *
  * @return void
  */
-function enqueue_plugin_script(): void {
+function enqueue_plugin_scripts(): void {
 
 	$events_page_id         = 16223;
 	$awards_banquet_page_id = 10424;
 
 	if ( is_page( [ $events_page_id, $awards_banquet_page_id ] ) ) {
 
-		$file = '/assets/scripts/nf-convert-checkbox-field-value.js';
+		$file = '/assets/scripts/nf-checkbox-toggle.js';
 
 		wp_enqueue_script(
-			'nf-convert-checkbox-field-value',
+			'nf-checkbox-toggle',
 			_get_plugin_url() . $file,
 			[ 'jquery' ],
 			_get_asset_version( $file ),
@@ -45,7 +45,7 @@ function enqueue_plugin_script(): void {
 	wp_enqueue_script(
 		'nf-prevent-early-form-submit-while-using-return-key',
 		_get_plugin_url() . $file,
-		[ 'jquery' ],
+		[],
 		_get_asset_version( $file ),
 		true
 	);
@@ -60,6 +60,6 @@ function enqueue_plugin_script(): void {
  *
  * @return bool|int
  */
-function _get_asset_version( $relative_path ) {
+function _get_asset_version( $relative_path ): bool|int	{
 	return filemtime( _get_plugin_directory() . $relative_path );
 }
