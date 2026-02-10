@@ -14,7 +14,7 @@ namespace gardenClubOfMpls\CustomFunctionalityPlugin\Asset;
 use function gardenClubOfMpls\CustomFunctionalityPlugin\_get_plugin_directory;
 use function gardenClubOfMpls\CustomFunctionalityPlugin\_get_plugin_url;
 
-add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_scripts' );
+add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_plugin_scripts', 20 );
 /**
  * Enqueues the plugin's script(s).
  *
@@ -52,7 +52,7 @@ function enqueue_plugin_scripts(): void {
 }
 
 /**
- * Get's the asset file's version number by using it's modification timestamp.
+ * Gets the asset file's version number by using its modification timestamp.
  *
  * @since 1.0.0
  *
@@ -60,6 +60,6 @@ function enqueue_plugin_scripts(): void {
  *
  * @return bool|int
  */
-function _get_asset_version( $relative_path ): bool|int	{
+function _get_asset_version( string $relative_path ): bool|int	{
 	return filemtime( _get_plugin_directory() . $relative_path );
 }

@@ -1,8 +1,9 @@
 /**
- * Handles the front-end display toggle for Ninja Forms checkbox merge tags.
- *
- * Intercepts binary 0/1 values in HTML fields and converts them to Yes/No
- * strings by observing DOM mutations on specific data-key spans.
+ * Ninja Forms Checkbox Toggle Script.
+ *  Intercepts binary 0/1 values rendered by Ninja Forms merge tags in HTML fields
+ *  and converts them to "Yes" or "No" display strings. This script uses a
+ *  MutationObserver to ensure values are updated even if the form re-renders
+ *  dynamically via AJAX.
  *
  * @since      1.0.0
  * @package    CustomFunctionalityPlugin
@@ -12,8 +13,12 @@
 
 (function($) {
 
-	/* Add a Ninja Forms merge tag key below to target additional checkboxes. */
-	/* Merge tags are preceded by the term 'field:'. Merge tags must be added to the array as strings.  */
+	/**
+	 *	Add a Ninja Forms merge tag key below to target additional checkboxes.
+	 *  Merge tags are preceded by the term 'field:'. Merge tags must be added to the array as strings.
+	 *
+	 * @type {string[]} targetKeys List of Ninja Forms merge tag data-keys to monitor.
+	 */
 	const targetKeys = [
 		'field:veg_dinner_order_ticket_purchaser_1768877697594',
 		'field:gf_dinner_order_ticket_purchaser_1768877759742',
@@ -23,6 +28,12 @@
 		'field:gf_dinner_order_2nd_added_attendee_1768881245576',
 	];
 
+	/**
+	 * Scans the DOM for specific Ninja Forms data-key spans and swaps
+	 * binary 0/1 text with human-readable Yes/No strings.
+	 *
+	 * @return {void}
+	 */
 	const performSwap = () => {
 		targetKeys.forEach(key => {
 			// Find the specific span Ninja Forms created for this merge tag
@@ -39,11 +50,19 @@
 		});
 	};
 
+	/**
+	 * Initializes the MutationObserver to watch for changes within the form content.
+	 * This ensures the swap happens after Ninja Forms completes its dynamic rendering.
+	 *
+	 * @return {void}
+	 */
 	const initObserver = () => {
 		const target = document.querySelector('.nf-form-content');
 		if (!target) return;
 
-		// Watch for Ninja Forms re-rendering the review section
+		/**
+		 * MutationObserver instance to handle dynamic updates.
+		 */
 		const observer = new MutationObserver(() => {
 			performSwap();
 		});
@@ -54,11 +73,15 @@
 			characterData: true
 		});
 
-		// Run immediately
+		// Initial execution for static content.
 		performSwap();
 	};
 
-	// Wait for Ninja Forms to load the content
+	/**
+	 * Polls for the existence of the Ninja Forms container before initializing.
+	 *
+	 * @type {number} checkExist
+	 */
 	const checkExist = setInterval(() => {
 		if ($('.nf-form-content').length) {
 			initObserver();
