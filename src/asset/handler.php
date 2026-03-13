@@ -51,6 +51,26 @@ function enqueue_plugin_scripts(): void {
 	);
 }
 
+add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_styles' );
+/**
+ * Enqueues the plugin's styles.
+ *
+ * @since 1.0.0
+ *
+ * @return void
+ */
+function enqueue_plugin_styles(): void 	{
+
+	$file = 'assets/styles/event-notices.css';
+
+	wp_register_style(
+		'event-registration-notice-styles',
+		_get_plugin_url() . $file,
+		[],
+		_get_asset_version( $file ),
+	);
+}
+
 /**
  * Gets the asset file's version number by using its modification timestamp.
  *
