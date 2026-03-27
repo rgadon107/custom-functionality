@@ -1,4 +1,7 @@
 <?php
+
+namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source;
+
 /**
  * Shortcode: [expire]
  *
@@ -25,9 +28,6 @@
  *
  * @return string The filtered content if within the time window, or a notice/empty string if not.
  */
-
-namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source;
-
 add_shortcode( 'expire', function( array|string $user_defined_attributes, ?string $content = null ): string {
 
 	$default_settings = array(
