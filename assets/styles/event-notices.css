@@ -1,0 +1,10 @@
+/* Styling for the post-event message displayed in the [expire] shortcode */
+.registration-closed-notice {
+	background-color: #f8f9fa; /* Light grayish blue. */
+	border: 1px solid #d1d1d1; /* Light grey. */
+	color: #555; /* Very dark grey. */
+	text-align: center;
+	font-style: italic;
+	border-radius: 4px;
+	margin-top: 10px;
+}
