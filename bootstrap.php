@@ -114,7 +114,7 @@ function _is_in_development_mode(): bool	{
 function autoload_files(): void	{
 	$files = [
 		'hooks.php',
-		'controllerUp.php',
+		'controller.php',
 	];
 
 	foreach ( $files as $file ) {
