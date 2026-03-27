@@ -14,7 +14,7 @@ namespace gardenClubOfMpls\CustomFunctionalityPlugin\Asset;
 use function gardenClubOfMpls\CustomFunctionalityPlugin\_get_plugin_directory;
 use function gardenClubOfMpls\CustomFunctionalityPlugin\_get_plugin_url;
 
-add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_plugin_scripts', 20 );
+add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_scripts', 20 );
 /**
  * Enqueues the plugin's script(s).
  *
