@@ -1,5 +1,11 @@
-/* Styling for the post-event message displayed in the [expire] shortcode */
-.registration-closed-notice {
+/* Styling for the pre-event message displayed by the [expire] shortcode */
+.message-before-registration-start {
+
+}
+
+
+/* Styling for the post-event message displayed by the [expire] shortcode */
+.message-after-registration-stop	{
 	background-color: #f8f9fa; /* Light grayish blue. */
 	border: 1px solid #d1d1d1; /* Light grey. */
 	color: #555; /* Very dark grey. */
