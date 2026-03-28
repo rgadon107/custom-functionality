@@ -32,7 +32,7 @@ add_shortcode( 'expire', function( array|string $user_defined_attributes, ?strin
 
 	$default_settings = array(
 		'start_date_and_time' => '1970-01-01 00:00',
-		'stop_date_and_time'  => '2030-01-01 00:00',
+		'stop_date_and_time'  => '2050-01-01 00:00',
 		'pre_start_message'   => '', // Message shown BEFORE start
 		'message'             => '', // Message shown AFTER stop
 	);
