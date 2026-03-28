@@ -20,7 +20,7 @@ require_once __DIR__ . '/shortcodes/expire-content.php';
  */
 add_action('init', function (): void {
 
-	$pattern_path = __DIR__ . '/patterns/registration-closed.php';
+	$pattern_path = __DIR__ . '/patterns/message-before-registration-start.php';
 
 	if (file_exists($pattern_path)) {
 		register_block_pattern(
