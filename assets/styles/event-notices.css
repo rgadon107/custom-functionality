@@ -1,16 +1,23 @@
 /* Styling for the pre-event message displayed by the [expire] shortcode */
-.message-before-registration-start {
-
+.message-before-registration-start,
+.message-after-registration-stop	{
+	padding: 1.5rem;
+	margin: 1rem 0;
+	font-style: italic;
+	text-align: center;
+	border: 1px solid;
+	border-radius: 8px;
 }
 
+.message-before-registration-start	{
+	background-color: #f8f9fa; /* Light grayish blue. */
+	border: 1px solid #d1d1d1; /* Light grey. */
+	color: #555; /* Very dark grey. */
+}
 
 /* Styling for the post-event message displayed by the [expire] shortcode */
 .message-after-registration-stop	{
 	background-color: #f8f9fa; /* Light grayish blue. */
 	border: 1px solid #d1d1d1; /* Light grey. */
 	color: #555; /* Very dark grey. */
-	text-align: center;
-	font-style: italic;
-	border-radius: 4px;
-	margin-top: 10px;
 }
