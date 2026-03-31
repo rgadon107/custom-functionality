@@ -61,7 +61,7 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_styles' );
  */
 function enqueue_plugin_styles(): void 	{
 
-	$file = 'assets/styles/event-notices.css';
+	$file = '/assets/styles/event-notices.css';
 
 	wp_register_style(
 		'event-registration-notice-styles',
