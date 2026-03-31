@@ -50,7 +50,7 @@ add_shortcode( 'expire', function( array|string $user_defined_attributes, ?strin
 	if ( $current_timestamp < $start_timestamp ) {
 		if ( ! empty( $final_settings['pre_start_message'] ) ) {
 			return sprintf(
-				'<div class="message-before-registration-start">%s</div>',
+				'<div id="expire-message-wrap" class="message-before-registration-start">%s</div>',
 				esc_html( $final_settings['pre_start_message'] )
 			);
 		}
@@ -65,7 +65,7 @@ add_shortcode( 'expire', function( array|string $user_defined_attributes, ?strin
 	if ( $current_timestamp >= $stop_timestamp ) {
 		if ( ! empty( $final_settings['message'] ) ) {
 			return sprintf(
-				'<div class="message-after-registration-stop">%s</div>',
+				'<div id="expire-message-wrap" class="message-after-registration-stop">%s</div>',
 				esc_html( $final_settings['message'] )
 			);
 		}
