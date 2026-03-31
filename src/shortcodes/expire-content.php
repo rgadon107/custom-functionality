@@ -58,7 +58,7 @@ add_shortcode( 'expire', function( array|string $user_defined_attributes, ?strin
 
 	// STAGE 2: Shortcode is active. Wrapped content is displayed.
 	if ( $current_timestamp >= $start_timestamp && $current_timestamp < $stop_timestamp ) {
-		return do_shortcode( $content );
+		return do_shortcode( $content ?? '' );
 	}
 
 	// STAGE 3: After shortcode stop time, the 'message' displays.
@@ -69,7 +69,6 @@ add_shortcode( 'expire', function( array|string $user_defined_attributes, ?strin
 				esc_html( $final_settings['message'] )
 			);
 		}
-		return '';
 	}
 
 	return '';
