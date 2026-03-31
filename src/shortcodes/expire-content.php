@@ -30,6 +30,9 @@ namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source;
  */
 add_shortcode( 'expire', function( array|string $user_defined_attributes, ?string $content = null ): string {
 
+	// Load the shortcode styles only on posts and pages where the shortcode is used.
+	wp_enqueue_style( 'event-registration-notice-styles' );
+
 	$default_settings = array(
 		'start_date_and_time' => '1970-01-01 00:00',
 		'stop_date_and_time'  => '2050-01-01 00:00',
@@ -43,31 +46,30 @@ add_shortcode( 'expire', function( array|string $user_defined_attributes, ?strin
 	$stop_timestamp    = strtotime( $final_settings['stop_date_and_time'] );
 	$current_timestamp = current_time( 'timestamp' );
 
-	// STAGE 1: ACTIVE (The Green Light)
+	// STAGE 1: Before the shortcode start time, the 'pre_start_message' displays.
+	if ( $current_timestamp < $start_timestamp ) {
+		if ( ! empty( $final_settings['pre_start_message'] ) ) {
+			return sprintf(
+				'<div class="message-before-registration-start">%s</div>',
+				esc_html( $final_settings['pre_start_message'] )
+			);
+		}
+	}
+
+	// STAGE 2: Shortcode is active. Wrapped content is displayed.
 	if ( $current_timestamp >= $start_timestamp && $current_timestamp < $stop_timestamp ) {
-		wp_enqueue_style( 'event-registration-notice-styles' );
 		return do_shortcode( $content );
 	}
 
-	// STAGE 2: EXPIRED (Past the Stop Time)
+	// STAGE 3: After shortcode stop time, the 'message' displays.
 	if ( $current_timestamp >= $stop_timestamp ) {
 		if ( ! empty( $final_settings['message'] ) ) {
 			return sprintf(
-				'<div class="registration-closed-notice">%s</div>',
+				'<div class="message-after-registration-stop">%s</div>',
 				esc_html( $final_settings['message'] )
 			);
 		}
 		return '';
-	}
-
-	// STAGE 3: PENDING (Before the Start Time)
-	if ( $current_timestamp < $start_timestamp ) {
-		if ( ! empty( $final_settings['pre_start_message'] ) ) {
-			return sprintf(
-				'<div class="registration-pending-notice">%s</div>',
-				esc_html( $final_settings['pre_start_message'] )
-			);
-		}
 	}
 
 	return '';
