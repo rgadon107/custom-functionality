@@ -29,3 +29,26 @@ add_filter( 'post_password_expires', __NAMESPACE__ . '\modify_cookie_expiration'
 function modify_cookie_expiration( int $expires ): int {
 	return 0;
 }
+
+add_filter( 'http_request_args', __NAMESPACE__. '\filter_http_request_timeout', 10, 2 );
+/**
+ * Increase the default HTTP request timeout to handle latent responses from
+ * Constant Contact during household membership applications.
+ *
+ * @since 1.0.0
+ *
+ * @param array<string, mixed> $http_request_args   The parsed arguments for the HTTP request.
+ * @param string               $url                 The request URL.
+ * @return array<string, mixed> 					The modified HTTP request arguments.
+ */
+function filter_http_request_timeout( array $http_request_args, string $url ): array
+{
+
+	if ( str_contains( $url, 'constantcontact.com' ) ) {
+
+		// Increase the http request timeout from 5 ( default ) to 20 seconds.
+		$http_request_args['timeout'] = 20;
+	}
+
+	return $http_request_args;
+}
