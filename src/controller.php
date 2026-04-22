@@ -10,7 +10,7 @@ namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source;
 // Load the directory modules.
 require_once __DIR__ . '/asset/handler.php';
 require_once __DIR__ . '/shortcodes/expire-content.php';
-require_once __DIR__ . '/shortcodes/current_year.php';
+require_once __DIR__ . '/shortcodes/current-year.php';
 
 /**
  * Register the block patterns on the 'init' hook.
