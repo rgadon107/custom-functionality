@@ -1,0 +1,30 @@
+/* Styles targeting the `Email Signup Form` header block and submit button. */
+
+/* Form header block */
+.email-form-header-block-container .nf-field {
+	text-align: center !important;
+	/*display: flex !important;*/
+	/*flex-direction: column !important;*/
+	/*align-items: center !important;*/
+}
+
+.email-form-header-block-container .nf-field-element h3,
+.email-form-header-block-container .nf-field-element p {
+	text-align: center !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	display: block !important;
+}
+
+/* Form submit button. */
+.email-form-submit-button-container .nf-field .nf-element {
+	text-align: center !important;
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+}
+
+/* Ensure the button doesn't stretch the full width of the container. */
+.email-form-submit-button-container input[type="submit"] {
+	width: auto !important;
+}
