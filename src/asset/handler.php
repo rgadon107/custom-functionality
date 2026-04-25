@@ -61,13 +61,22 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_styles' );
  */
 function enqueue_plugin_styles(): void 	{
 
-	$file = '/assets/styles/event-notices.css';
+	$event_notices_file = '/assets/styles/event-notices.css';
 
 	wp_register_style(
 		'event-registration-notice-styles',
-		_get_plugin_url() . $file,
+		_get_plugin_url() . $event_notices_file,
 		[],
-		_get_asset_version( $file ),
+		_get_asset_version( $event_notices_file ),
+	);
+
+	$nf_styles_file = '/assets/styles/ninja-form-styles.css';
+
+	wp_register_style(
+		'ninja-form-styles',
+		_get_plugin_url() . $nf_styles_file,
+		[],
+		_get_asset_version( $nf_styles_file ),
 	);
 }
 
