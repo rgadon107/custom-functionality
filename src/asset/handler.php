@@ -51,7 +51,7 @@ function enqueue_plugin_scripts(): void {
 	);
 }
 
-add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_styles' );
+add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_styles', 20 );
 /**
  * Enqueues the plugin's styles.
  *
@@ -61,22 +61,22 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_styles' );
  */
 function enqueue_plugin_styles(): void 	{
 
-	$event_notices_file = '/assets/styles/event-notices.css';
+	$file = '/assets/styles/event-notices.css';
 
-	wp_register_style(
+	wp_enqueue_style(
 		'event-registration-notice-styles',
-		_get_plugin_url() . $event_notices_file,
+		_get_plugin_url() . $file,
 		[],
-		_get_asset_version( $event_notices_file ),
+		_get_asset_version( $file ),
 	);
 
-	$nf_styles_file = '/assets/styles/ninja-form-styles.css';
+	$file = '/assets/styles/ninja-form-styles.css';
 
-	wp_register_style(
-		'ninja-form-styles',
-		_get_plugin_url() . $nf_styles_file,
+	wp_enqueue_style(
+		'ninja-form-email-signup-form-styles',
+		_get_plugin_url() . $file,
 		[],
-		_get_asset_version( $nf_styles_file ),
+		_get_asset_version( $file ),
 	);
 }
 
