@@ -10,7 +10,7 @@
  * Plugin Name:     Custom Functionality
  * Plugin URI:      https://github.com/rgadon107/custom-functionality
  * Description:     A plugin that contains custom functions, scripts, and styles to modify the behavior of WordPress. Built off the `starter-plugin` package developed for KnowTheCode.io.
- * Version:         1.0.0
+ * Version:         1.0.5
  * Requires WP:     6.9
  * Requires PHP:    8.2
  * Author:          Robert A Gadon
@@ -39,9 +39,9 @@ function _get_plugin_directory(): string	{
  *  Registers the plugin with WordPress activation, deactivation, and uninstall hooks.
  *
  *  Note: Remove this function if using the 'central-hub' plugin instead to flush rewrites.
- *  Note: Activate this function if the plugin registers custom post types, taxonomies, endpoints, or custom rewrites;
+ *  Note: Activate this function if the plugin registers custom post-types, taxonomies, endpoints, or custom rewrites;
  * ** then keep the hooks and declare the function.  If it’s just “custom functions/scripts/styles” with no routing changes,
- * ** then deactivate ( or remove ) the rewrite hooks (no need to flush).
+ * ** then deactivate (or remove) the rewrite hooks (no need to flush).
  *
  *  @since 1.0.0
  *
