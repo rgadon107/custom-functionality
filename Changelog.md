@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Unreleased Version 1.6 - 2026-XX-XX]()
+### Added
+
+### Changed
+
+### Fixed
+
 ## [Version 1.5.1 - 2026-04-26](https://github.com/rgadon107/custom-functionality/pull/7)
 ### Fixed
 - `/bootstrap.php`: Updated plugin version number to `1.5.1`.
