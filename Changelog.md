@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 1.5.1 - 2026-04-26](https://github.com/rgadon107/custom-functionality/pull/7)
+### Fixed
+- `/bootstrap.php`: Updated plugin version number to `1.5.1`.
+
 ## [Version 1.5 - 2026-04-25](https://github.com/rgadon107/custom-functionality/pull/6)
 ### Added
 - `/assets/styles/ninja-form-styles.css`: Added styles for `Email Signup Form` rendered in popup opened from call-to-action button in footer.
