@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Unreleased Version 1.7 - 2026-XX-XX]()
+### Added
+
+### Changed
+
+### Fixed
+
+### Corrections
+
 ## [Version 1.6 - 2026-04-27](https://github.com/rgadon107/custom-functionality/pull/8)
 ### Added
 - `assets/styles/coblocks-accordian-fix.css`: Added styles to fix the accordian caret in the Coblocks plugin.
