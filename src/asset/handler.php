@@ -55,29 +55,33 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_styles', 20 )
 /**
  * Enqueues the plugin's styles.
  *
- * @since 1.0.0
+ * @since 1.2.0	Enqueued 'event-registration-notice-styles'
+ * @since 1.5.0	Enqueued 'ninja-form-email-signup-form-styles'
+ * @since 1.6.0	Refactored callback and enqueued 'coblocks-accordian-fix'.
  *
  * @return void
  */
-function enqueue_plugin_styles(): void 	{
+function enqueue_plugin_styles(): void {
+	$styles = [
+		'event-registration-notice-styles'    => '/assets/styles/event-notices.css',
+		'ninja-form-email-signup-form-styles' => '/assets/styles/ninja-form-styles.css',
+		'coblocks-accordian-fix'              => '/assets/styles/coblocks-accordian-fix.css',
+	];
 
-	$file = '/assets/styles/event-notices.css';
+	$plugin_dir = _get_plugin_directory();
+	$plugin_url = _get_plugin_url();
 
-	wp_enqueue_style(
-		'event-registration-notice-styles',
-		_get_plugin_url() . $file,
-		[],
-		_get_asset_version( $file ),
-	);
-
-	$file = '/assets/styles/ninja-form-styles.css';
-
-	wp_enqueue_style(
-		'ninja-form-email-signup-form-styles',
-		_get_plugin_url() . $file,
-		[],
-		_get_asset_version( $file ),
-	);
+	foreach ( $styles as $handle => $file ) {
+		// Defensive check: Verify the file exists on disk before enqueuing
+		if ( file_exists( $plugin_dir . $file ) ) {
+			wp_enqueue_style(
+				$handle,
+				$plugin_url . $file,
+				[],
+				_get_asset_version( $file )
+			);
+		}
+	}
 }
 
 /**

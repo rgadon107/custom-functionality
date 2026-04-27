@@ -10,9 +10,9 @@
  * Plugin Name:     Custom Functionality
  * Plugin URI:      https://github.com/rgadon107/custom-functionality
  * Description:     A plugin that contains custom functions, scripts, and styles to modify the behavior of WordPress. Built off the `starter-plugin` package developed for KnowTheCode.io.
- * Version:         1.5.1
- * Requires WP:     6.9
- * Requires PHP:    8.2
+ * Version:         1.6.0
+ * Requires WP:     6.9.4
+ * Requires PHP:    8.3
  * Author:          Robert A Gadon
  * Author URI:      https://github.com/rgadon107/custom-functionality
  * Text Domain:     custom-functionality
