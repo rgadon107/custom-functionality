@@ -5,12 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased Version 1.6 - 2026-XX-XX]()
+## [Version 1.6 - 2026-04-27](https://github.com/rgadon107/custom-functionality/pull/8)
 ### Added
+- `assets/styles/coblocks-accordian-fix.css`: Added styles to fix the accordian caret in the Coblocks plugin.
+  - This includes the svgs `caret-right` and `caret-down`.
+- `src/asset/handler.php`: Updated `enqueue_plugin_styles()` to enqueue the `coblocks-accordian-fix.css` stylesheet.
 
 ### Changed
+- `src/asset/handler.php`: Refactored `function __NAMESPACE__ . '\enqueue_plugin_styles'` to loop through stylesheets and enqueue them.
+- `/bootstrap.php`: Updated header values:
+  - plugin version bump to `1.6.0`;
+  - requires WP increased to `6.9.4`, and
+  - requires PHP to `8.3`.
 
 ### Fixed
+- Used WP-CLI to search and remove all instances of the `?` icon in the `wp_posts` db table preceding the `.wp-block-coblocks-accordion-item summary::before` selector.
 
 ## [Version 1.5.1 - 2026-04-26](https://github.com/rgadon107/custom-functionality/pull/7)
 ### Fixed
