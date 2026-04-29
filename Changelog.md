@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased Version 1.7 - 2026-XX-XX]()
 ### Added
+- `/assets/styles/variables.css`: Added file to plugin and assigned color values to CSS variables.
+- `/src/asset/handler.php`: Enqueue the `variables.css` stylesheet with `enqueue_plugin_styles()`.
+- `/assets/styles/coblocks-accordion-fix.css`: Added color variables to `<svg>` fonts declared in file.
 
 ### Changed
 
