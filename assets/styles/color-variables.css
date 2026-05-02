@@ -1,0 +1,13 @@
+/* Declare color variables within plugin. */
+
+:root {
+
+	/* --- BRAND COLORS --- */
+	--brand-soft-orange: #f3bd50;
+	--brand-green-dark: #527a55;
+	--brand-green-light: #cbd8cb;
+	--brand-white-lime: #f8faf8;
+	--brand-text-main: #333333; /* Dark gray for readability */
+	--card-background: #f4f4f4; /* Very light gray */
+	--white: #ffffff;
+}
