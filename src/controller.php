@@ -7,10 +7,27 @@
  */
 namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source;
 
+use function gardenClubOfMpls\CustomFunctionalityPlugin\_get_plugin_directory;
+
 // Load the directory modules.
 require_once __DIR__ . '/asset/handler.php';
 require_once __DIR__ . '/shortcodes/expire-content.php';
 require_once __DIR__ . '/shortcodes/current-year.php';
+
+add_action( 'plugins_loaded', __NAMESPACE__ .'\\load_ninja_forms_integration' );
+/**
+ * Load Ninja Forms integrations only if the plugin is active.
+ *
+ * @since    1.0.7
+ * @return   void
+ */
+function load_ninja_forms_integration(): void	{
+
+	if ( class_exists( 'Ninja_Forms' ) ) {
+		require_once _get_plugin_directory() . '/src/Integrations/ninja-forms.php';
+
+	}
+}
 
 /**
  * Register the block patterns on the 'init' hook.
@@ -29,8 +46,6 @@ add_action( 'init', __NAMESPACE__ . '\register_plugin_block_patterns' );
  */
 function register_plugin_block_patterns(): void {
 
-	$source_dir_path = plugin_dir_path( __DIR__ );
-
 	$patterns_to_register = [
 		'message-before-registration-start.php',
 		'message-before-registration-start.php',
@@ -38,7 +53,7 @@ function register_plugin_block_patterns(): void {
 
 	foreach ( $patterns_to_register as $file ) {
 
-		$full_path = $source_dir_path . 'patterns/' . $file;
+		$full_path = _get_plugin_directory() . '/patterns/' . $file;
 
 		if ( ! file_exists( $full_path ) ) {
 			continue;
