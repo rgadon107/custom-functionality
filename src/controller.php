@@ -24,7 +24,7 @@ add_action( 'plugins_loaded', __NAMESPACE__ .'\\load_ninja_forms_integration' );
 function load_ninja_forms_integration(): void	{
 
 	if ( class_exists( 'Ninja_Forms' ) ) {
-		require_once _get_plugin_directory() . '/src/Integrations/ninja-forms.php';
+		require_once _get_plugin_directory() . '/src/integrations/ninja-forms.php';
 
 	}
 }
