@@ -5,26 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased Version 1.7 - 2026-XX-XX]()
+## [Version 1.7 - 2026-05-02](https://github.com/rgadon107/custom-functionality/pull/9)
 ### Added
-- `/assets/styles/variables.css`: Added file to plugin and assigned color values to CSS variables.
+- `/assets/styles/variables.css`: Added CSS file to plugin and assigned color values to variables.
 - `/src/asset/handler.php`: Enqueue the `variables.css` stylesheet with `enqueue_plugin_styles()`.
 - `/assets/styles/coblocks-accordion-fix.css`: Added color variables to `<svg>` fonts declared in file.
-
-### Changed
+- `/src/integrations/ninja-forms.php`: Added a file to filter and cleanup all name and email fields in Ninja Forms before submitting data.
+- `/src/controller.php`: Load the Ninja Forms integration file only when the Ninja Forms plugin is active.
 
 ### Fixed
-
-### Corrections
+- Clean up Ninja Forms name and email address fields before form submission.
 
 ## [Version 1.6 - 2026-04-27](https://github.com/rgadon107/custom-functionality/pull/8)
 ### Added
-- `assets/styles/coblocks-accordian-fix.css`: Added styles to fix the accordian caret in the Coblocks plugin.
+- `/assets/styles/coblocks-accordian-fix.css`: Added styles to fix the accordian caret in the Coblocks plugin.
   - This includes the svgs `caret-right` and `caret-down`.
-- `src/asset/handler.php`: Updated `enqueue_plugin_styles()` to enqueue the `coblocks-accordian-fix.css` stylesheet.
+- `/src/asset/handler.php`: Updated `enqueue_plugin_styles()` to enqueue the `coblocks-accordian-fix.css` stylesheet.
 
 ### Changed
-- `src/asset/handler.php`: Refactored `function __NAMESPACE__ . '\enqueue_plugin_styles'` to loop through stylesheets and enqueue them.
+- `/src/asset/handler.php`: Refactored `function __NAMESPACE__ . '\enqueue_plugin_styles'` to loop through stylesheets and enqueue them.
 - `/bootstrap.php`: Updated header values:
   - plugin version bump to `1.6.0`;
   - requires WP increased to `6.9.4`, and
@@ -99,6 +98,6 @@ Initial commit of the plugin.
 - Bumped the minimum PHP version from '5.6.0' to '7.4'.
 
 ### Fixed
-- `bootstrap.php`:
+- `/bootstrap.php`:
 	- Fixed WP_DEBUG declaration for activating plugin development mode.
 	- Fixed functions `register_plugin()` and `delete_rewrite_rules()`
