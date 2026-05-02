@@ -18,9 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Version 1.6 - 2026-04-27](https://github.com/rgadon107/custom-functionality/pull/8)
 ### Added
-- `/assets/styles/coblocks-accordian-fix.css`: Added styles to fix the accordian caret in the Coblocks plugin.
+- `/assets/styles/coblocks-accordion-fix.css`: Added styles to fix the accordion caret in the Coblocks plugin.
   - This includes the svgs `caret-right` and `caret-down`.
-- `/src/asset/handler.php`: Updated `enqueue_plugin_styles()` to enqueue the `coblocks-accordian-fix.css` stylesheet.
+- `/src/asset/handler.php`: Updated `enqueue_plugin_styles()` to enqueue the `coblocks-accordion-fix.css` stylesheet.
 
 ### Changed
 - `/src/asset/handler.php`: Refactored `function __NAMESPACE__ . '\enqueue_plugin_styles'` to loop through stylesheets and enqueue them.
