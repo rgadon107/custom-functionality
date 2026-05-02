@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 1.8 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/11)
+### Added
+
+### Changed
+
+### Fixed
+
+### Corrections
+
 ## [Version 1.7.1 - 2026-05-02](https://github.com/rgadon107/custom-functionality/pull/10)
 ### Fixed
 - `/src/controller.php`: Fix string in file path to resolve `500 Internal Server Error` on live staging server.
