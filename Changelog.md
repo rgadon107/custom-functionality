@@ -5,20 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Version 1.8 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/11)
+## [Version 1.7.2 - 2026-05-02](https://github.com/rgadon107/custom-functionality/pull/11)
+This version update filters Ninja Forms submission data for key fields that contain the term `name`, `email`, `address`, `city`, and `county`.
+It eliminates the need to filter form submission data in Zapier.
+All Ninja Forms used on the `gardenclubmpls.org` website will now be filtered before they are submitted to the database, rendered to the front end, and sent to 3rd party applications.
+
 ### Added
+- `src/integrations/ninja-forms.php`:
+  - Update the sorting machine in `cleanup_form_submission_data()` to use 'fuzzy' key matching and evaluate address, city, and county key fields.
+  - Add helper function `standardize_location_data()` to match regular expressions and expand street abbreviations.
+  - Add and update function docblocks.
 
 ### Changed
-
-### Fixed
-
-### Corrections
+- `/bootstrap.php`:
+  - Modify path parameter in `plugins_url()` to an empty string to satisfy PHP 8.1+ type requirements.
+  - Plugin version bump to `1.7.2`.
 
 ## [Version 1.7.1 - 2026-05-02](https://github.com/rgadon107/custom-functionality/pull/10)
 ### Fixed
 - `/src/controller.php`: Fix string in file path to resolve `500 Internal Server Error` on live staging server.
 
-## [Version 1.7 - 2026-05-02](https://github.com/rgadon107/custom-functionality/pull/9)
+## [Version 1.7.0 - 2026-05-02](https://github.com/rgadon107/custom-functionality/pull/9)
 ### Added
 - `/assets/styles/variables.css`: Added CSS file to plugin and assigned color values to variables.
 - `/src/asset/handler.php`: Enqueue the `variables.css` stylesheet with `enqueue_plugin_styles()`.
