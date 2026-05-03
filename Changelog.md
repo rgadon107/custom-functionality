@@ -6,13 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Version 1.7.2 - 2026-05-02](https://github.com/rgadon107/custom-functionality/pull/11)
-This version update filters Ninja Forms submission data for key fields that contain the term `name`, `email`, `address`, `city`, and `county`.
+This version update filters Ninja Forms submission data for key fields that contain the term `name`, `email`, `zip`, `address`, `city`, and `county`.
 It eliminates the need to filter form submission data in Zapier.
-All Ninja Forms used on the `gardenclubmpls.org` website will now be filtered before they are submitted to the database, rendered to the front end, and sent to 3rd party applications.
+All Ninja Forms used on the `gardenclubmpls.org` website will now be filtered before they are submitted to the database, rendered to the front end, and sent to third party applications.
 
 ### Added
 - `src/integrations/ninja-forms.php`:
-  - Update the sorting machine in `cleanup_form_submission_data()` to use 'fuzzy' key matching and evaluate address, city, and county key fields.
+  - Update the sorting machine in `cleanup_form_submission_data()` to use 'fuzzy' key matching.
+    - This evaluates `zip`, `address`, `city`, and `county` key fields.
   - Add helper function `standardize_location_data()` to match regular expressions and expand street abbreviations.
   - Add and update function docblocks.
 

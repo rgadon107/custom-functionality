@@ -24,7 +24,7 @@ add_filter('ninja_forms_submit_data', __NAMESPACE__ .'\\cleanup_form_submission_
  * Filter _all_ active Ninja Forms with field keys that contain the term `name`, `email`, address`, `city`, and `county`.
  *
  * @since 	1.0.7	Filter field keys that contain the terms `name`, and `email`.
- * @since	1.0.8	Filter field keys that contain the terms `address`, `city`, and `county`.
+ * @since	1.0.8	Filter field keys that contain the terms `zip`, `address`, `city`, and `county`.
  *
  * @param 	array $form_data The original form submission data.
  * @return 	array $form_data The sanitized form submission data returned on submit.
@@ -56,8 +56,11 @@ function cleanup_form_submission_data(array $form_data): array	{
 		} elseif ( str_contains( $key, 'email' ) ) {
 			// Case 2: Emails (Lowercase)
 			$value = mb_strtolower( $value );
+		} elseif ( str_contains( $key, 'zip' ) ) {
+			// Case 3: Zip Codes ( first 5 characters only )
+			$value = substr($value, 0, 5);
 		} elseif ( ( str_contains( $key, 'address' ) || str_contains( $key, 'city' ) || str_contains( $key, 'county' ) ) ) {
-			// Case 3: Address , City, and County ( Title case and expand street abbreviations )
+			// Case 4: Address , City, and County ( Title case and expand street abbreviations )
 			$value = standardize_location_data( $value, $key );
 		}
 		// Update the array
