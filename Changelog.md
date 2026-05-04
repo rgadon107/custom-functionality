@@ -5,14 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased Version 1.8.0 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/12)
+## [Version 1.7.3 - 2026-05-03](https://github.com/rgadon107/custom-functionality/pull/12)
 ### Added
+- `/src/integrations/ninja-forms.php`: Added filter for 'phone' field key to remove the `+1 ` preceding the phone number.
 
 ### Changed
-
-### Fixed
-
-### Correction
+- `/src/integrations/ninja-forms.php`: Replaced complex `if elseif` control statement with `match` expression ( valid in PHP 8 ).
+- `/boostrap.php`: Plugin version bump to `1.7.3`.
 
 ## [Version 1.7.2 - 2026-05-02](https://github.com/rgadon107/custom-functionality/pull/11)
 This version update filters Ninja Forms submission data for key fields that contain the term `name`, `email`, `zip`, `address`, `city`, and `county`.
