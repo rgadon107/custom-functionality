@@ -4,7 +4,7 @@
  * Custom callbacks hooked to Ninja Forms actions or filters.
  *
  * @package     gardenClubOfMpls\CustomFunctionalityPlugin\Source\Integrations
- * @since       1.0.7
+ * @since       1.7.0
  * @author      Robert Gadon
  * @link        https://github.com/rgadon107/custom-functionality
  * @license     GPL-2.0+
@@ -23,8 +23,9 @@ add_filter('ninja_forms_submit_data', __NAMESPACE__ .'\\cleanup_form_submission_
  * Strip whitespace, title case names, and lowercase email addresses before form submission.
  * Filter _all_ active Ninja Forms with field keys that contain the term `name`, `email`, address`, `city`, and `county`.
  *
- * @since 	1.0.7	Filter field keys that contain the terms `name`, and `email`.
- * @since	1.0.8	Filter field keys that contain the terms `zip`, `address`, `city`, and `county`.
+ * @since 	1.7.0	Filter field keys that contain the terms `name`, and `email`.
+ * @since	1.7.2	Filter field keys that contain the terms `zip`, `address`, `city`, and `county`.
+ * @since	1.7.3	Filter field keys that contain the term `phone`.
  *
  * @param 	array $form_data The original form submission data.
  * @return 	array $form_data The sanitized form submission data returned on submit.
@@ -48,21 +49,32 @@ function cleanup_form_submission_data(array $form_data): array	{
 		// Universal Trim (Remove standard spaces, tabs, and non-breaking spaces.)
 		$value = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u', '', $value);
 
-		// Sorting Machine: Route data based on 'fuzzy' key matching
-		if ( str_contains( $key, 'name' ) ) {
-			// Case 1: Names (Title case)
-			$value = mb_strtolower( $value );
-			$value = ucwords( $value, " \t\r\n\f\v-'" );
-		} elseif ( str_contains( $key, 'email' ) ) {
-			// Case 2: Emails (Lowercase)
-			$value = mb_strtolower( $value );
-		} elseif ( str_contains( $key, 'zip' ) ) {
-			// Case 3: Zip Codes ( first 5 characters only )
-			$value = substr($value, 0, 5);
-		} elseif ( ( str_contains( $key, 'address' ) || str_contains( $key, 'city' ) || str_contains( $key, 'county' ) ) ) {
-			// Case 4: Address , City, and County ( Title case and expand street abbreviations )
-			$value = standardize_location_data( $value, $key );
-		}
+		// Sorting Machine using PHP 8 `match` expression
+		$value = match ( true ) {
+			// Names: Title Case 'name' fields
+			str_contains( $key, 'name' )    => ucwords( mb_strtolower( $value ), " \t\r\n\f\v-'" ),
+
+			// Emails: Lowercase 'email' field(s)
+			str_contains( $key, 'email' )   => mb_strtolower( $value ),
+
+			// Zip Codes: Truncate to first 5 characters for Zapier compatibility
+			str_contains( $key, 'zip' )     => substr( $value, 0, 5 ),
+
+			/**
+			 * Phone Numbers: Strip the '+1 ' prefix (indices 0, 1, 2)
+			 * Returns (XXX) XXX-XXXX
+			 */
+			str_contains( $key, 'phone' )   => substr( $value, 3, 16 ),
+
+			// Render full address street abbreviations; title case 'city' and 'county' fields
+			str_contains( $key, 'address' ) ||
+			str_contains( $key, 'city' )    ||
+			str_contains( $key, 'county' )  => standardize_location_data( $value, $key ),
+
+			// Default: If match returns false, leave $value unchanged
+			default                         => $value,
+		};
+
 		// Update the array
 		$form_data['fields'][$id]['value'] = $value;
 	}
