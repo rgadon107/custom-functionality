@@ -108,18 +108,42 @@ function _is_in_development_mode(): bool	{
 /**
  * Autoload the plugin's files.
  *
- * @since 1.0.0
+ * @since 1.0.0	Intial release.
+ * @since 1.0.8 Modify this function to serve as a module controller for the entire plugin.
  *
  * @return void
  */
 function autoload_files(): void	{
-	$files = [
-		'hooks.php',
-		'controller.php',
+
+	$plugin_files	= [
+		'/includes/patterns/pattern-loader.php',
+		'/src/asset/handler.php',
+		'/src/shortcodes/expire-content.php',
+		'/src/shortcodes/current-year.php',
+		'/src/hooks.php',
 	];
 
-	foreach ( $files as $file ) {
-		require __DIR__ . '/src/' . $file;
+	foreach ( $plugin_files as $file ) {
+		$path = _get_plugin_directory() . $file;
+		if ( file_exists( $path ) ) {
+			require_once $path;
+		}
+	}
+
+	add_action( 'plugins_loaded', __NAMESPACE__ .'\\load_ninja_forms_integration' );
+	/**
+	 * Load Ninja Forms integrations only if the plugin is active.
+	 *
+	 * @since    1.0.7
+	 * @return   void
+	 */
+	function load_ninja_forms_integration(): void	{
+		if ( class_exists( 'Ninja_Forms' ) ) {
+			$integration = _get_plugin_directory() . '/src/integrations/ninja-forms.php';
+			if ( file_exists( $integration ) ) {
+				require_once $integration;
+			}
+		}
 	}
 }
 
