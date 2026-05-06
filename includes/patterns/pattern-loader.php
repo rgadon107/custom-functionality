@@ -1,13 +1,35 @@
-<?php /** @noinspection PhpUndefinedVariableInspection */
-
+<?php
 /**
  * Register all custom block patterns called by this plugin.
+ *
  */
 namespace gardenClubOfMpls\CustomFunctionalityPlugin\Includes;
 
 use function gardenClubOfMpls\CustomFunctionalityPlugin\_get_plugin_directory;
 
+add_action( 'init', __NAMESPACE__ . '\\register_pattern_categories', 5 );
 add_action( 'init', __NAMESPACE__ . '\\register_plugin_block_patterns' );
+
+/**
+ * Register custom block pattern categories for use in the Gutenberg editor.
+ *
+ * The function defines an array of categories, each with a unique slug and label.
+ * It then iterates through the array and registers each category using `register_block_pattern_category`.
+ *
+ * @since 1.8.0
+ *
+ * @return void
+ */
+function register_pattern_categories(): void	{
+	$categories = array(
+		'accordion-meeting-topics' => array('label' => __('Accordion: Meeting Topics', 'custom-functionality')),
+	);
+
+	foreach ($categories as $slug => $settings) {
+		register_block_pattern_category($slug, $settings);
+	}
+}
+
 /**
  * Register custom block patterns.
  *
