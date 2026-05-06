@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 ## [Version 1.8.0 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/13)
 ### Added
 - `includes/patterns/`: Added directory to manage logic to register design patterns with WordPress.
-- `includes/patterns/pattern-loader.php`: Added file to run registration logic and load design patterns.
+- `includes/patterns/pattern-loader.php`: Added file to register block patterns and categories with WordPress.
 
 ### Changed
 - `/bootstrap.php`: Modified `autoload_files()` to serve as a module controller for the entire plugin.
