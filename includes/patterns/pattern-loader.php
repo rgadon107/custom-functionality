@@ -44,7 +44,7 @@ function register_plugin_block_patterns(): void {
 	$patterns_to_register = [
 		'message-before-registration-start.php',
 		'message-after-registration-start.php',
-		'current-and-past-year-meeting-topics.php',
+		'accordion-meeting-topics.php',
 	];
 
 	foreach ( $patterns_to_register as $file ) {
@@ -60,7 +60,7 @@ function register_plugin_block_patterns(): void {
  */
 function load_and_register_pattern( string $file ): void {
 
-	$full_path = _get_plugin_directory() . '/patterns/' . $file;
+	$full_path = _get_plugin_directory() . '/src/patterns/' . $file;
 
 	if ( ! file_exists( $full_path ) ) {
 		return;
