@@ -106,7 +106,7 @@ function _is_in_development_mode(): bool	{
 }
 
 /**
- * Autoload the plugin's files.
+ * Autoload the plugin's modules and files.
  *
  * @since 1.0.0	Intial release.
  * @since 1.0.8 Modify this function to serve as a module controller for the entire plugin.
