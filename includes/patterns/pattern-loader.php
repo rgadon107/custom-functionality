@@ -1,6 +1,6 @@
 <?php
 /**
- * Register all custom block patterns called by this plugin.
+ * Register all custom block pattern categories and block patterns called by this plugin.
  *
  */
 namespace gardenClubOfMpls\CustomFunctionalityPlugin\Includes;
@@ -9,7 +9,6 @@ use function gardenClubOfMpls\CustomFunctionalityPlugin\_get_plugin_directory;
 
 add_action( 'init', __NAMESPACE__ . '\\register_pattern_categories', 5 );
 add_action( 'init', __NAMESPACE__ . '\\register_plugin_block_patterns' );
-
 /**
  * Register custom block pattern categories for use in the Gutenberg editor.
  *
@@ -22,7 +21,9 @@ add_action( 'init', __NAMESPACE__ . '\\register_plugin_block_patterns' );
  */
 function register_pattern_categories(): void	{
 	$categories = array(
-		'accordion-meeting-topics' => array('label' => __('Accordion: Meeting Topics', 'custom-functionality')),
+		'accordion-meeting-topics-table' 	=> array('label' => __('Accordion: Meeting Topics Table', 'custom-functionality')),
+		'message-before-registration-start' => array('label' => __('Message: Before Registration Start', 'custom-functionality')),
+		'message-after-registration-stop' 	=> array('label' => __('Message: After Registration Stop', 'custom-functionality')),
 	);
 
 	foreach ($categories as $slug => $settings) {
@@ -43,9 +44,9 @@ function register_plugin_block_patterns(): void {
 
 	$patterns_to_register = [
 		'message-before-registration-start.php',
-		'message-after-registration-start.php',
+		'message-after-registration-stop.php',
 		'accordion-meeting-topics.php',
-	];
+		];
 
 	foreach ( $patterns_to_register as $file ) {
 		load_and_register_pattern( $file );
@@ -78,7 +79,7 @@ function load_and_register_pattern( string $file ): void {
 
 	// Parse the 'Title' header from the file
 	if ( preg_match( '/Title:\s*(.*)$/mi', $content, $matches ) ) {
-		$title = trim( $matches[1] );
+		$title = trim($matches[1]);
 	}
 
 	// Parse the 'Categories' header (comma-separated string to array)
