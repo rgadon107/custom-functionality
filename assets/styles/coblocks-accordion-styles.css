@@ -54,3 +54,7 @@
 .wp-block-coblocks-accordion-item details[open] summary {
 	color: var(--brand-soft-orange);
 }
+
+.meeting-topics-table-group .wp-block-columns[class*="meeting-topics-table-data-row-"] .wp-block-column:nth-child(2) p {
+	font-style: italic !important;
+}
