@@ -50,7 +50,7 @@
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 1 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
 					<!-- wp:paragraph { "placeholder": "Enter topic", "metadata": { "name": "Field Row 1 - Event Topic" } } -->
-					<p><em></em></p><!-- /wp:paragraph -->
+					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 1 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
@@ -71,7 +71,7 @@
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 2 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
 					<!-- wp:paragraph { "placeholder": "Enter topic", "metadata": { "name": "Field Row 2 - Event Topic" } } -->
-					<p><em></em></p><!-- /wp:paragraph -->
+					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 2 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
@@ -92,7 +92,7 @@
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 3 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
 					<!-- wp:paragraph { "placeholder": "Enter topic", "metadata": { "name": "Field Row 3 - Event Topic" } } -->
-					<p><em></em></p><!-- /wp:paragraph -->
+					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 3 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
@@ -113,7 +113,7 @@
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 4 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
 					<!-- wp:paragraph { "placeholder": "Enter topic", "metadata": { "name": "Field Row 4 - Event Topic" } } -->
-					<p><em></em></p><!-- /wp:paragraph -->
+					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 4 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
@@ -134,7 +134,7 @@
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 5 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
 					<!-- wp:paragraph { "placeholder": "Enter topic", "metadata": { "name": "Field Row 5 - Event Topic" } } -->
-					<p><em></em></p><!-- /wp:paragraph -->
+					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 5 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
@@ -155,7 +155,7 @@
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 6 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
 					<!-- wp:paragraph { "placeholder": "Enter topic", "metadata": { "name": "Field Row 6 - Event Topic" } } -->
-					<p><em></em></p><!-- /wp:paragraph -->
+					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 6 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
@@ -176,7 +176,7 @@
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 7 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
 					<!-- wp:paragraph { "placeholder": "Enter topic", "metadata": { "name": "Field Row 7 - Event Topic" } } -->
-					<p><em></em></p><!-- /wp:paragraph -->
+					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 7 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
@@ -194,7 +194,7 @@
 				<!-- /wp:column -->
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 8 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
-					<!-- wp:paragraph {"metadata":{"name":"Field Row 8 - Event Topic"}} --><p><em></em></p><!-- /wp:paragraph -->
+					<!-- wp:paragraph {"metadata":{"name":"Field Row 8 - Event Topic"}} --><p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 8 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
@@ -211,7 +211,7 @@
 				<!-- /wp:column -->
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 9 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
-					<!-- wp:paragraph {"metadata":{"name":"Field Row 9 - Event Topic"}} --><p><em></em></p><!-- /wp:paragraph -->
+					<!-- wp:paragraph {"metadata":{"name":"Field Row 9 - Event Topic"}} --><p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 9 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
