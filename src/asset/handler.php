@@ -65,7 +65,7 @@ function enqueue_plugin_styles(): void {
 	$styles = [
 		'event-registration-notice-styles'    => '/assets/styles/event-notices.css',
 		'ninja-form-email-signup-form-styles' => '/assets/styles/ninja-form-styles.css',
-		'coblocks-accordion-fix'              => '/assets/styles/coblocks-accordion-fix.css',
+		'coblocks-accordion-styles'           => '/assets/styles/coblocks-accordion-styles.css',
 		'color-variables'					  => '/assets/styles/color-variables.css',
 	];
 
