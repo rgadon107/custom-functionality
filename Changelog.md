@@ -5,23 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Version 1.8.0 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/13)
+## [Version 1.8.0 - 2026-05-06](https://github.com/rgadon107/custom-functionality/pull/13)
 ### Added
-- `includes/patterns/`: Added directory to manage logic to register design patterns with WordPress.
-- `includes/patterns/pattern-loader.php`: Added file to register block patterns and categories with WordPress.
+- `/includes/patterns/`: Added directory to manage logic to register design patterns with WordPress.
+- `/includes/patterns/pattern-loader.php`: Added file to register block patterns and categories with WordPress.
+- `/src/patterns/accordion-meeting-topics.php`: Added a design pattern to register the accordion meeting topics block.
+  - Added placeholder text to the accordion label and the table fields.
 
 ### Changed
 - `/bootstrap.php`: Modified `autoload_files()` to serve as a module controller for the entire plugin.
   - Moved all module and file loading from `/src/controller.php` to `/bootstrap.php`.
-- `src/controller.php`: Removed and relocated the `register_design_patterns()` function to `includes/patterns/pattern-loader.php`.
-- `includes/patterns/pattern-loader.php`: Refactored `\\register_plugin_block_patterns()` to abstract away a new helper function `load_and_register_pattern()`.
+- `/src/controller.php`: Removed and relocated the `register_design_patterns()` function to `/includes/patterns/pattern-loader.php`.
+- `/includes/patterns/pattern-loader.php`: Refactored `\\register_plugin_block_patterns()` to abstract away a new helper function `load_and_register_pattern()`.
   - `function load_and_register_pattern()`: Added the `$categories` variable to register with `register_block_pattern()`.
 - `/src/controller.php`: Deleted the file from the project.
 
 ### Fixed
-- `includes/patterns/pattern-loader.php`: In `$patterns_to_register` array, updated the reference to `'message-after-registration-start.php'` pattern so it will now load.
-
-### Corrections
+- `/includes/patterns/pattern-loader.php`: In `$patterns_to_register` array, updated the reference to `'message-after-registration-start.php'` pattern so it will now load.
+- `/src/patterns/message-after-registration-stop.php`: Fixed category in file header to correctly register the pattern with WordPress.
+- `/src/patterns/message-before-registration-start.php`: Fixed category in file header to correctly register the pattern with WordPress.
 
 ## [Version 1.7.3 - 2026-05-03](https://github.com/rgadon107/custom-functionality/pull/12)
 ### Added
