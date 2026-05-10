@@ -14,7 +14,7 @@
 	<!-- wp:coblocks/accordion-item { "placeholder": "{YYYY} (Optional:) Current Year Events", "className": "accordion-item-meeting-topics-label", "metadata": { "name": "Accordion Item - Meeting Topics Label" } } -->
 	<div class="wp-block-coblocks-accordion-item accordion-item-meeting-topics-label">
 
-		<!-- wp:group {"metadata":{"name":"Meeting Topics Table Group"},"className":"meeting-topics-table-group","layout":{"type":"constrained"}} -->
+		<!-- wp:group { "templateLock": "contentOnly", "metadata": { "name": "Meeting Topics Table Group" }, "className": "meeting-topics-table-group", "layout": { "type": "constrained" } } -->
 		<div class="wp-block-group meeting-topics-table-group">
 
 			<!-- wp:columns {"metadata":{"name":"Accordion Table Header Row"},"className":"meeting-topics-table-header-row"} -->

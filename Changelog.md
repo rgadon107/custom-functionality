@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - `/includes/patterns/`: Added directory to manage logic to register design patterns with WordPress.
 - `/includes/patterns/pattern-loader.php`: Added file to register block patterns and categories with WordPress.
 - `/src/patterns/accordion-meeting-topics.php`: Added a design pattern to register the accordion meeting topics block.
+  - Added a `templateLock` property to the block attributes to prevent site editors from accidentally deleting or moving any portion of the block.
   - Added placeholder text to the accordion label and the table fields.
 - `/assets/styles/coblocks-accordion-fix.css`: Updates to style sheet.
   - Prevent the browser from jumping when accordion is opened.
