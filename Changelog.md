@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 1.8.0 - 2026-05-10](https://github.com/rgadon107/custom-functionality/pull/13)
+### Added
+- `/includes/patterns/`: Added directory to manage logic to register design patterns with WordPress.
+- `/includes/patterns/pattern-loader.php`: Added file to register block patterns and categories with WordPress.
+- `/src/patterns/accordion-meeting-topics.php`: Added a design pattern to register the accordion meeting topics block.
+  - Added a `templateLock` property to the block attributes to prevent site editors from accidentally deleting or moving any portion of the block.
+  - Added placeholder text to the accordion label and the table fields.
+- `/assets/styles/coblocks-accordion-fix.css`: Updates to style sheet.
+  - Prevent the browser from jumping when accordion is opened.
+  - Change the background-color of the accordion from dark green to dark blue.
+  - Change the link visibility inside an accordion item.
+  - Add horizontal 'zebra-striping' colors to multi-row tables.
+  - Adjust column widths to prevent character wrapping.
+  - Add styles for mobile, tablet, and desktop view.
+  - Add blue color variables.
+- `/assets/scripts/coblocks-accordion-prevent-vertical-scroll.js`: Add and enqueue script to prevent the page from jumping when an accordion item is opened.
+- `src/integrations/ninja-forms.php`: Added street suffix abbreviations to the `standardize_location_data()` function.
+
+### Changed
+- `/bootstrap.php`: Modified `autoload_files()` to serve as a module controller for the entire plugin.
+  - Moved all module and file loading from `/src/controller.php` to `/bootstrap.php`.
+  - Plugin version bump to `1.8.0`.
+- `/src/controller.php`: Removed and relocated the `register_design_patterns()` function to `/includes/patterns/pattern-loader.php`.
+- `/includes/patterns/pattern-loader.php`: Refactored `\\register_plugin_block_patterns()` to abstract away a new helper function `load_and_register_pattern()`.
+  - `function load_and_register_pattern()`: Added the `$categories` variable to register with `register_block_pattern()`.
+- `/src/controller.php`: Deleted the file from the project.
+- `/src/asset/handler.php`: Refactor function`enqueue_plugin_scripts()` to add a custom configuration for new script files.
+- `/src/README.md`:  Update the `/src/README.md` file to document the addition of an `integrations` directory.
+
+### Fixed
+- `/includes/patterns/pattern-loader.php`: In `$patterns_to_register` array, updated the reference to `'message-after-registration-start.php'` pattern so it will now load.
+- `/src/patterns/message-after-registration-stop.php`: Fixed category in file header to correctly register the pattern with WordPress.
+- `/src/patterns/message-before-registration-start.php`: Fixed category in file header to correctly register the pattern with WordPress.
+
 ## [Version 1.7.3 - 2026-05-03](https://github.com/rgadon107/custom-functionality/pull/12)
 ### Added
 - `/src/integrations/ninja-forms.php`: Added filter for 'phone' field key to remove the `+1 ` preceding the phone number.

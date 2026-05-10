@@ -1,8 +1,8 @@
 <?php
 /**
- * Title: Notice - After Registration Stop
- * Slug: notice-after-registration-stop
- * Categories: featured, message-after-registration-stop
+ * Title: Message: After Registration Stop
+ * Slug: message-after-registration-stop
+ * Categories: message-after-registration-stop, featured
  * Description: Style a message displayed after an event registration stops.
  * Keywords: featured, message, after registration
  * Viewport Width: 400

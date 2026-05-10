@@ -10,7 +10,7 @@
  * Plugin Name:     Custom Functionality
  * Plugin URI:      https://github.com/rgadon107/custom-functionality
  * Description:     A plugin that contains custom functions, scripts, and styles to modify the behavior of WordPress. Built off the `starter-plugin` package developed for KnowTheCode.io.
- * Version:         1.7.3
+ * Version:         1.8.0
  * Requires WP:     6.9.4
  * Requires PHP:    8.3
  * Author:          Robert A Gadon
@@ -76,7 +76,7 @@ function delete_rewrite_rules(): void	{
  * Gets this plugin's URL.
  *
  * @since  1.0.0
- * @since  1.0.8 Change paramater value in plugins_url() to satisfy PHP 8.1+ type requirements.
+ * @since  1.8.0 Change paramater value in plugins_url() to satisfy PHP 8.1+ type requirements.
  * @ignore
  * @access private
  *
@@ -106,20 +106,44 @@ function _is_in_development_mode(): bool	{
 }
 
 /**
- * Autoload the plugin's files.
+ * Autoload the plugin's modules and files.
  *
- * @since 1.0.0
+ * @since 1.0.0	Initial release.
+ * @since 1.8.0 Modify this function to serve as a module controller for the entire plugin.
  *
  * @return void
  */
 function autoload_files(): void	{
-	$files = [
-		'hooks.php',
-		'controller.php',
+
+	$plugin_files	= [
+		'/includes/patterns/pattern-loader.php',
+		'/src/asset/handler.php',
+		'/src/shortcodes/expire-content.php',
+		'/src/shortcodes/current-year.php',
+		'/src/hooks.php',
 	];
 
-	foreach ( $files as $file ) {
-		require __DIR__ . '/src/' . $file;
+	foreach ( $plugin_files as $file ) {
+		$path = _get_plugin_directory() . $file;
+		if ( file_exists( $path ) ) {
+			require_once $path;
+		}
+	}
+
+	add_action( 'plugins_loaded', __NAMESPACE__ .'\\load_ninja_forms_integration' );
+	/**
+	 * Load Ninja Forms integrations only if the plugin is active.
+	 *
+	 * @since    1.0.7
+	 * @return   void
+	 */
+	function load_ninja_forms_integration(): void	{
+		if ( class_exists( 'Ninja_Forms' ) ) {
+			$integration = _get_plugin_directory() . '/src/integrations/ninja-forms.php';
+			if ( file_exists( $integration ) ) {
+				require_once $integration;
+			}
+		}
 	}
 }
 
