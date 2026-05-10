@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	const accordionSummaries = document.querySelectorAll('.wp-block-coblocks-accordion-item summary');
 
 	accordionSummaries.forEach(summary => {
-		summary.addEventListener('click', function(event) {
+		summary.addEventListener('click', function() {
 			// 1. Capture the scroll position immediately at the moment of click
 			const startingScrollPos = window.pageYOffset || document.documentElement.scrollTop;
 
