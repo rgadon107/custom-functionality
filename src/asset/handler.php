@@ -40,15 +40,25 @@ function enqueue_plugin_scripts(): void {
 		);
 	}
 
-	$file = '/assets/scripts/nf-prevent-early-form-submit-while-using-return-key.js';
+	$scripts = [
+		'nf-prevent-early-form-submit-while-using-return-key' 	=> '/assets/scripts/nf-prevent-early-form-submit-while-using-return-key.js',
+		'coblocks-accordion-prevent-vertical-scroll' 			=> '/assets/scripts/coblocks-accordion-prevent-vertical-scroll.js',
+	];
 
-	wp_enqueue_script(
-		'nf-prevent-early-form-submit-while-using-return-key',
-		_get_plugin_url() . $file,
-		[],
-		_get_asset_version( $file ),
-		true
-	);
+	$plugin_dir = _get_plugin_directory();
+	$plugin_url = _get_plugin_url();
+
+	foreach ( $scripts as $handle => $file ) {
+		// Defensive check: Verify the file exists on disk before enqueuing
+		if ( file_exists( $plugin_dir . $file ) ) {
+			wp_enqueue_script(
+				$handle,
+				$plugin_url . $file,
+				[],
+				_get_asset_version( $file )
+			);
+		}
+	}
 }
 
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_styles', 20 );
