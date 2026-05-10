@@ -13,6 +13,7 @@ For example, if you need:
 - For plugin served templates, add a `templates` folder.
 - For plugin served patterns accessible from the block inserter, add a `patterns` folder.
 - For custom callbacks hooked to WordPress actions or filters, add a `hooks` folder.
+- For custom callbacks hooked to third-party plugin actions or filters, add an `integrations` -> `{plugin-name}` folder.
 
 Don't forget to separate concerns by keeping the business logic and HTML separate. Add a `src/patterns` folder to store `{custom-pattern}.php` files that manage frontend content.
 
