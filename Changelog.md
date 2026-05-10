@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Add styles for mobile, tablet, and desktop view.
   - Add blue color variables.
 - `/assets/scripts/coblocks-accordion-prevent-vertical-scroll.js`: Add and enqueue script to prevent the page from jumping when an accordion item is opened.
+- `src/integrations/ninja-forms.php`: Added street suffix abbreviations to the `standardize_location_data()` function.
 
 ### Changed
 - `/bootstrap.php`: Modified `autoload_files()` to serve as a module controller for the entire plugin.

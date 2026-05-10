@@ -113,6 +113,7 @@ function standardize_location_data( string $value, string $key ): string {
 			'Pkwy'  => 'Parkway',
 			'Bl'    => 'Boulevard',
 			'St'    => 'Street',
+			'Ter'   => 'Terrace',
 			'Terr'  => 'Terrace',
 			'Pl'    => 'Place',
 			'Wy'    => 'Way',
@@ -130,6 +131,9 @@ function standardize_location_data( string $value, string $key ): string {
 			'Nw'	=> 'Northwest',
 			'E'		=> 'East',
 			'W'		=> 'West',
+			'Cv'	=> 'Curve',
+			'Crv'	=> 'Curve',
+			'Curv'	=> 'Curve',
 
 		];
 
