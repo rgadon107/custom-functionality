@@ -1,8 +1,8 @@
 <?php
 /**
- * Title: Notice - Before Registration Start
- * Slug: notice-before-registration-start
- * Categories: featured, message-before-registration-start
+ * Title: Message: Before Registration Start
+ * Slug: message-before-registration-start
+ * Categories: message-before-registration-start, featured
  * Description: Style a message displayed before an event registration starts.
  * Keywords: featured, message, before registration
  * Viewport Width: 400

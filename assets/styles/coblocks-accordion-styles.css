@@ -1,0 +1,264 @@
+/* Fix for CoBlocks Accordion Carets. Replace broken font characters with SVGs. */
+
+/* Prevent the browser from jumping when the accordion expands */
+.wp-block-coblocks-accordion {
+	overflow-anchor: none;
+}
+
+/* Optional: Ensure the summary doesn't trigger a 'scroll-into-view' jump */
+.wp-block-coblocks-accordion-item summary {
+	scroll-margin-top: 100px; /* Adjust this to match the height of your sticky header if you have one */
+}
+
+/* Hide the default browser/plugin marker */
+.wp-block-coblocks-accordion-item summary::-webkit-details-marker {
+	display: none;
+}
+
+/* Target the main accordion item container */
+.wp-block-coblocks-accordion-item {
+	background-color: var(--brand-dark-blue);
+	color: var(--brand-white-lime);
+}
+
+.wp-block-coblocks-accordion-item summary {
+	list-style: none;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+/* Caret Right (Closed state) */
+.wp-block-coblocks-accordion-item summary::before {
+	content: "";
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	margin-right: 12px;
+	background-color: var(--brand-white-lime);		/* Set the icon color using background-color */
+	/* Apply the SVG as a mask */
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512'%3E%3Cpath d='M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512'%3E%3Cpath d='M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z'/%3E%3C/svg%3E");
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	-webkit-mask-size: contain;
+	mask-size: contain;
+	-webkit-mask-position: center;
+	mask-position: center;
+}
+
+/* Caret Down (Open state) */
+.wp-block-coblocks-accordion-item details[open] summary::before {
+	background-color: var(--brand-soft-orange);
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'%3E%3Cpath d='M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'%3E%3Cpath d='M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z'/%3E%3C/svg%3E");
+}
+
+/* Add color outline around the accordion-item for visual accessibility */
+.wp-block-coblocks-accordion-item__title.has-background:focus,
+.wp-block-coblocks-accordion-item__title:focus{
+	outline: 2px solid var(--brand-soft-orange) !important;
+	outline-offset: -2px !important;
+}
+
+.wp-block-coblocks-accordion-item details[open] summary {
+	color: var(--brand-soft-orange);
+}
+
+/* --- LINK VISIBILITY FIX ---
+   Target links inside the accordion content.
+   We use high-specificity selectors to override the child-theme's
+   main-style.css which is currently forcing dark green.
+   ====================================================================
+*/
+
+.wp-block-coblocks-accordion .wp-block-coblocks-accordion-item .wp-block-coblocks-accordion-item__content a {
+	color: var(--brand-soft-orange) !important;
+	text-decoration: underline;
+	transition: color 0.2s ease-in-out;
+}
+
+.wp-block-coblocks-accordion .wp-block-coblocks-accordion-item .wp-block-coblocks-accordion-item__content a:hover,
+.wp-block-coblocks-accordion .wp-block-coblocks-accordion-item .wp-block-coblocks-accordion-item__content a:focus {
+	color: var(--brand-light-greyish-blue) !important;
+	text-decoration: underline var(--brand-light-greyish-blue) 2px !important;
+	text-underline-offset: 0.1em;
+}
+
+/* Ensure that if a link is placed inside a zebra-striped row (Even rows),
+   it remains legible against the light blue background.
+*/
+.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns:nth-child(even) a {
+	color: var(--brand-dark-blue) !important;
+	font-weight: bold;
+}
+
+.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns:nth-child(even) a:hover {
+	color: var(--brand-soft-orange) !important;
+
+}
+
+/* --- Meeting Topics Table Zebra-Striping --- */
+
+/* Base styles for all "rows" (Column Blocks) in this table */
+.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns {
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
+	padding: 12px 20px; /* Adds padding so background color doesn't hug the text */
+}
+
+.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns > .wp-block-column:nth-child(2) p {
+	line-height: 1.5rem !important;
+}
+
+/* Style the Header and every ODD row (1, 3, 5...) */
+/* This applies the Dark Blue background */
+.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns:nth-child(odd) {
+	background-color: var(--brand-dark-blue) !important;
+	color: var(--brand-soft-orange);
+}
+
+/* Style every EVEN row (2, 4, 6...) */
+/* This applies the Light Greyish Blue background */
+.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns:nth-child(even) {
+	background-color: var(--brand-light-greyish-blue) !important;
+	/* Dark green text provides the best contrast/readability on the light background */
+	color: var(--brand-dark-blue);
+}
+
+/* Fix for the Italicizing selector */
+/* Your previous selector used [class*="meeting-topics-table-row-"].
+   Since your data rows use "data-row-", we'll broaden this to "meeting-topics-table-"
+   so the italics apply correctly to _all accordion item rows_.
+
+   Targets the second column of DATA rows only.
+   By including "-data-", we automatically exclude the "header-row".
+*/
+.wp-block-coblocks-accordion.accordion-meeting-topics .meeting-topics-table-group div[class*="meeting-topics-table-data-row-"] .wp-block-column:nth-child(2) p {
+	font-style: italic !important;
+}
+
+/* Clean up paragraph spacing inside the table */
+.accordion-meeting-topics .meeting-topics-table-group p {
+	margin: 0 !important;
+}
+
+/* Adjust Column Widths to prevent text wrapping (e.g., "September") */
+
+/* Target the Month Column (1st child) */
+.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns > .wp-block-column:nth-child(1) {
+	flex-basis: 20% !important;
+}
+
+/* Target the Meeting Topic Column (2nd child) to compensate */
+.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns > .wp-block-column:nth-child(2) {
+	flex-basis: 45% !important;
+}
+
+/* Vertically center the content in the header row */
+.wp-block-columns.meeting-topics-table-header-row {
+	align-items: center !important;
+}
+
+/* Ensure paragraphs inside the header don't have bottom margins
+   that would push the text off-center */
+.meeting-topics-table-header-row .wp-block-column p {
+	margin-bottom: 0 !important;
+	margin-top: 0 !important;
+}
+
+/* --- Mobile Accordion Table Adjustments (Table-to-List) --- */
+
+@media (max-width: 37.5rem) {
+	/* 1. Hide the horizontal header row */
+	.meeting-topics-table-header-row {
+		display: none !important;
+	}
+
+	/* 2. Force rows to stack vertically into "cards" */
+	.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns {
+		flex-direction: column !important;
+		padding: 0.75rem 1.25rem !important; /* Reduced card padding */
+	}
+
+	/* 3. Reduce space between Month, Topic, and Presenter columns */
+	.accordion-meeting-topics .meeting-topics-table-group .wp-block-column {
+		flex-basis: 100% !important;
+		width: 100% !important;
+		margin-bottom: 0.16rem !important; /* Reduced vertical gap between fields */
+	}
+
+	.accordion-meeting-topics .meeting-topics-table-group .wp-block-column:last-child {
+		margin-bottom: 0 !important;
+	}
+
+	/* 4. SHARED STYLING for all labels (Tightens the relationship) */
+	.meeting-topics-table-group div[class*="meeting-topics-table-data-row-"] .wp-block-column:before {
+		font-weight: bold;
+		font-size: 0.85rem;
+		opacity: 0.8;
+		display: block;
+		line-height: 1.1rem;
+		margin-bottom: 0.05rem; /* Tiny gap before the content */
+		text-transform: uppercase;
+	}
+
+	/* 5. SPECIFIC TEXT for each label */
+	.meeting-topics-table-group div[class*="meeting-topics-table-data-row-"] .wp-block-column:nth-child(1):before {
+		content: "MONTH: ";
+	}
+
+	.meeting-topics-table-group div[class*="meeting-topics-table-data-row-"] .wp-block-column:nth-child(2):before {
+		content: "MEETING TOPIC: ";
+	}
+
+	.meeting-topics-table-group div[class*="meeting-topics-table-data-row-"] .wp-block-column:nth-child(3):before {
+		content: "PRESENTER: ";
+	}
+
+	/* 6. PARAGRAPH RESET (Eliminates hidden theme spacing) */
+	.accordion-meeting-topics .meeting-topics-table-group .wp-block-column p {
+		margin: 0 !important;
+		line-height: 1.3 !important;
+	}
+}
+
+/* --- INTERMEDIATE (Tablet Portrait): 37.5625rem to 45rem (601px - 720px) --- */
+/* This specifically targets your 712px (44.5rem) viewport */
+@media (min-width: 37.5625rem) and (max-width: 45rem) {
+
+	/* Ensure the header row is visible */
+	.meeting-topics-table-header-row {
+		display: flex !important;
+	}
+
+	/* Month Column: Maintain at 20% */
+	.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns > .wp-block-column:nth-child(1) {
+		flex-basis: 20% !important;
+	}
+
+	/* Meeting Topic: Shrink to 35% to make room */
+	.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns > .wp-block-column:nth-child(2) {
+		flex-basis: 35% !important;
+	}
+
+	/* Presenter: Increase to 45% to prevent wrapping */
+	.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns > .wp-block-column:nth-child(3) {
+		flex-basis: 45% !important;
+	}
+}
+
+
+/* --- DESKTOP: 45.0625rem and up (721px+) --- */
+@media (min-width: 45.0625rem) {
+	/* Standard widths for larger screens */
+	.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns > .wp-block-column:nth-child(1) {
+		flex-basis: 20% !important;
+	}
+	.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns > .wp-block-column:nth-child(2) {
+		flex-basis: 45% !important;
+	}
+	.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns > .wp-block-column:nth-child(3) {
+		flex-basis: 35% !important;
+	}
+}
