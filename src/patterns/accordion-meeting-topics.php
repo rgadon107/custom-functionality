@@ -7,14 +7,13 @@
  * Keywords: featured, accordion, meeting topics, past meeting topics
  * Viewport Width: 800
  */
-?>
-<!-- wp:coblocks/accordion {"className":"accordion-meeting-topics","metadata":{"name":"Accordion - Meeting Topics"}} -->
+?><!-- wp:coblocks/accordion {"templateLock":"contentOnly","className":"accordion-meeting-topics","metadata":{"name":"Accordion - Meeting Topics"}} -->
 <div class="wp-block-coblocks-accordion accordion-meeting-topics">
 
-	<!-- wp:coblocks/accordion-item { "placeholder": "{YYYY} (Optional:) Current Year Events", "className": "accordion-item-meeting-topics-label", "metadata": { "name": "Accordion Item - Meeting Topics Label" } } -->
+	<!-- wp:coblocks/accordion-item {"placeholder":"{YYYY} (Optional:) Current Year Events","className":"accordion-item-meeting-topics-label","metadata":{"name": "Accordion Item - Meeting Topics Label"} } -->
 	<div class="wp-block-coblocks-accordion-item accordion-item-meeting-topics-label">
 
-		<!-- wp:group { "templateLock": "contentOnly", "metadata": { "name": "Meeting Topics Table Group" }, "className": "meeting-topics-table-group", "layout": { "type": "constrained" } } -->
+		<!-- wp:group {"metadata":{"name":"Meeting Topics Table Group"}, "className": "meeting-topics-table-group", "layout": {"type": "constrained"} } -->
 		<div class="wp-block-group meeting-topics-table-group">
 
 			<!-- wp:columns {"metadata":{"name":"Accordion Table Header Row"},"className":"meeting-topics-table-header-row"} -->
@@ -43,18 +42,18 @@
 			<div class="wp-block-columns meeting-topics-table-data-row-1">
 				<!-- wp:column {"width":"15%","metadata":{"name":"Topic Row 1 - Month"}} -->
 				<div class="wp-block-column" style="flex-basis:15%">
-					<!-- wp:paragraph { "placeholder": "Enter month", "metadata": { "name": "Field Row 1 - Month" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter month", "metadata": {"name": "Field Row 1 - Month"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div>
 				<!-- /wp:column -->
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 1 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
-					<!-- wp:paragraph { "placeholder": "Enter topic", "metadata": { "name": "Field Row 1 - Event Topic" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter topic", "metadata": {"name": "Field Row 1 - Event Topic"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 1 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
-					<!-- wp:paragraph { "placeholder": "Enter presenter's name", "metadata": { "name": "Field Row 1 - Presenter" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter presenter's name", "metadata": {"name": "Field Row 1 - Presenter"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 			</div>
@@ -64,18 +63,18 @@
 			<div class="wp-block-columns meeting-topics-table-data-row-2">
 				<!-- wp:column {"width":"15%","metadata":{"name":"Topic Row 2 - Month"}} -->
 				<div class="wp-block-column" style="flex-basis:15%">
-					<!-- wp:paragraph { "placeholder": "Enter month", "metadata": { "name": "Field Row 2 - Month" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter month", "metadata": {"name": "Field Row 2 - Month"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div>
 				<!-- /wp:column -->
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 2 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
-					<!-- wp:paragraph { "placeholder": "Enter topic", "metadata": { "name": "Field Row 2 - Event Topic" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter topic", "metadata": {"name": "Field Row 2 - Event Topic"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 2 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
-					<!-- wp:paragraph { "placeholder": "Enter presenter's name", "metadata": { "name": "Field Row 2 - Presenter" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter presenter's name", "metadata": {"name": "Field Row 2 - Presenter"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 			</div>
@@ -85,18 +84,18 @@
 			<div class="wp-block-columns meeting-topics-table-data-row-3">
 				<!-- wp:column {"width":"15%","metadata":{"name":"Topic Row 3 - Month"}} -->
 				<div class="wp-block-column" style="flex-basis:15%">
-					<!-- wp:paragraph { "placeholder": "Enter month", "metadata": { "name": "Field Row 3 - Month" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter month", "metadata": {"name": "Field Row 3 - Month"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div>
 				<!-- /wp:column -->
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 3 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
-					<!-- wp:paragraph { "placeholder": "Enter topic", "metadata": { "name": "Field Row 3 - Event Topic" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter topic", "metadata": {"name": "Field Row 3 - Event Topic"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 3 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
-					<!-- wp:paragraph { "placeholder": "Enter presenter's name", "metadata": { "name": "Field Row 3 - Presenter" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter presenter's name", "metadata": {"name": "Field Row 3 - Presenter"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 			</div>
@@ -106,18 +105,18 @@
 			<div class="wp-block-columns meeting-topics-table-data-row-4">
 				<!-- wp:column {"width":"15%","metadata":{"name":"Topic Row 4 - Month"}} -->
 				<div class="wp-block-column" style="flex-basis:15%">
-					<!-- wp:paragraph { "placeholder": "Enter month", "metadata": { "name": "Field Row 4 - Month" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter month", "metadata": {"name": "Field Row 4 - Month"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div>
 				<!-- /wp:column -->
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 4 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
-					<!-- wp:paragraph { "placeholder": "Enter topic", "metadata": { "name": "Field Row 4 - Event Topic" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter topic", "metadata": {"name": "Field Row 4 - Event Topic"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 4 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
-					<!-- wp:paragraph { "placeholder": "Enter presenter's name", "metadata": { "name": "Field Row 4 - Presenter" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter presenter's name", "metadata": {"name": "Field Row 4 - Presenter"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 			</div>
@@ -127,18 +126,18 @@
 			<div class="wp-block-columns meeting-topics-table-data-row-5">
 				<!-- wp:column {"width":"15%","metadata":{"name":"Topic Row 5 - Month"}} -->
 				<div class="wp-block-column" style="flex-basis:15%">
-					<!-- wp:paragraph { "placeholder": "Enter month", "metadata": { "name": "Field Row 5 - Month" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter month", "metadata": {"name": "Field Row 5 - Month"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div>
 				<!-- /wp:column -->
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 5 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
-					<!-- wp:paragraph { "placeholder": "Enter topic", "metadata": { "name": "Field Row 5 - Event Topic" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter topic", "metadata": {"name": "Field Row 5 - Event Topic"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 5 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
-					<!-- wp:paragraph { "placeholder": "Enter presenter's name", "metadata": { "name": "Field Row 5 - Presenter" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter presenter's name", "metadata": {"name": "Field Row 5 - Presenter"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 			</div>
@@ -148,18 +147,18 @@
 			<div class="wp-block-columns meeting-topics-table-data-row-6">
 				<!-- wp:column {"width":"15%","metadata":{"name":"Topic Row 6 - Month"}} -->
 				<div class="wp-block-column" style="flex-basis:15%">
-					<!-- wp:paragraph { "placeholder": "Enter month", "metadata": { "name": "Field Row 6 - Month" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter month", "metadata": {"name": "Field Row 6 - Month"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div>
 				<!-- /wp:column -->
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 6 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
-					<!-- wp:paragraph { "placeholder": "Enter topic", "metadata": { "name": "Field Row 6 - Event Topic" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter topic", "metadata": {"name": "Field Row 6 - Event Topic"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 6 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
-					<!-- wp:paragraph { "placeholder": "Enter presenter's name", "metadata": { "name": "Field Row 6 - Presenter" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter presenter's name", "metadata": {"name": "Field Row 6 - Presenter"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 			</div>
@@ -169,18 +168,18 @@
 			<div class="wp-block-columns meeting-topics-table-data-row-7">
 				<!-- wp:column {"width":"15%","metadata":{"name":"Topic Row 7 - Month"}} -->
 				<div class="wp-block-column" style="flex-basis:15%">
-					<!-- wp:paragraph { "placeholder": "Enter month", "metadata": { "name": "Field Row 7 - Month" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter month", "metadata": {"name": "Field Row 7 - Month"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div>
 				<!-- /wp:column -->
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 7 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
-					<!-- wp:paragraph { "placeholder": "Enter topic", "metadata": { "name": "Field Row 7 - Event Topic" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter topic", "metadata": {"name": "Field Row 7 - Event Topic"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 7 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
-					<!-- wp:paragraph { "placeholder": "Enter presenter's name", "metadata": { "name": "Field Row 7 - Presenter" } } -->
+					<!-- wp:paragraph {"placeholder": "Enter presenter's name", "metadata": {"name": "Field Row 7 - Presenter"} } -->
 					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 			</div>
