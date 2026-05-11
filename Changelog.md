@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 ### Fixed
 
 ### Corrections
+- `/assets/styles/coblocks-accordion-styles.css`: In version `1.8.0`, changed the file name from `/coblocks-accordion-fix.css` to `/coblocks-accordion-styles.css`.
 
 ## [Version 1.8.0 - 2026-05-10](https://github.com/rgadon107/custom-functionality/pull/13)
 ### Added
