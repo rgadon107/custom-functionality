@@ -189,15 +189,19 @@
 			<div class="wp-block-columns meeting-topics-table-data-row-8">
 				<!-- wp:column {"width":"15%","metadata":{"name":"Topic Row 8 - Month"}} -->
 				<div class="wp-block-column" style="flex-basis:15%">
-					<!-- wp:paragraph {"metadata":{"name":"Field Row 8 - Month"}} --><p></p><!-- /wp:paragraph --></div>
+					<!-- wp:paragraph {"placeholder": "Enter month", "metadata": {"name": "Field Row 8 - Month"} } -->
+					<p></p><!-- /wp:paragraph -->
+				</div>
 				<!-- /wp:column -->
 				<!-- wp:column {"width":"50%","metadata":{"name":"Topic Row 8 - Event Topic"}} -->
 				<div class="wp-block-column" style="flex-basis:50%">
-					<!-- wp:paragraph {"metadata":{"name":"Field Row 8 - Event Topic"}} --><p></p><!-- /wp:paragraph -->
+					<!-- wp:paragraph {"placeholder": "Enter topic", "metadata": {"name": "Field Row 8 - Event Topic"} } -->
+					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 				<!-- wp:column {"width":"35%","metadata":{"name":"Topic Row 8 - Presenter"}} -->
 				<div class="wp-block-column" style="flex-basis:35%">
-					<!-- wp:paragraph {"metadata":{"name":"Field Row 8 - Presenter"}} --><p></p><!-- /wp:paragraph -->
+					<!-- wp:paragraph {"placeholder": "Enter presenter's name", "metadata": {"name": "Field Row 8 - Presenter"} } -->
+					<p></p><!-- /wp:paragraph -->
 				</div><!-- /wp:column -->
 			</div>
 			<!-- /wp:columns -->
