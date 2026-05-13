@@ -5,15 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased Version 1.9.0 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/14)
+## [Unreleased Version 1.8.1 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/14)
 ### Added
+- `/.editorconfig`: Configured editor settings for `/src/patterns/*.php` to not add a newline at the end of each file.
+  - This will prevent the appearance of a 'Classic' block before the insertion of a registered block in the editor.
 
 ### Changed
 
 ### Fixed
+- `/src/patterns/accordion-meeting-topics.php`: Eliminated newline at the end of file with new setting in `.editorconfig`.
 
 ### Corrections
 - `/assets/styles/coblocks-accordion-styles.css`: In version `1.8.0`, changed the file name from `/coblocks-accordion-fix.css` to `/coblocks-accordion-styles.css`.
+- `/Changelog.md`: Fix reference in version 1.3.0 release notes to `/src/hooks.php`.
 
 ## [Version 1.8.0 - 2026-05-10](https://github.com/rgadon107/custom-functionality/pull/13)
 ### Added
@@ -125,7 +129,7 @@ All Ninja Forms used on the `gardenclubmpls.org` website will now be filtered be
 
 ## [Version 1.3 - 2026-04-16](https://github.com/rgadon107/custom-functionality/pull/4)
 ### Added
-- `/src/hoops.php` - Filter `http_request_args` to handle latent responses from Constant Contact during household membership applications.
+- `/src/hooks.php` - Filter `http_request_args` to handle latent responses from Constant Contact during household membership applications.
 
 ### Fixed
 - Extend the maximum duration of an http request to Constant Contact to register email addresses for new household memberships.
