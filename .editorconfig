@@ -19,3 +19,7 @@ indent_size = 2
 
 [{*.txt}]
 end_of_line = crlf
+
+# Override: Disable final newline for block patterns to prevent the appearance of 'Classic' blocks in the editor.
+[src/patterns/*.php]
+insert_final_newline = false
