@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 ### Fixed
 - `/src/patterns/accordion-meeting-topics.php`: Eliminated newline at the end of file with new setting in `.editorconfig`.
+- `/src/patterns/message-after-registration-stop.php` & `/src/patterns/message-before-registration-start.php`: Eliminated leading whitespace before delimiters and newline at end of each file.
 
 ### Corrections
 - `/assets/styles/coblocks-accordion-styles.css`: In version `1.8.0`, changed the file name from `/coblocks-accordion-fix.css` to `/coblocks-accordion-styles.css`.
