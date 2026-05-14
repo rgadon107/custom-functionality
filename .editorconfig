@@ -20,6 +20,16 @@ indent_size = 2
 [{*.txt}]
 end_of_line = crlf
 
-# Override: Disable final newline for block patterns to prevent the appearance of 'Classic' blocks in the editor.
+# Target only the design pattern files
+# Override: Disable final newline for block patterns, and prevent HTML and delimiters from indenting markup.
+# This will help the WP parser read the file and clear the display of 'Classic' in the editor before the pattern insertion point.
 [src/patterns/*.php]
 insert_final_newline = false
+indent_size = 0
+indent_style = space
+
+# JetBrains-specific overrides for PHPStorm
+ij_php_indent_size = 0
+ij_html_indent_size = 0
+ij_html_align_attributes = false
+ij_html_do_not_indent_children_of = html,body,div,section,article

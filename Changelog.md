@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased Version 1.8.1 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/14)
 ### Added
-- `/.editorconfig`: Configured editor settings for `/src/patterns/*.php` to not add a newline at the end of each file.
-  - This will prevent the appearance of a 'Classic' block before the insertion of a registered block in the editor.
+- `/.editorconfig`: Configured editor settings targeting design pattern files and PHPStorm-specific settings.
+  - Eliminate newlines at the end of files, and markup indentation.
+  - This will allow the WP parser to read the file and not insert `Classic` before patterns inserted into the editor.
 
 ### Changed
 
