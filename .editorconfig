@@ -13,11 +13,11 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 indent_style = tab
 
-[{.jshintrc,*.yml}]
-indent_style = space
-indent_size = 2
+# [{.jshintrc,*.yml}]
+# indent_style = space
+# indent_size = 2
 
-[{*.txt}]
+[*.txt]
 end_of_line = crlf
 
 # Target only the design pattern files
@@ -31,5 +31,4 @@ indent_style = space
 # JetBrains-specific overrides for PHPStorm
 ij_php_indent_size = 0
 ij_html_indent_size = 0
-ij_html_align_attributes = false
-ij_html_do_not_indent_children_of = html,body,div,section,article
+ij_visual_guides = none
