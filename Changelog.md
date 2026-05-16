@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased Version 1.8.1 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/14)
+## [Unreleased Version 1.8.1 - 2026-05-16](https://github.com/rgadon107/custom-functionality/pull/14)
 ### Added
 - `/.editorconfig`: Configured editor settings targeting design pattern files and PHPStorm-specific settings.
   - Eliminate newlines at the end of files, and markup indentation.
@@ -18,12 +18,14 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - `message-after-registration-stop.php`; and
   - `message-before-registration-start.php`.
 - Modified IDE settings to target design pattern files.
+- `/bootstrap.php`: Plugin version bump to `1.8.1`.
 
 ### Fixed
 - Eliminated leading whitespace before delimiters and newline at end of each file.
   - `accordion-meeting-topics.php`;
   - `message-after-registration-stop.php`; and
   - `message-before-registration-start.php`.
+- `/assets/styles/coblocks-accordion-styles.css`: Fix color contrast of link in accordion table row.
 
 ### Corrections
 - `/assets/styles/coblocks-accordion-styles.css`: In version `1.8.0`, changed the file name from `/coblocks-accordion-fix.css` to `/coblocks-accordion-styles.css`.
