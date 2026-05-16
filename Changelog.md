@@ -12,10 +12,18 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - This will allow the WP parser to read the file and not insert `Classic` before patterns inserted into the editor.
 
 ### Changed
+- `/includes/patterns/pattern-loader.php`: Added filter to `register_plugin_block_patterns()` to exclude pattern file docblock from being parsed by the WP parser.
+- Minified delimiters and HTML in design pattern files.
+  - `accordion-meeting-topics.php`;
+  - `message-after-registration-stop.php`; and
+  - `message-before-registration-start.php`.
+- Modified IDE settings to target design pattern files.
 
 ### Fixed
-- `/src/patterns/accordion-meeting-topics.php`: Eliminated newline at the end of file with new setting in `.editorconfig`.
-- `/src/patterns/message-after-registration-stop.php` & `/src/patterns/message-before-registration-start.php`: Eliminated leading whitespace before delimiters and newline at end of each file.
+- Eliminated leading whitespace before delimiters and newline at end of each file.
+  - `accordion-meeting-topics.php`;
+  - `message-after-registration-stop.php`; and
+  - `message-before-registration-start.php`.
 
 ### Corrections
 - `/assets/styles/coblocks-accordion-styles.css`: In version `1.8.0`, changed the file name from `/coblocks-accordion-fix.css` to `/coblocks-accordion-styles.css`.
