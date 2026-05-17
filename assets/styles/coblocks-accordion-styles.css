@@ -90,12 +90,13 @@
 */
 .accordion-meeting-topics .meeting-topics-table-group .wp-block-columns:nth-child(even) a {
 	color: var(--brand-dark-blue) !important;
-	font-weight: bold;
 }
 
 .accordion-meeting-topics .meeting-topics-table-group .wp-block-columns:nth-child(even) a:hover {
-	color: var(--brand-soft-orange) !important;
-
+	color: var(--brand-dark-blue) !important;
+	text-decoration: underline var(--brand-dark-blue) 2px !important;
+	text-underline-offset: 0.1em;
+	/*font-weight: bold;*/
 }
 
 /* --- Meeting Topics Table Zebra-Striping --- */
@@ -107,7 +108,8 @@
 	padding: 12px 20px; /* Adds padding so background color doesn't hug the text */
 }
 
-.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns > .wp-block-column:nth-child(2) p {
+.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns > .wp-block-column:nth-child(2) p,
+.accordion-meeting-topics .meeting-topics-table-group .wp-block-columns > .wp-block-column:nth-child(3) p	{
 	line-height: 1.5rem !important;
 }
 

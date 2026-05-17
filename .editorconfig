@@ -13,9 +13,22 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 indent_style = tab
 
-[{.jshintrc,*.yml}]
-indent_style = space
-indent_size = 2
+# [{.jshintrc,*.yml}]
+# indent_style = space
+# indent_size = 2
 
-[{*.txt}]
+[*.txt]
 end_of_line = crlf
+
+# Target only the design pattern files
+# Override: Disable final newline for block patterns, and prevent HTML and delimiters from indenting markup.
+# This will help the WP parser read the file and clear the display of 'Classic' in the editor before the pattern insertion point.
+[src/patterns/*.php]
+insert_final_newline = false
+indent_size = 0
+indent_style = space
+
+# JetBrains-specific overrides for PHPStorm
+ij_php_indent_size = 0
+ij_html_indent_size = 0
+ij_visual_guides = none

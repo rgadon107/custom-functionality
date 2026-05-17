@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 1.8.1 - 2026-05-16](https://github.com/rgadon107/custom-functionality/pull/14)
+### Added
+- `/.editorconfig`: Configured editor settings targeting design pattern files and PHPStorm-specific settings.
+  - Eliminate newlines at the end of files, and markup indentation.
+  - This will allow the WP parser to read the file and not insert `Classic` before patterns inserted into the editor.
+
+### Changed
+- `/includes/patterns/pattern-loader.php`: Added filter to `register_plugin_block_patterns()` to exclude pattern file docblock from being parsed by the WP parser.
+- Minified delimiters and HTML in design pattern files.
+  - `accordion-meeting-topics.php`;
+  - `message-after-registration-stop.php`; and
+  - `message-before-registration-start.php`.
+- Modified IDE settings to target design pattern files.
+- `/bootstrap.php`: Plugin version bump to `1.8.1`.
+
+### Fixed
+- Eliminated leading whitespace before delimiters and newline at end of each file.
+  - `accordion-meeting-topics.php`;
+  - `message-after-registration-stop.php`; and
+  - `message-before-registration-start.php`.
+- `/assets/styles/coblocks-accordion-styles.css`: Fix color contrast of link in accordion table row.
+
+### Corrections
+- `/assets/styles/coblocks-accordion-styles.css`: In version `1.8.0`, changed the file name from `/coblocks-accordion-fix.css` to `/coblocks-accordion-styles.css`.
+- `/Changelog.md`: Fix reference in version 1.3.0 release notes to `/src/hooks.php`.
+
 ## [Version 1.8.0 - 2026-05-10](https://github.com/rgadon107/custom-functionality/pull/13)
 ### Added
 - `/includes/patterns/`: Added directory to manage logic to register design patterns with WordPress.
@@ -115,7 +141,7 @@ All Ninja Forms used on the `gardenclubmpls.org` website will now be filtered be
 
 ## [Version 1.3 - 2026-04-16](https://github.com/rgadon107/custom-functionality/pull/4)
 ### Added
-- `/src/hoops.php` - Filter `http_request_args` to handle latent responses from Constant Contact during household membership applications.
+- `/src/hooks.php` - Filter `http_request_args` to handle latent responses from Constant Contact during household membership applications.
 
 ### Fixed
 - Extend the maximum duration of an http request to Constant Contact to register email addresses for new household memberships.
