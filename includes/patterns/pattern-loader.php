@@ -67,7 +67,7 @@ function load_and_register_pattern( string $file ): void {
 		return;
 	}
 
-	$content = file_get_contents( $full_path );
+	$entire_file_contents = file_get_contents( $full_path );
 
 	/**
 	 * Set initial values for the $title and $categories variables. If the regular expression does not find a value for
@@ -78,15 +78,29 @@ function load_and_register_pattern( string $file ): void {
 	$categories = [ 'text' ];
 
 	// Parse the 'Title' header from the file
-	if ( preg_match( '/Title:\s*(.*)$/mi', $content, $matches ) ) {
+	if ( preg_match( '/Title:\s*(.*)$/mi', $entire_file_contents , $matches ) ) {
 		$title = trim($matches[1]);
 	}
 
 	// Parse the 'Categories' header (comma-separated string to array)
-	if ( preg_match( '/Categories:\s*(.*)$/mi', $content, $matches ) ) {
+	if ( preg_match( '/Categories:\s*(.*)$/mi', $entire_file_contents, $matches ) ) {
 		// Convert "text, featured, gcm" into ['text', 'featured', 'gcm']
 		$categories = array_map( 'trim', explode( ',', $matches[1] ) );
 	}
+
+	/**
+	 * Strips all content preceding the closing PHP tag.
+	 *
+	 * This searches for the first occurrence of the block delimiter `<!-- wp:`
+	 * to ensure only valid block markup is registered.
+	 */
+    $block_start_pos = strpos( $entire_file_contents, '<!-- wp:' );
+
+    if ( $block_start_pos !== false ) {
+        $filtered_file_contents = substr( $entire_file_contents, $block_start_pos );
+    } else {
+        $filtered_file_contents = $entire_file_contents;
+    }
 
 	/**
 	 * Derive the slug from the filename (e.g., 'hero-header').
@@ -103,7 +117,7 @@ function load_and_register_pattern( string $file ): void {
 		[
 			'title'   		=> $title,
 			'categories'	=> $categories,
-			'content' 		=> $content,
+			'content' 		=> $filtered_file_contents,
 		]
 	);
 }
