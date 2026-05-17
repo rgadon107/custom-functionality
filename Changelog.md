@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased Version 1.8.1 - 2026-05-16](https://github.com/rgadon107/custom-functionality/pull/14)
+## [Version 1.8.1 - 2026-05-16](https://github.com/rgadon107/custom-functionality/pull/14)
 ### Added
 - `/.editorconfig`: Configured editor settings targeting design pattern files and PHPStorm-specific settings.
   - Eliminate newlines at the end of files, and markup indentation.
