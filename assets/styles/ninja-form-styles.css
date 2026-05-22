@@ -33,3 +33,16 @@
 	margin-right: 0 !important;
 	display: block !important;
 }
+
+/* Target links in a Ninja Forms success message. */
+.ninja-forms-form-wrap .nf-response-msg a {
+	color: var(--brand-green-dark);
+	text-decoration: underline var(--brand-green-dark) 1px;
+	text-underline-offset: 4px;
+}
+
+.ninja-forms-form-wrap .nf-response-msg a:hover,
+.ninja-forms-form-wrap .nf-response-msg a:focus	{
+	color: var(--brand-green-dark);
+	text-decoration: underline var(--brand-green-dark) 2px;
+}
