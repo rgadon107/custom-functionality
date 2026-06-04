@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Version 1.8.3 - 2026-06-04](https://github.com/rgadon107/custom-functionality/pull/16)
+## [Version 1.8.3 - 2026-06-04](https://github.com/rgadon107/custom-functionality/pull/15)
 
 This plugin update introduces a drop-down menu of counties on the membership application form. This feature was added to prevent browsers from automatically passing in a string of 'MN' or 'Mn' in place of the actual county name. If the option 'None of These' is selected, conditionally display a single line text field to capture the name of the county.
 ### Added
@@ -17,8 +17,9 @@ This plugin update introduces a drop-down menu of counties on the membership app
 ### Fixed
 - Forced Ninja Forms to acknowledge and store the name of a county outside the Minneapolis - St. Paul metro area when a value of 'none_of_these' was selected in the 'County' field.
 - `/src/integrations/ninja-forms.php`: Fixed version number in docblock of `function standardize_location_data()`.
+- `/Changelog.md`: Update pull request number.
 
-## [Version 1.8.2 - 2026-05-21](https://github.com/rgadon107/custom-functionality/pull/15)
+## Version 1.8.2 - 2026-05-21
 ### Added
 - `/assets/styles/ninja-form-styles.css`: Added styles to target links in a Ninja Forms success message. These styles override the parent theme link styles.
 - `/bootstrap.php`: Plugin version bump to `1.8.2`.
