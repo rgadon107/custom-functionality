@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-add_filter('ninja_forms_submit_data', __NAMESPACE__ .'\\cleanup_form_submission_data');
+add_filter('ninja_forms_submit_data', __NAMESPACE__ .'\\cleanup_form_submission_data', 999);
 /**
  * Ninja Forms Integration - Form Data Cleanup
  *
@@ -26,6 +26,7 @@ add_filter('ninja_forms_submit_data', __NAMESPACE__ .'\\cleanup_form_submission_
  * @since 	1.7.0	Filter field keys that contain the terms `name`, and `email`.
  * @since	1.7.2	Filter field keys that contain the terms `zip`, `address`, `city`, and `county`.
  * @since	1.7.3	Filter field keys that contain the term `phone`.
+ * @since 	1.8.3	Added data integrity enforcement when the 'county' field returns a value of 'none_of_these'.
  *
  * @param 	array $form_data The original form submission data.
  * @return 	array $form_data The sanitized form submission data returned on submit.
@@ -38,45 +39,59 @@ function cleanup_form_submission_data(array $form_data): array	{
 
 	foreach ( $form_data['fields'] as $id => $field ) {
 
-		$value 	= $field['value'] ?? '';
-		$key 	= strtolower( $field['key'] ?? '' );
+		$key_input 	=  $field['key'] ?? '';
+		if ( !is_string( $key_input ) ) {
+			continue;
+		}
+		$key_lowercase = strtolower( $key_input );
 
-		// Ensure we only touch strings
-		if ( !is_string($value) || empty($value) ) {
+		$value_input 	= $field['value'] ?? '';
+		if ( !is_string( $value_input  ) || empty( $value_input ) ) {
 			continue;
 		}
 
+		// Data Integrity Enforcement: If applicant submits a county outside the MSP metro area, force the dropdown to match.
+		if ( str_contains( $key_lowercase, 'county_outside_msp_metro' ) ) {
+			// Find the companion dropdown field in the payload and ensure its value matches the logic
+			foreach ( $form_data['fields'] as $search_id => $search_field ) {
+				if ( str_contains( strtolower( $search_field['key'] ?? '' ), 'county_1780529684228' ) ) {
+					$form_data['fields'][$search_id]['value'] = 'none_of_these';
+					break;
+				}
+			}
+		}
+
 		// Universal Trim (Remove standard spaces, tabs, and non-breaking spaces.)
-		$value = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u', '', $value);
+		$value_trimmed = preg_replace('/^[\pZ\pC]+|[\pZ\pC]+$/u', '', $value_input );
 
 		// Sorting Machine using PHP 8 `match` expression
-		$value = match ( true ) {
+		$value_trimmed = match ( true ) {
 			// Names: Title Case 'name' fields
-			str_contains( $key, 'name' )    => ucwords( mb_strtolower( $value ), " \t\r\n\f\v-'" ),
+			str_contains($key_lowercase, 'name') => ucwords(mb_strtolower($value_trimmed), " \t\r\n\f\v-'"),
 
 			// Emails: Lowercase 'email' field(s)
-			str_contains( $key, 'email' )   => mb_strtolower( $value ),
+			str_contains($key_lowercase, 'email') => mb_strtolower($value_trimmed),
 
 			// Zip Codes: Truncate to first 5 characters for Zapier compatibility
-			str_contains( $key, 'zip' )     => substr( $value, 0, 5 ),
+			str_contains($key_lowercase, 'zip') => substr($value_trimmed, 0, 5),
 
 			/**
 			 * Phone Numbers: Strip the '+1 ' prefix (indices 0, 1, 2)
 			 * Returns (XXX) XXX-XXXX
 			 */
-			str_contains( $key, 'phone' )   => substr( $value, 3, 16 ),
+			str_contains($key_lowercase, 'phone') => substr($value_trimmed, 3, 16),
 
 			// Render full address street abbreviations; title case 'city' and 'county' fields
-			str_contains( $key, 'address' ) ||
-			str_contains( $key, 'city' )    ||
-			str_contains( $key, 'county' )  => standardize_location_data( $value, $key ),
+			str_contains($key_lowercase, 'address') ||
+			str_contains($key_lowercase, 'city') ||
+			str_contains($key_lowercase, 'county') => standardize_location_data($value_trimmed, $key_lowercase),
 
-			// Default: If match returns false, leave $value unchanged
-			default                         => $value,
+			// Default: If match returns false, leave $value_trimmed unchanged
+			default => $value_trimmed,
 		};
 
 		// Update the array
-		$form_data['fields'][$id]['value'] = $value;
+		$form_data['fields'][$id]['value'] = $value_trimmed;
 	}
 
 	return $form_data;
@@ -85,7 +100,7 @@ function cleanup_form_submission_data(array $form_data): array	{
 /**
  * Specialized helper function to filter address, city, and county fields.
  *
- * @since 1.0.8
+ * @since 1.7.2
  *
  * @param string $value The value to be filtered.
  * @param string $key The field key.
