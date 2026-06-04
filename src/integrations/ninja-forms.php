@@ -100,7 +100,7 @@ function cleanup_form_submission_data(array $form_data): array	{
 /**
  * Specialized helper function to filter address, city, and county fields.
  *
- * @since 1.0.8
+ * @since 1.7.2
  *
  * @param string $value The value to be filtered.
  * @param string $key The field key.

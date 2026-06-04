@@ -16,6 +16,7 @@ This plugin update introduces a drop-down menu of counties on the membership app
 
 ### Fixed
 - Forced Ninja Forms to acknowledge and store the name of a county outside the Minneapolis - St. Paul metro area when a value of 'none_of_these' was selected in the 'County' field.
+- `/src/integrations/ninja-forms.php`: Fixed version number in docblock of `function standardize_location_data()`.
 
 ## [Version 1.8.2 - 2026-05-21](https://github.com/rgadon107/custom-functionality/pull/15)
 ### Added
