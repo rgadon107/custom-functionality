@@ -167,3 +167,24 @@ function standardize_location_data( string $value, string $key ): string {
 
 	return $value;
 }
+
+add_filter( 'ninja_forms_stripe_checkout_session_args', __NAMESPACE__ .'\\shorten_stripe_checkout_session_expiration', 10, 2 );
+/**
+ * Shorten the Stripe checkout session expiration time for all Ninja Forms submissions.
+ *
+ * Stripe requires 'expires_at' to be a future Unix timestamp (in seconds).
+ * The absolute minimum allowed by the Stripe API is 1800 s (30 min) from right now.
+ *
+ * @since 1.9.0	Filter the `expires_at` argument sent to Stripe.
+ *
+ * @param array $session_parameters The unfiltered payload arguments sent to Stripe to create the checkout page.
+ * @param array $form_data The full array payload containing the source Ninja Form ID and field metrics.
+ *
+ * @return array The filtered payload argument `expires_at` sent to Stripe when it creates the checkout page.
+ */
+function shorten_stripe_checkout_session_expiration( array $session_parameters, array $form_data ): array {
+
+	$session_parameters['expires_at'] = time() + 1800;
+
+	return $session_parameters;
+}
