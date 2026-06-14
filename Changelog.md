@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 1.9.0 - 2026-06-13](https://github.com/rgadon107/custom-functionality/pull/16)
+### Added
+- `/src/integrations/ninja-forms.php`: Registered callback to Ninja Forms filter 'ninja_forms_stripe_checkout_session_args' to shorten the Stripe checkout session expiration time for all Ninja Forms submissions involving payment.
+
+### Change
+- `/bootstrap.php`: Plugin version bump to `1.9.0`.
+
 ## [Version 1.8.3 - 2026-06-04](https://github.com/rgadon107/custom-functionality/pull/15)
 
 This plugin update introduces a drop-down menu of counties on the membership application form. This feature was added to prevent browsers from automatically passing in a string of 'MN' or 'Mn' in place of the actual county name. If the option 'None of These' is selected, conditionally display a single line text field to capture the name of the county.
