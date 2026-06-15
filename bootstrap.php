@@ -138,11 +138,9 @@ function autoload_files(): void	{
 	 * @return   void
 	 */
 	function load_ninja_forms_integration(): void	{
-		if ( class_exists( 'Ninja_Forms' ) ) {
-			$integration = _get_plugin_directory() . '/src/integrations/ninja-forms.php';
-			if ( file_exists( $integration ) ) {
-				require_once $integration;
-			}
+		$integration = _get_plugin_directory() . '/src/integrations/ninja-forms.php';
+		if ( file_exists( $integration ) ) {
+			require $integration;
 		}
 	}
 }
