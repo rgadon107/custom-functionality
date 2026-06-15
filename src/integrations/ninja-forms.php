@@ -12,10 +12,6 @@
 
 namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source\Integrations;
 
-// START
-error_log( '!!! SECURITY CHECK: NINJA FORMS FILE WAS OPENED BY THE SERVER !!!' );
-// STOP
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
