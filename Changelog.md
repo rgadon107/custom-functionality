@@ -5,13 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased Version 2.0.0 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/17)
+## [Version 2.0.0 - 2026-06-15](https://github.com/rgadon107/custom-functionality/pull/17)
+
+Debugged the Ninja Forms filter that shortens the Stripe checkout session expiration time. The filter reduces
+the default checkout session expiration time from 24 hours to 30 minutes. Stripe checkout sessions expire if a payment page is abandoned,
+a card is rejected, or conditions on the Stripe server interfere with the completion of a checkout session.
+
+When a checkout session expires, Stripe calls a Zapier webhook that triggers a Zapier workflow. The workflow sends a customized email
+notifying the visitor that their payment was not processed, and encouraging them to register and submit a new payment.
+
 ### Added
+- `/src/integrations/ninja-forms.php`:
+	- Added a new wrapper function hooked to the action `ninja_forms_loaded` that calls a filter to shorten the Stripe checkout session expiration time for all Ninja Forms submissions involving payment.
+	- Added a helper function to extract and dynamically resolve the 'activity_type' metadata parameter passed by Ninja Forms to Stripe.
 
 ### Change
-- `/bootstrap.php`: Plugin version bump to `2.0.0`.
+- `/bootstrap.php`:
+  - Plugin version bump to `2.0.0`.
+  - `load_ninja_forms_integration()`: Changed the control structure `require_once` to `require` to ensure that the `/src/integrations/ninja-form.php` file is available when the `ninja_forms_loaded` action hook fires.
 
 ### Fixed
+- Changed the Ninja Forms filter from `ninja_forms_stripe_checkout_session_args` to `ninja_forms_stripe_checkout_session_create_params`.
+  - The former did not exist.
 
 ### Corrections
 
