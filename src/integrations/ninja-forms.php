@@ -12,6 +12,10 @@
 
 namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source\Integrations;
 
+// START
+error_log( '!!! SECURITY CHECK: NINJA FORMS FILE WAS OPENED BY THE SERVER !!!' );
+// STOP
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -168,27 +172,70 @@ function standardize_location_data( string $value, string $key ): string {
 	return $value;
 }
 
-add_filter( 'ninja_forms_stripe_checkout_session_args', __NAMESPACE__ .'\\shorten_stripe_checkout_session_expiration', 10, 2 );
+add_action( 'ninja_forms_loaded', __NAMESPACE__ . '\\load_nf_filter_to_modify_stripe_checkout_expiration' );
 /**
- * Shorten the Stripe checkout session expiration time for all Ninja Forms submissions.
+ *	Load the filter 'ninja_forms_stripe_checkout_session_create_params' and registered callback on the 'ninja_forms_loaded' hook.
  *
- * Stripe requires 'expires_at' to be a future Unix timestamp (in seconds).
- * The absolute minimum allowed by the Stripe API is 1800 s (30 min) from right now.
+ *  Once Ninja Forms and all its add-on plugin extensions are loaded, then call the filter and its registered callbacks.
  *
- * @since 1.9.0	Filter the `expires_at` argument sent to Stripe.
- *
- * @param array $session_parameters The unfiltered payload arguments sent to Stripe to create the checkout page.
- * @param array $form_data The full array payload containing the source Ninja Form ID and field metrics.
- *
- * @return array The filtered payload argument `expires_at` sent to Stripe when it creates the checkout page.
+ * @ since 2.0.0
+ * @ return void
  */
-function shorten_stripe_checkout_session_expiration( array $session_parameters, array $form_data ): array {
+function load_nf_filter_to_modify_stripe_checkout_expiration(): void	{
 
-	// Write an unmistakable marker to the WordPress log file
-	error_log( '--- GARDEN CLUB STRIPE FILTER EXECUTED SUCCESSFULLY ---' );
-	error_log( 'Original Session Args: ' . print_r( $session_parameters, true ) );
+	add_filter( 'ninja_forms_stripe_checkout_session_create_params', __NAMESPACE__ . '\\shorten_stripe_checkout_session_expiration' );
+}
 
+/**
+ * Shorten the Stripe checkout session expiration time to 30 minutes and elevate
+ *  the 'activity_type' metadata within the $sessions_parameters array using a helper function.
+ *
+ * @since 2.0.0
+ *
+ * @param array $session_parameters The unfiltered payload arguments passed by Ninja Forms.
+ * @return array The altered payload array with modified 'expires_at' and metadata parameters.
+ */
+function shorten_stripe_checkout_session_expiration( array $session_parameters ): array {
+
+	// 1. Enforce the 30-minute expiration rule (1800 s) starting when the Stripe payment page opens.
 	$session_parameters['expires_at'] = time() + 1800;
 
+	// 2. Process and elevate the 'activity_type' metadata via the helper function
+	$session_parameters['metadata'] = array(
+		'activity_type' => get_stripe_checkout_activity_type( $session_parameters )
+	);
+
+	// 3. Return the strictly formatted array back to the core engine
 	return $session_parameters;
+}
+
+/**
+ * Extract and resolve the 'activity_type' metadata parameter dynamically.
+ *
+ * This helper function inspects whether Ninja Forms has already nested the
+ * 'activity_type' inside the 'payment_intent_data' array layer. If absent,
+ * it seamlessly falls back to analyzing the current page context using a regex
+ * (regular expression) equivalent match condition against the request URI path.
+ *
+ * @since 2.0.0
+ *
+ * @param array $session_parameters The active Stripe checkout session configuration parameters.
+ * @return string The resolved value of the 'activity_type' metadata key to append to the top-level session metadata.
+ */
+function get_stripe_checkout_activity_type( array $session_parameters ): string {
+
+	// Condition 1: Direct extraction from the payment_intent_data nested object array
+	if ( isset( $session_parameters['payment_intent_data']['metadata']['activity_type'] ) ) {
+		return (string) $session_parameters['payment_intent_data']['metadata']['activity_type'];
+	}
+
+	// Condition 2: Resilient Safety Net fallback using Request URI context parsing
+	$current_uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : '';
+
+	return match ( true ) {
+		str_contains( $current_uri, 'membership' ) => 'membership application',
+		str_contains( $current_uri, 'awards' )     => 'annual awards banquet registration',
+		str_contains( $current_uri, 'tour' )       => 'public garden tour registration',
+		default                                    => 'dinner registration', // Standard dynamic catch-all
+	};
 }
