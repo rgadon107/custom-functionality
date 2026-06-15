@@ -184,6 +184,10 @@ add_filter( 'ninja_forms_stripe_checkout_session_args', __NAMESPACE__ .'\\shorte
  */
 function shorten_stripe_checkout_session_expiration( array $session_parameters, array $form_data ): array {
 
+	// Write an unmistakable marker to the WordPress log file
+	error_log( '--- GARDEN CLUB STRIPE FILTER EXECUTED SUCCESSFULLY ---' );
+	error_log( 'Original Session Args: ' . print_r( $session_parameters, true ) );
+
 	$session_parameters['expires_at'] = time() + 1800;
 
 	return $session_parameters;
