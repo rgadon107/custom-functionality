@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 2.0.1 - 2026-06-15](https://github.com/rgadon107/custom-functionality/pull/18)
+This version modifies a function to ensure that an array is set to accept metadata key-value pairs sent by Ninja Forms to Stripe.
+The update corresponds with the addition of 2 new metadata fields to a Ninja Form - Stripe form action;
+`customer_first_name` and `customer_last_name`.
+
+### Changed
+- `/bootstrap.php`: Plugin version bump to `2.0.1`.
+
+### Fixed
+- `/src/integrations/ninja-forms.php`: Modify `shorten_stripe_checkout_session_expiration( array $session_parameters )`.
+  - Check if array key is set and data type is array; else set an empty array.
+  - Refactor assignment of helper function `get_stripe_checkout_activity_type( $session_parameters )`.
+
 ## [Version 2.0.0 - 2026-06-15](https://github.com/rgadon107/custom-functionality/pull/17)
 
 Debugged the Ninja Forms filter that shortens the Stripe checkout session expiration time. The filter reduces
@@ -19,7 +32,7 @@ notifying the visitor that their payment was not processed, and encouraging them
 	- Added a new wrapper function hooked to the action `ninja_forms_loaded` that calls a filter to shorten the Stripe checkout session expiration time for all Ninja Forms submissions involving payment.
 	- Added a helper function to extract and dynamically resolve the 'activity_type' metadata parameter passed by Ninja Forms to Stripe.
 
-### Change
+### Changed
 - `/bootstrap.php`:
   - Plugin version bump to `2.0.0`.
   - `load_ninja_forms_integration()`: Changed the control structure `require_once` to `require` to ensure that the `/src/integrations/ninja-form.php` file is available when the `ninja_forms_loaded` action hook fires.
@@ -28,13 +41,11 @@ notifying the visitor that their payment was not processed, and encouraging them
 - Changed the Ninja Forms filter from `ninja_forms_stripe_checkout_session_args` to `ninja_forms_stripe_checkout_session_create_params`.
   - The former did not exist.
 
-### Corrections
-
 ## [Version 1.9.0 - 2026-06-13](https://github.com/rgadon107/custom-functionality/pull/16)
 ### Added
 - `/src/integrations/ninja-forms.php`: Registered callback to Ninja Forms filter 'ninja_forms_stripe_checkout_session_args' to shorten the Stripe checkout session expiration time for all Ninja Forms submissions involving payment.
 
-### Change
+### Changed
 - `/bootstrap.php`: Plugin version bump to `1.9.0`.
 
 ## [Version 1.8.3 - 2026-06-04](https://github.com/rgadon107/custom-functionality/pull/15)
