@@ -10,7 +10,7 @@
  * Plugin Name:     Custom Functionality
  * Plugin URI:      https://github.com/rgadon107/custom-functionality
  * Description:     A plugin that contains custom functions, scripts, and styles to modify the behavior of WordPress. Built off the `starter-plugin` package developed for KnowTheCode.io.
- * Version:         2.0.1
+ * Version:         2.0.2
  * Requires WP:     6.9.4
  * Requires PHP:    8.3
  * Author:          Robert A Gadon
@@ -156,7 +156,7 @@ function launch(): void	{
 	autoload_files();
 
 // Uncomment 'Custom\register_plugin()' below if using `central-hub` plugin to flush rewrites.
-// Remove a call to 'rgadon107\CustomFunctionalityPlugin\register_plugin()' when using 'central-hub'.
+// Remove a call to `rgadon107\CustomFunctionalityPlugin\register_plugin()` when using 'central-hub'.
 //	Custom\register_plugin( __FILE__ );
 	register_plugin();
 }
