@@ -186,8 +186,9 @@ function load_nf_filter_to_modify_stripe_checkout_expiration(): void	{
  * Shorten the Stripe checkout session expiration time to 30 minutes and elevate
  *  the 'activity_type' metadata within the $sessions_parameters array using a helper function.
  *
- * @since 2.0.0
+ * @since 2.0.0	Intial commit.
  * @since 2.0.1	Added a check of array key and array data type, else set an empty array.
+ * @since 2.0.2	Check the Ninja Forms global instance to get the metadata values for `first_name` and `last_name`.
  *
  * @param array $session_parameters The unfiltered payload arguments passed by Ninja Forms.
  * @return array The altered payload array with modified 'expires_at' and metadata parameters.
@@ -204,6 +205,42 @@ function shorten_stripe_checkout_session_expiration( array $session_parameters )
 
 	// Process and elevate the 'activity_type' metadata key via the helper function
 	$session_parameters['metadata']['activity_type'] = get_stripe_checkout_activity_type( $session_parameters );
+
+	// Get the Ninja Forms merge tags assigned as values in each form metadata key-value pair.
+	// Check if the global Ninja_Forms instance and its field merge tags exist.
+	if ( function_exists( 'Ninja_Forms' ) && isset( Ninja_Forms()->merge_tags['fields'] ) ) {
+
+		// Retrieve the Merge Tag definitions
+		$fields_tags = Ninja_Forms()->merge_tags['fields'];
+
+		// Ensure the internal merge tags registry is accessible as an array
+		if (isset($fields_tags->merge_tags) && is_array($fields_tags->merge_tags)) {
+			foreach ($fields_tags->merge_tags as $tag) {
+				// Ensure the tag structure has an identifying key string to check
+				if (!isset($tag['id'])) {
+					continue;
+				}
+
+				$current_key = $tag['id'];
+
+				// Check if the key matches ticket purchaser OR membership variations for First Name
+				if ( str_contains( $current_key, 'first_name_ticket_purchaser' ) || str_contains( $current_key, 'first_name_membership' ) ) {
+					$unfiltered_first_name = $fields_tags->get_value( $current_key );
+					if ( ! empty( $unfiltered_first_name ) ) {
+						$session_parameters['metadata']['customer_first_name'] = sanitize_text_field( $unfiltered_first_name );
+					}
+				}
+
+				// Check if the key matches ticket purchaser OR membership variations for Last Name
+				if ( str_contains( $current_key, 'last_name_ticket_purchaser' ) || str_contains( $current_key, 'last_name_membership' ) ) {
+					$unfiltered_last_name = $fields_tags->get_value( $current_key );
+					if ( ! empty( $unfiltered_last_name ) ) {
+						$session_parameters['metadata']['customer_last_name'] = sanitize_text_field( $unfiltered_last_name );
+					}
+				}
+			}
+		}
+	}
 
 	// Return the strictly formatted array back to the core engine
 	return $session_parameters;

@@ -5,15 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased Version 2.1.0 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/19)
-## Added
+## [Version 2.0.2 - 2026-06-15](https://github.com/rgadon107/custom-functionality/pull/19)
 
 ## Changed
-- `/bootstrap.php`: Plugin version bump to `2.1.0`.
-
-## Fixed
-
-## Corrections
+- `/src/integrations/ninja-forms.php`: Modified function `shorten_stripe_checkout_session_expiration( array $session_parameters )`.
+  - Check the Ninja Forms global instance to loop through merge tags and get metadata values for `first_name` and `last_name` based on string pattern matching.
+- `/bootstrap.php`: Plugin version bump to `2.0.2`.
 
 ## [Version 2.0.1 - 2026-06-15](https://github.com/rgadon107/custom-functionality/pull/18)
 This version modifies a function to ensure that an array is set to accept metadata key-value pairs sent by Ninja Forms to Stripe.
