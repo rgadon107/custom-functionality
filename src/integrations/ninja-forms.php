@@ -187,21 +187,25 @@ function load_nf_filter_to_modify_stripe_checkout_expiration(): void	{
  *  the 'activity_type' metadata within the $sessions_parameters array using a helper function.
  *
  * @since 2.0.0
+ * @since 2.0.1	Added a check of array key and array data type, else set an empty array.
  *
  * @param array $session_parameters The unfiltered payload arguments passed by Ninja Forms.
  * @return array The altered payload array with modified 'expires_at' and metadata parameters.
  */
 function shorten_stripe_checkout_session_expiration( array $session_parameters ): array {
 
-	// 1. Enforce the 30-minute expiration rule (1800 s) starting when the Stripe payment page opens.
+	// Enforce the 30-minute expiration rule (1800 s) starting when the Stripe payment page opens.
 	$session_parameters['expires_at'] = time() + 1800;
 
-	// 2. Process and elevate the 'activity_type' metadata via the helper function
-	$session_parameters['metadata'] = array(
-		'activity_type' => get_stripe_checkout_activity_type( $session_parameters )
-	);
+	// If array key is not set or variable is not an array, initialize an empty array.
+	if ( ! isset( $session_parameters['metadata'] ) || ! is_array( $session_parameters['metadata'] ) ) {
+		$session_parameters['metadata'] = [];
+	}
 
-	// 3. Return the strictly formatted array back to the core engine
+	// Process and elevate the 'activity_type' metadata key via the helper function
+	$session_parameters['metadata']['activity_type'] = get_stripe_checkout_activity_type( $session_parameters );
+
+	// Return the strictly formatted array back to the core engine
 	return $session_parameters;
 }
 
