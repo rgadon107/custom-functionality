@@ -156,7 +156,7 @@ function launch(): void	{
 	autoload_files();
 
 // Uncomment 'Custom\register_plugin()' below if using `central-hub` plugin to flush rewrites.
-// Remove a call to 'rgadon107\CustomFunctionalityPlugin\register_plugin()' when using 'central-hub'.
+// Remove a call to `rgadon107\CustomFunctionalityPlugin\register_plugin()` when using 'central-hub'.
 //	Custom\register_plugin( __FILE__ );
 	register_plugin();
 }
