@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Version 2.0.2 - 2026-06-15](https://github.com/rgadon107/custom-functionality/pull/19)
 
-## Changed
+### Changed
 - `/src/integrations/ninja-forms.php`: Modified function `shorten_stripe_checkout_session_expiration( array $session_parameters )`.
   - Check the Ninja Forms global instance to loop through merge tags and get metadata values for `first_name` and `last_name` based on string pattern matching.
 - `/bootstrap.php`: Plugin version bump to `2.0.2`.
