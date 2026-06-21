@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 /**
  * Custom callbacks hooked to Ninja Forms actions or filters.
@@ -179,100 +179,88 @@ add_action( 'ninja_forms_loaded', __NAMESPACE__ . '\\load_nf_filter_to_modify_st
  */
 function load_nf_filter_to_modify_stripe_checkout_expiration(): void	{
 
-	add_filter( 'ninja_forms_stripe_checkout_session_create_params', __NAMESPACE__ . '\\shorten_stripe_checkout_session_expiration' );
+	add_filter( 'ninja_forms_stripe_checkout_session_create_params', __NAMESPACE__ . '\\organize_stripe_checkout_session_payload' );
 }
 
 /**
- * Shorten the Stripe checkout session expiration time to 30 minutes and elevate
- *  the 'activity_type' metadata within the $sessions_parameters array using a helper function.
+ * Shorten the Stripe checkout session expiration time for a failed payment, and get Ninja Forms metadata.
  *
  * @since 2.0.0	Intial commit.
  * @since 2.0.1	Added a check of array key and array data type, else set an empty array.
- * @since 2.0.2	Check the Ninja Forms global instance to get the metadata values for `first_name` and `last_name`.
+ * @since 2.0.2	Check the Ninja Forms global instance to get the metadata values for `customer_first_name` and `customer_last_name`.
+ * @since 2.0.3	Refactor and rename this function to serve as an orchestrator of the included helper functions.
  *
  * @param array $session_parameters The unfiltered payload arguments passed by Ninja Forms.
  * @return array The altered payload array with modified 'expires_at' and metadata parameters.
  */
-function shorten_stripe_checkout_session_expiration( array $session_parameters ): array {
-
-	// Enforce the 30-minute expiration rule (1800 s) starting when the Stripe payment page opens.
-	$session_parameters['expires_at'] = time() + 1800;
-
-	// If array key is not set or variable is not an array, initialize an empty array.
-	if ( ! isset( $session_parameters['metadata'] ) || ! is_array( $session_parameters['metadata'] ) ) {
-		$session_parameters['metadata'] = [];
+function organize_stripe_checkout_session_payload( array $session_parameters ): array {
+	// 1. DEFENSIVE CHECK: Verify input integrity.
+	if ( ! is_array( $session_parameters ) ) {
+		return $session_parameters;
 	}
 
-	// Process and elevate the 'activity_type' metadata key via the helper function
-	$session_parameters['metadata']['activity_type'] = get_stripe_checkout_activity_type( $session_parameters );
+	// 2. TRANSFORM: Run modifications
+	$session_parameters = reduce_stripe_checkout_session_expiry_time( $session_parameters );
+	$session_parameters = get_stripe_checkout_activity_type( $session_parameters );
 
-	// Get the Ninja Forms merge tags assigned as values in each form metadata key-value pair.
-	// Check if the global Ninja_Forms instance and its field merge tags exist.
-	if ( function_exists( 'Ninja_Forms' ) && isset( Ninja_Forms()->merge_tags['fields'] ) ) {
-
-		// Retrieve the Merge Tag definitions
-		$fields_tags = Ninja_Forms()->merge_tags['fields'];
-
-		// Ensure the internal merge tags registry is accessible as an array
-		if (isset($fields_tags->merge_tags) && is_array($fields_tags->merge_tags)) {
-			foreach ($fields_tags->merge_tags as $tag) {
-				// Ensure the tag structure has an identifying key string to check
-				if (!isset($tag['id'])) {
-					continue;
-				}
-
-				$current_key = $tag['id'];
-
-				// Check if the key matches ticket purchaser OR membership variations for First Name
-				if ( str_contains( $current_key, 'first_name_ticket_purchaser' ) || str_contains( $current_key, 'first_name_membership' ) ) {
-					$unfiltered_first_name = $fields_tags->get_value( $current_key );
-					if ( ! empty( $unfiltered_first_name ) ) {
-						$session_parameters['metadata']['customer_first_name'] = sanitize_text_field( $unfiltered_first_name );
-					}
-				}
-
-				// Check if the key matches ticket purchaser OR membership variations for Last Name
-				if ( str_contains( $current_key, 'last_name_ticket_purchaser' ) || str_contains( $current_key, 'last_name_membership' ) ) {
-					$unfiltered_last_name = $fields_tags->get_value( $current_key );
-					if ( ! empty( $unfiltered_last_name ) ) {
-						$session_parameters['metadata']['customer_last_name'] = sanitize_text_field( $unfiltered_last_name );
-					}
-				}
-			}
-		}
-	}
-
-	// Return the strictly formatted array back to the core engine
 	return $session_parameters;
 }
 
 /**
- * Extract and resolve the 'activity_type' metadata parameter dynamically.
+ * Reduce the Stripe checkout session expiry time for failed payment.
+ *
+ * 	The Unix timestamp (time()) starts the moment that a Stripe payment page opens.
+ *	The minimum time allowed by Stripe to reduce the "expire_at" property is 30 min. (1800 s).
+ *
+ * @since 2.0.3
+ *
+ * @param array $session_parameters Stripe checkout session parameters
+ * @return array $session_parameters Modified checkout session expiration time.
+ */
+function reduce_stripe_checkout_session_expiry_time( array $session_parameters ): array {
+	$session_parameters['expires_at'] = time() + 1800;
+	return $session_parameters;
+}
+
+/**
+ * Extract and dynamically resolve the value of the Ninja Forms metadata key 'activity_type'.
  *
  * This helper function inspects whether Ninja Forms has already nested the
- * 'activity_type' inside the 'payment_intent_data' array layer. If absent,
- * it seamlessly falls back to analyzing the current page context using a regex
- * (regular expression) equivalent match condition against the request URI path.
+ * 	'activity_type' metadata key inside the Stripe 'payment_intent_data' array layer. If absent,
+ * 	it seamlessly falls back to analyzing the current page context using a regex
+ * 	(regular expression) equivalent match condition against the request URI path.
  *
  * @since 2.0.0
  *
  * @param array $session_parameters The active Stripe checkout session configuration parameters.
- * @return string The resolved value of the 'activity_type' metadata key to append to the top-level session metadata.
+ * @return array The resolved value of the 'activity_type' metadata key to append to the top-level Stripe checkout session data object.
+ *
  */
-function get_stripe_checkout_activity_type( array $session_parameters ): string {
+function get_stripe_checkout_activity_type( array $session_parameters ): array {
+	// 1. Determine the activity type string
+	// We keep your existing resilient logic
+	$activity_type = '';
 
-	// Condition 1: Direct extraction from the payment_intent_data nested object array
 	if ( isset( $session_parameters['payment_intent_data']['metadata']['activity_type'] ) ) {
-		return (string) $session_parameters['payment_intent_data']['metadata']['activity_type'];
+		$activity_type = (string) $session_parameters['payment_intent_data']['metadata']['activity_type'];
+	} else {
+		$current_uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : '';
+		$activity_type = match ( true ) {
+			str_contains( $current_uri, 'membership' ) => 'membership application',
+			str_contains( $current_uri, 'awards' )     => 'annual awards banquet registration',
+			str_contains( $current_uri, 'tour' )       => 'public garden tour registration',
+			default                                    => 'dinner registration',
+		};
 	}
 
-	// Condition 2: Resilient Safety Net fallback using Request URI context parsing
-	$current_uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : '';
+	// 2. Ensure metadata structure exists
+	if ( ! isset( $session_parameters['payment_intent_data']['metadata'] ) ) {
+		$session_parameters['payment_intent_data']['metadata'] = [];
+	}
 
-	return match ( true ) {
-		str_contains( $current_uri, 'membership' ) => 'membership application',
-		str_contains( $current_uri, 'awards' )     => 'annual awards banquet registration',
-		str_contains( $current_uri, 'tour' )       => 'public garden tour registration',
-		default                                    => 'dinner registration', // Standard dynamic catch-all
-	};
+	// 3. Assign the determined string to the array key
+	$session_parameters['payment_intent_data']['metadata']['activity_type'] = $activity_type;
+
+	// 4. Return the entire modified array (maintaining the contract)
+	return $session_parameters;
 }

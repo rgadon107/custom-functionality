@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 2.0.3 - 2026-06-19](https://github.com/rgadon107/custom-functionality/pull/20)
+Debugging to get the Ninja Forms metadata key-value pairs sent to the Stripe checkout session data object.
+
+### Changed
+- `/bootstrap.php`: Plugin version bump to `2.0.3`.
+- `/src/integrations/ninja-forms.php`: Refactored and renamed function to serve as an orchestrator of the included helper functions.
+
 ## [Version 2.0.2 - 2026-06-15](https://github.com/rgadon107/custom-functionality/pull/19)
 
 ### Changed
