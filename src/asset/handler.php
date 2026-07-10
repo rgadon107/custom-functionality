@@ -19,43 +19,59 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_scripts', 20 
  * Enqueues the plugin's script(s).
  *
  * @since 1.0.0
+ * @since 2.1.1 Refactor callback to load and loop through a custom configuration of script files.
  *
  * @return void
  */
-function enqueue_plugin_scripts(): void {
+function enqueue_plugin_scripts(): void	{
 
-	$events_page_id         = 16223;
+	$events_page_id = 16223;
 	$awards_banquet_page_id = 10424;
-
-	if ( is_page( [ $events_page_id, $awards_banquet_page_id ] ) ) {
-
-		$file = '/assets/scripts/nf-checkbox-toggle.js';
-
-		wp_enqueue_script(
-			'nf-checkbox-toggle',
-			_get_plugin_url() . $file,
-			[ 'jquery' ],
-			_get_asset_version( $file ),
-			true
-		);
-	}
+	$is_target_page = is_page($events_page_id) || is_page($awards_banquet_page_id);
 
 	$scripts = [
-		'nf-prevent-early-form-submit-while-using-return-key' 	=> '/assets/scripts/nf-prevent-early-form-submit-while-using-return-key.js',
-		'coblocks-accordion-prevent-vertical-scroll' 			=> '/assets/scripts/coblocks-accordion-prevent-vertical-scroll.js',
+		'nf-checkbox-toggle' => [
+			'file' => '/assets/scripts/nf-checkbox-toggle.js',
+			'deps' => ['jquery'],
+			'in_footer' => true,
+			'condition' => $is_target_page, // Evaluates to true/false
+		],
+		'nf-prevent-early-form-submit-while-using-return-key' => [
+			'file' => '/assets/scripts/nf-prevent-early-form-submit-while-using-return-key.js',
+			'deps' => [],
+			'in_footer' => true,
+			'condition' => true, // Load globally
+		],
+		'coblocks-accordion-prevent-vertical-scroll' => [
+			'file' => '/assets/scripts/coblocks-accordion-prevent-vertical-scroll.js',
+			'deps' => [],
+			'in_footer' => true,
+			'condition' => true,
+		],
+		'nf-scroll-fix' => [
+			'file' => '/assets/scripts/nf-scroll-fix.js',
+			'deps' => ['jquery'],
+			'in_footer' => true,
+			'condition' => true,
+		],
 	];
 
 	$plugin_dir = _get_plugin_directory();
 	$plugin_url = _get_plugin_url();
 
-	foreach ( $scripts as $handle => $file ) {
-		// Defensive check: Verify the file exists on disk before enqueuing
-		if ( file_exists( $plugin_dir . $file ) ) {
+	foreach ($scripts as $handle => $config) {
+
+		if (!$config['condition']) {
+			continue;
+		}
+
+		if (!file_exists($plugin_dir . $config['file'])) {
 			wp_enqueue_script(
 				$handle,
-				$plugin_url . $file,
-				[],
-				_get_asset_version( $file )
+				$plugin_url . $config['file'],
+				$config['deps'],
+				_get_asset_version($config['file']),
+				$config['in_footer']
 			);
 		}
 	}
