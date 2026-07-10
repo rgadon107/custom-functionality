@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 2.1.0 - 2026-07-10](https://github.com/rgadon107/custom-functionality/pull/21)
+
+### Added
+- `/src/integrations/ninja-forms.php`: Added Ninja Forms filter 'ninja_forms_enable_submission_scroll' to prevent downward page scroll on form submit.
+
+### Changed
+- `/bootstrap.php`: Plugin version bump to `2.1.0`.
+
 ## [Version 2.0.3 - 2026-06-19](https://github.com/rgadon107/custom-functionality/pull/20)
 Debugging to get the Ninja Forms metadata key-value pairs sent to the Stripe checkout session data object.
 

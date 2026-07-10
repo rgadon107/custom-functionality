@@ -264,3 +264,13 @@ function get_stripe_checkout_activity_type( array $session_parameters ): array {
 	// 4. Return the entire modified array (maintaining the contract)
 	return $session_parameters;
 }
+
+/**
+ * Filter Ninja Forms to prevent hard downward scroll following form submit.
+ *
+ * @since 2.1.0
+ *
+ * @return false
+ */
+add_filter( 'ninja_forms_enable_submission_scroll', '__return_false' );
+
