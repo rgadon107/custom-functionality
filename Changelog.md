@@ -5,15 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unrelease Version 2.1.X - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/22)
+## [Unrelease Version 2.1.1 - 2026-07-10](https://github.com/rgadon107/custom-functionality/pull/22)
 
 ### Added
-
-### Fixed
+- `/assets/scripts/nf-scroll-fix.js`: Added and documented JQuery file to fix Ninja Forms scroll issue after form submit.
+- `/src/asset/handler.php`: Added the config array for `'nf-scroll-fix'` to the custom configuration that enqueues script files.
 
 ### Changed
-
-### Corrections
+- `/src/asset/handler.php`: Refactored `/enqueue_plugin_scripts()` to add and loop through a custom configuration to enqueue script files.
+- `/bootstrap.php`: Plugin version bump to `2.1.1.
 
 ## [Version 2.1.0 - 2026-07-10](https://github.com/rgadon107/custom-functionality/pull/21)
 
