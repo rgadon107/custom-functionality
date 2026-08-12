@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 2.2.0 - 2026-08-12](https://github.com/rgadon107/custom-functionality/pull/23)
+
+### Added
+- `/src/asset/handler.php`: Enqueue the scripts and styles to load and render the member photo directory view file.
+- `/src/shortcodes/member-photo-directory.php`: Register the [member_photo_directory] shortcode and return the HTMl template view.
+- `/src/templates/member-photo-directory-view.php`: Add the template view to render the member photo directory file.
+- `/assets/scripts/member-photo-directory-loader.js`: Add scripts to conditionally load and render the member photo directory file.
+- `/assets/styles/member-photo-directory-viewer-styles.css`: Add styles to render the member photo directory file viewer.
+
 ## [Version 2.1.1 - 2026-07-10](https://github.com/rgadon107/custom-functionality/pull/22)
 
 ### Added
