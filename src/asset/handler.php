@@ -20,6 +20,7 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_scripts', 20 
  *
  * @since 1.0.0
  * @since 2.1.1 Refactor callback to load and loop through a custom configuration of script files.
+ * @since 2.2.0 Enqueued 'member-photo-directory-loader'.
  *
  * @return void
  */
@@ -54,6 +55,12 @@ function enqueue_plugin_scripts(): void	{
 			'in_footer' => true,
 			'condition' => true,
 		],
+		'member-photo-directory-loader' => [
+			'file' => '/assets/scripts/member-photo-directory-loader.js',
+			'deps' => [],
+			'in_footer' => true,
+			'condition' => true,
+		],
 	];
 
 	$plugin_dir = _get_plugin_directory();
@@ -84,15 +91,17 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_styles', 20 )
  * @since 1.2.0	Enqueued 'event-registration-notice-styles'
  * @since 1.5.0	Enqueued 'ninja-form-email-signup-form-styles'
  * @since 1.6.0	Refactored callback and enqueued 'coblocks-accordian-fix'.
+ * @since 2.2.0 Enqueued 'member-photo-directory-viewer-styles'
  *
  * @return void
  */
 function enqueue_plugin_styles(): void {
 	$styles = [
-		'event-registration-notice-styles'    => '/assets/styles/event-notices.css',
-		'ninja-form-email-signup-form-styles' => '/assets/styles/ninja-form-styles.css',
-		'coblocks-accordion-styles'           => '/assets/styles/coblocks-accordion-styles.css',
-		'color-variables'					  => '/assets/styles/color-variables.css',
+		'event-registration-notice-styles'    	=>	'/assets/styles/event-notices.css',
+		'ninja-form-email-signup-form-styles' 	=>	'/assets/styles/ninja-form-styles.css',
+		'coblocks-accordion-styles'           	=>	'/assets/styles/coblocks-accordion-styles.css',
+		'color-variables'					  	=>	'/assets/styles/color-variables.css',
+		'member-photo-directory-viewer-styles'	=>	'/assets/styles/member-photo-directory-viewer-styles.css'
 	];
 
 	$plugin_dir = _get_plugin_directory();
