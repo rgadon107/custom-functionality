@@ -52,3 +52,25 @@ function filter_http_request_timeout( array $http_request_args, string $url ): a
 
 	return $http_request_args;
 }
+
+add_action( 'template_redirect', __NAMESPACE__. '\exclude_page_cache' );
+/**
+ * Exclude `The Garden Spray` newsletter archive page from server and browser caching.
+ *
+ * @since 2.2.1
+ *
+ * @return void
+ */
+function exclude_page_cache(): void {
+	// Replace 'your-newsletter-slug' with the actual page slug or ID
+	if ( is_page( 'gardenspray' ) ) {
+
+		// 1. Tell WordPress.com / Batcache edge servers NOT to cache this page
+		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true );
+		}
+
+		// 2. Send complete no-cache HTTP headers to browsers and proxies
+		nocache_headers();
+	}
+}

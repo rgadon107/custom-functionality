@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 2.2.1 - 2026-08-13](https://github.com/rgadon107/custom-functionality/pull/24)
+
+### Added
+- `src/hooks.php`: Added custom function to exclude `'gardenspray'` from server and browser caching.
+
 ## [Version 2.2.0 - 2026-08-13](https://github.com/rgadon107/custom-functionality/pull/23)
 
 Add a PDF viewer to the website with a shortcode, HTML view file, a conditional file loader script and some styling. Files are served based on the viewport size. The absolute path to the PDF file paths are stored in a custom configuration array passed to the shortcode. The configuration path names can be easily changed as needed without disturbing the logic to process and serve those files.
