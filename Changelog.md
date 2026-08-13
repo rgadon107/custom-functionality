@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 2.2.0 - 2026-08-13](https://github.com/rgadon107/custom-functionality/pull/23)
+
+Add a PDF viewer to the website with a shortcode, HTML view file, a conditional file loader script and some styling. Files are served based on the viewport size. The absolute path to the PDF file paths are stored in a custom configuration array passed to the shortcode. The configuration path names can be easily changed as needed without disturbing the logic to process and serve those files.
+
+### Added
+- `/bootstrap.php`: Added relative file path of shortcode to autoload function.
+- `/src/asset/handler.php`: Enqueue the scripts and styles to load and render the member photo directory view file.
+- `/src/shortcodes/member-photo-directory.php`: Register the [member_photo_directory] shortcode and return the HTMl template view.
+- `/src/templates/member-photo-directory-view.php`: Add the template view to render the member photo directory file.
+- `/assets/scripts/member-photo-directory-loader.js`: Add scripts to conditionally load and render the member photo directory file.
+- `/assets/styles/member-photo-directory-viewer-styles.css`: Add styles to render the member photo directory file viewer.
+- `/src/configuration/shortcodes/member-photo-directory.php`:
+  - Added a `/configuration/shortcodes/` directory to plugin.
+  - Added custom configuration to `[member-photo-directory]` shortcode to load absolute file paths of PDF files.
+
+### Changed
+- `/src/shortcodes/member-photo-directory.php`: Called the configuration array for the shortcode and passed the file URLs to the default shortcode attributes.
+- `/assets/scripts/member-photo-directory-loader.js`:
+  - Refined the file to:
+	  - Select all potential view containers with `.querySelectorAll('.smart-pdf-viewer, #smart-pdf-viewer')`.
+	  - Simplify conditional to serve file based on viewport size.
+	  - Render front-end and console error messages if configuration URLs fail to resolve.
+	  - Process PDF views when using the `<details>` block or Popup Maker plugin.
+- `src/asset/handler.php`: Renamed 'member-photo-directory-viewer-styles' to 'member-photo-directory-styles'.
+- `/assets/styles/member-photo-directory-styles.css`:
+  - Renamed file from `member-photo-directory-viewer-styles.css`.
+  - Modify PDF fallback message styles.
+  - Add styles for `.pdf-error-message`.
+
+### Fixed
+- `/src/asset/handler.php`: Fixed control statement within loop to allow scripts to load in browser.
+
 ## [Version 2.1.1 - 2026-07-10](https://github.com/rgadon107/custom-functionality/pull/22)
 
 ### Added

@@ -1,0 +1,96 @@
+/* ==========================================================================
+   Member Directory File Viewer Styles
+   ========================================================================== */
+
+/* 1. Main Container Wrap */
+.smart-pdf-container {
+	width: 100%;
+	margin: 2rem 0;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+	overflow: hidden;
+	background-color: var(--brand-white-lime);
+}
+
+/* 2. The PDF Object Player Target */
+#smart-pdf-viewer {
+	width: 100%;
+	display: block;
+}
+
+#smart-pdf-viewer object {
+	display: block;
+	width: 100%;
+	/* Default height for desktop/tablet viewing */
+	height: 800px;
+}
+
+/* 3. Loading State Styling */
+.pdf-loading-placeholder {
+	padding: 3rem;
+	text-align: center;
+	background-color: var(--brand-green-dark);
+	color: var(--brand-white-lime);
+}
+
+/* 4. Browser Fallback Announcement Block
+   (Displays only if a browser cannot read inline PDFs natively) */
+.pdf-fallback-message {
+	padding: 3rem 2rem;
+	text-align: center;
+	background-color: var(--brand-green-light);
+	font-style: italic;
+	font-weight: bold;
+	border-radius: 4px;
+	margin: 1.5rem;
+}
+
+.pdf-fallback-message p {
+	margin-bottom: 1.5rem;
+	font-size: 1.1rem;
+	color: #333;
+}
+
+.pdf-fallback-message a	{
+	background-color: var(--brand-green-dark);
+	color: var(--brand-white-lime);
+	border: 1px solid var(--brand-green-dark);
+	border-radius: 8px;
+}
+
+.pdf-fallback-message a:hover,
+.pdf-fallback-message a:focus	{
+	background-color: var(--brand-white-lime);
+	color: var(--brand-green-dark);
+	text-decoration: none !important;
+}
+
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+
+/* Mobile Optimization: Drop the height on compact viewports to prevent
+   extreme vertical scrolling tracking issues */
+@media screen and (max-width: 37.5em) { /* 600px and down */
+	#smart-pdf-viewer object {
+		height: 500px;
+	}
+}
+
+/* ==========================================================================
+   PDF Viewer Error Message Styles
+   ========================================================================== */
+.pdf-error-message {
+	padding: 20px;
+	background-color: var(--brand-green-dark);
+	border-radius: 6px;
+	color: var(--brand-soft-orange);
+	text-align: center;
+	margin: 10px 0;
+}
+
+.pdf-error-message p {
+	margin: 0;
+	font-size: 0.95rem;
+}

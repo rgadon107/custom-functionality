@@ -120,6 +120,7 @@ function autoload_files(): void	{
 		'/src/asset/handler.php',
 		'/src/shortcodes/expire-content.php',
 		'/src/shortcodes/current-year.php',
+		'/src/shortcodes/member-photo-directory.php',
 		'/src/hooks.php',
 	];
 
