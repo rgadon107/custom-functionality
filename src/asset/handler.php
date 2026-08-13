@@ -72,7 +72,7 @@ function enqueue_plugin_scripts(): void	{
 			continue;
 		}
 
-		if (!file_exists($plugin_dir . $config['file'])) {
+		if ( file_exists($plugin_dir . $config['file']) ) {
 			wp_enqueue_script(
 				$handle,
 				$plugin_url . $config['file'],
