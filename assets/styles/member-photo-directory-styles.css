@@ -38,9 +38,9 @@
 .pdf-fallback-message {
 	padding: 3rem 2rem;
 	text-align: center;
-	background-color: var(--brand-green-dark);
-	color: var(--brand-soft-orange);
+	background-color: var(--brand-green-light);
 	font-style: italic;
+	font-weight: bold;
 	border-radius: 4px;
 	margin: 1.5rem;
 }
@@ -50,6 +50,21 @@
 	font-size: 1.1rem;
 	color: #333;
 }
+
+.pdf-fallback-message a	{
+	background-color: var(--brand-green-dark);
+	color: var(--brand-white-lime);
+	border: 1px solid var(--brand-green-dark);
+	border-radius: 8px;
+}
+
+.pdf-fallback-message a:hover,
+.pdf-fallback-message a:focus	{
+	background-color: var(--brand-white-lime);
+	color: var(--brand-green-dark);
+	text-decoration: none !important;
+}
+
 
 /* ==========================================================================
    Responsive Adaptations
