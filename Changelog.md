@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 2.2.2 - 2026-08-13](https://github.com/rgadon107/custom-functionality/pull/25)
+
+### Changed
+- `/src/asset/handler.php`: Changed cookie expiration time to 1 hour. Require mobile browsers to require password login once browser session cookie expires.
+
+### Correction
+- `/boostrap.php`: Updated the plugin version number from `2.1.1` to `2.2.2`.
+
 ## [Version 2.2.1 - 2026-08-13](https://github.com/rgadon107/custom-functionality/pull/24)
 
 ### Added
