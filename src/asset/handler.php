@@ -101,7 +101,7 @@ function enqueue_plugin_styles(): void {
 		'ninja-form-email-signup-form-styles' 	=>	'/assets/styles/ninja-form-styles.css',
 		'coblocks-accordion-styles'           	=>	'/assets/styles/coblocks-accordion-styles.css',
 		'color-variables'					  	=>	'/assets/styles/color-variables.css',
-		'member-photo-directory-viewer-styles'	=>	'/assets/styles/member-photo-directory-viewer-styles.css'
+		'member-photo-directory-styles'			=>	'/assets/styles/member-photo-directory-styles.css'
 	];
 
 	$plugin_dir = _get_plugin_directory();
