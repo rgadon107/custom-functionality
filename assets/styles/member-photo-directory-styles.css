@@ -62,3 +62,20 @@
 		height: 500px;
 	}
 }
+
+/* ==========================================================================
+   PDF Viewer Error Message Styles
+   ========================================================================== */
+.pdf-error-message {
+	padding: 20px;
+	background-color: var(--brand-green-dark);
+	border-radius: 6px;
+	color: var(--brand-soft-orange);
+	text-align: center;
+	margin: 10px 0;
+}
+
+.pdf-error-message p {
+	margin: 0;
+	font-size: 0.95rem;
+}
