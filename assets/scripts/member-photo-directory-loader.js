@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		const mobileUrl  = viewerRoot.getAttribute('data-mobile');
 
 		const currentWidth = window.innerWidth;
-		let targetPdfUrl = desktopUrl;
+		let targetPdfUrl;
 
 		if (currentWidth <= 600) {
 			targetPdfUrl = mobileUrl;
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 		// Safety check: Don't embed if URLs are empty
 		if (!targetPdfUrl) {
-			viewerRoot.innerHTML = '<p class="pdf-error">Unable to read the current configuration file path. Visit `/src/configuration/shortcodes/member-photo-directory.php` and inspect the file configuration.<p>';
+			viewerRoot.innerHTML = '<p class="pdf-error">Unable to read the current configuration file path. Visit `/src/configuration/shortcodes/member-photo-directory.php` and inspect the file configuration.</p>';
 			return;
 		}
 
