@@ -8,11 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 ## [Version 2.2.0 - 2026-08-12](https://github.com/rgadon107/custom-functionality/pull/23)
 
 ### Added
+- `/bootstrap.php`: Added relative file path of shortcode to autoload function.
 - `/src/asset/handler.php`: Enqueue the scripts and styles to load and render the member photo directory view file.
 - `/src/shortcodes/member-photo-directory.php`: Register the [member_photo_directory] shortcode and return the HTMl template view.
 - `/src/templates/member-photo-directory-view.php`: Add the template view to render the member photo directory file.
 - `/assets/scripts/member-photo-directory-loader.js`: Add scripts to conditionally load and render the member photo directory file.
 - `/assets/styles/member-photo-directory-viewer-styles.css`: Add styles to render the member photo directory file viewer.
+- `/src/configuration/shortcodes/member-photo-directory.php`:
+  - Added a `/configuration/shortcodes/` directory to plugin.
+  - Added custom configuration to `[member-photo-directory]` shortcode to load absolute file paths of PDF files.
+
+### Changed
+- `/src/shortcodes/member-photo-directory.php`: Called the configuration array for the shortcode and passed the file URLs to the default shortcode attributes.
+
+### Fixed
+- `/src/asset/handler.php`: Fixed control statement within loop to allow scripts to load in browser.
 
 ## [Version 2.1.1 - 2026-07-10](https://github.com/rgadon107/custom-functionality/pull/22)
 
