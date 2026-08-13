@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Version 2.2.0 - 2026-08-12](https://github.com/rgadon107/custom-functionality/pull/23)
+## [Version 2.2.0 - 2026-08-13](https://github.com/rgadon107/custom-functionality/pull/23)
 
 ### Added
 - `/bootstrap.php`: Added relative file path of shortcode to autoload function.
@@ -20,6 +20,14 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 ### Changed
 - `/src/shortcodes/member-photo-directory.php`: Called the configuration array for the shortcode and passed the file URLs to the default shortcode attributes.
+- `/assets/scripts/member-photo-directory-loader.js`:
+  - Refined the file to:
+	  - Select all potential view containers with `.querySelectorAll('.smart-pdf-viewer, #smart-pdf-viewer')`.
+	  - Simplify conditional to serve file based on viewport size.
+	  - Render front-end and console error messages if configuration URLs fail to resolve.
+	  - Process PDF views when using the `<details>` block or Popup Maker plugin.
+- `src/asset/handler.php`: Renamed 'member-photo-directory-viewer-styles' to 'member-photo-directory-styles'.
+- `/assets/styles/member-photo-directory-styles.css`: Renamed file from `member-photo-directory-viewer-styles.css`. Added styles for `.pdf-error-message`.
 
 ### Fixed
 - `/src/asset/handler.php`: Fixed control statement within loop to allow scripts to load in browser.
