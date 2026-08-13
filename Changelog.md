@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Version 2.2.0 - 2026-08-13](https://github.com/rgadon107/custom-functionality/pull/23)
 
+Add a PDF viewer to the website with a shortcode, HTML view file, a conditional file loader script and some styling. Files are served based on the viewport size. The absolute path to the PDF file paths are stored in a custom configuration array passed to the shortcode. The configuration path names can be easily changed as needed without disturbing the logic to process and serve those files.
+
 ### Added
 - `/bootstrap.php`: Added relative file path of shortcode to autoload function.
 - `/src/asset/handler.php`: Enqueue the scripts and styles to load and render the member photo directory view file.
@@ -27,7 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 	  - Render front-end and console error messages if configuration URLs fail to resolve.
 	  - Process PDF views when using the `<details>` block or Popup Maker plugin.
 - `src/asset/handler.php`: Renamed 'member-photo-directory-viewer-styles' to 'member-photo-directory-styles'.
-- `/assets/styles/member-photo-directory-styles.css`: Renamed file from `member-photo-directory-viewer-styles.css`. Added styles for `.pdf-error-message`.
+- `/assets/styles/member-photo-directory-styles.css`:
+  - Renamed file from `member-photo-directory-viewer-styles.css`.
+  - Modify PDF fallback message styles.
+  - Add styles for `.pdf-error-message`.
 
 ### Fixed
 - `/src/asset/handler.php`: Fixed control statement within loop to allow scripts to load in browser.
