@@ -24,10 +24,10 @@ add_filter( 'post_password_expires', __NAMESPACE__ . '\modify_cookie_expiration'
  * @since 1.0.0
  *
  * @param 	int $expires Expiration timestamp passed to set cookie.
- * @return 	int Zero ( 0 ) to create a session cookie (expires when browser session ends).
+ * @return 	int Create a session cookie that expires in 1 hour from when a browser session begins.
  */
 function modify_cookie_expiration( int $expires ): int {
-	return 0;
+	return time() + HOUR_IN_SECONDS;
 }
 
 add_filter( 'http_request_args', __NAMESPACE__. '\filter_http_request_timeout', 10, 2 );
