@@ -5,12 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Version 2.X.X - 2026-08-XX](https://github.com/rgadon107/custom-functionality/pull/26)
+## [Version 2.3.0 - 2026-08-XX](https://github.com/rgadon107/custom-functionality/pull/26)
 
 ### Added
+- New directories:
+  - `/src/api/config/`, // For future use when registering v1 REST endpoints.
+  - `/src/custom/config/`,
+  - `/src/taxonomy/config/`.
+- New files:
+  - `/src/api/registrar.php`, // For future use when registering v1 REST endpoints.
+  - `/src/custom/registrar.php`,
+  - `/src/custom/config/auction-item.php`,
+  - `/src/taxonomy/registrar.php`,
+  - `/src/taxonomy/config/auction-category.php`.
 
 ### Changed
-- `/bootstrap.php`: Increase plugin version number to `2.X.X`.
+- `/bootstrap.php`: Increase plugin version number to `2.3.0`.
 
 ### Fixed
 
