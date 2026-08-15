@@ -11,16 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - New directories:
   - `/src/api/config/`, // For future use when registering v1 REST endpoints.
   - `/src/custom/config/`,
+  - `/src/shortcodes/config/`,
   - `/src/taxonomy/config/`.
 - New files:
   - `/src/api/registrar.php`, // For future use when registering v1 REST endpoints.
   - `/src/custom/registrar.php`,
   - `/src/custom/config/auction-item.php`,
+  - `/src/shortcodes/config/member-photo-directory.php`,
   - `/src/taxonomy/registrar.php`,
   - `/src/taxonomy/config/auction-category.php`.
 
 ### Changed
 - `/bootstrap.php`: Increase plugin version number to `2.3.0`.
+- `/configuration/shorcodes/member-photo-directory.php`: Removed file and directory. Moved file to `/src/shortcodes/config/member-photo-directory.php`.
+- `/src/shortcodes/config/member-photo-directory.php`: Change file path assigned to `$config_path`.
 
 ### Fixed
 
