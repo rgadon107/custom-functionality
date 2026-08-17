@@ -20,7 +20,7 @@ function member_photo_directory_shortcode_handler( array|string $user_defined_at
 	wp_enqueue_style( 'member-photo-directory-viewer-styles' );
 	wp_enqueue_script( 'member-photo-directory-loader' );
 
-	// 1. Fetch default configuration array from updated configuration/shortcodes path
+	// 1. Fetch default configuration array from updated `/shortcodes/config/` path
 	$config_path = _get_plugin_directory() . '/src/shortcodes/config/member-photo-directory.php';
 
 	$defaults = file_exists( $config_path ) ? require $config_path : array(
