@@ -12,9 +12,17 @@
 
 namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source;
 
+use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_cpt_from_config;
+use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_meta_from_config;
+use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Taxonomy\register_taxonomy_from_config;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+// Load worker registrars so function definitions exist in memory immediately.
+require_once __DIR__ . '/custom/registrar.php';
+require_once __DIR__ . '/taxonomy/registrar.php';
 
 add_filter( 'post_password_expires', __NAMESPACE__ . '\modify_cookie_expiration' );
 /**
@@ -72,5 +80,59 @@ function exclude_page_cache(): void {
 
 		// 2. Send complete no-cache HTTP headers to browsers and proxies
 		nocache_headers();
+	}
+}
+
+add_action( 'init', __NAMESPACE__ . '\initialize_custom_taxonomies', 6 );
+/**
+ * Custom Taxonomy Initialization Hooks.
+ *
+ * Handles the loading of taxonomy configuration arrays and initiates taxonomy
+ * 	registrations on the WordPress init hook.
+ *
+ * @since 2.3.0 Initial release.
+ *
+ * @return void
+ */
+function initialize_custom_taxonomies(): void {
+	$tax_configs = [
+		__DIR__ . '/taxonomy/config/auction-category.php',
+		// Future taxonomy configs go here.
+	];
+
+	foreach ( $tax_configs as $file_path ) {
+		if ( file_exists( $file_path ) ) {
+			$config = require $file_path;
+
+			register_taxonomy_from_config( $config );
+		}
+	}
+}
+
+add_action( 'init', __NAMESPACE__ . '\initialize_custom_post_types', 7 );
+/**
+ * Custom Post-Type Initialization Hooks.
+ *
+ * Handles the loading of CPT configuration arrays and initiates post-type
+ *  and metadata registrations on the WordPress init hook.
+ *
+ * @since 2.3.0 Initial release.
+ *
+ * @return void
+ */
+function initialize_custom_post_types(): void {
+	// Array of configuration file paths to load.
+	$cpt_configs = [
+		__DIR__ . '/custom/config/auction-item.php',
+		// Future CPT configs go here: __DIR__ . '/custom/config/members.php',
+	];
+
+	foreach ( $cpt_configs as $file_path ) {
+		if ( file_exists( $file_path ) ) {
+			$config = require $file_path;
+
+			register_cpt_from_config( $config );
+			register_meta_from_config( $config );
+		}
 	}
 }

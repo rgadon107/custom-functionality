@@ -2,7 +2,7 @@
 /**
  * Configuration for [member_photo_directory] shortcode.
  *
- * Location: /src/configuration/shortcodes/member-photo-directory.php
+ * Location: /src/shortcodes/member-photo-directory.php
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -17,3 +17,4 @@ return array(
 	'tablet_url'  => $upload_base_url . '2026-GCM-Photo-Directory-Tablet.pdf',
 	'mobile_url'  => $upload_base_url . '2026-GCM-Photo-Directory-Mobile.pdf',
 );
+
