@@ -17,7 +17,7 @@ return [
 		'hierarchical'       => false,
 		'menu_position'      => 20,
 		'menu_icon'          => 'dashicons-tickets-alt',
-		'supports'           => [ 'title', 'excerpt', 'custom-fields', 'revisions' ],
+		'supports'           => [ 'title', 'excerpt', 'editor', 'custom-fields', 'revisions' ],
 		'show_in_rest'       => true,
 		'rest_base'          => 'auction_item',
 	],
