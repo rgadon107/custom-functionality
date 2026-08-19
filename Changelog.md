@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Version 2.3.0 - 2026-08-XX](https://github.com/rgadon107/custom-functionality/pull/26)
+## [Version 2.3.0 - 2026-08-18](https://github.com/rgadon107/custom-functionality/pull/26)
+
+Register custom post-types, post metadata, and taxonomies for the `auction_item` custom post-type and `auction_category` taxonomy.
+
+Install the stub for an API to register v1 REST endpoints for the `members` custom post-type.
 
 ### Added
 - New directories:
@@ -16,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - New files:
   - `/src/api/registrar.php`: // For future use when registering v1 REST endpoints.
   - `/src/custom/registrar.php`: Generate labels for custom post-types and taxonomies. Register CPT and metadata from configurations.
-  - `/src/custom/config/auction-item.php`: Add custom post-type and metadata configuration array for an auction item.
+  - `/src/custom/config/auction-item.php`: Add custom post-type and metadata configuration arrays for an auction item.
   - `/src/shortcodes/config/member-photo-directory.php`: Added file.
   - `/src/taxonomy/registrar.php`: Add generic registrar for custom taxonomies.
   - `/src/taxonomy/config/auction-category.php`: Add the `auction_category` taxonomy for the object_type (custom post-type) named `auction_item`.
@@ -26,7 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - `/bootstrap.php`: Increase plugin version number to `2.3.0`.
 - `/configuration/shorcodes/member-photo-directory.php`: Removed file and directory. Moved the file to `/src/shortcodes/config/member-photo-directory.php`.
 - `/src/shortcodes/config/member-photo-directory.php`: Change file path assigned to `$config_path`.
-- `/src/hooks.php`: Register and initalize the registration of CPTs, metadata, and taxonomies for the `auction-item` CPT.
+- `/src/hooks.php`:
+  - Load the `registrar.php` files for CPTs, metadata, and taxonomies into memory with `require_once`.
+  - Register and initalize the registration of CPTs, metadata, and taxonomies for the `auction-item` CPT.
 
 ## [Version 2.2.2 - 2026-08-13](https://github.com/rgadon107/custom-functionality/pull/25)
 
