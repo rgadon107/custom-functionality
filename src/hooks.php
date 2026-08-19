@@ -20,6 +20,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Load worker registrars so function definitions exist in memory immediately.
+require_once __DIR__ . '/custom/registrar.php';
+require_once __DIR__ . '/taxonomy/registrar.php';
+
 add_filter( 'post_password_expires', __NAMESPACE__ . '\modify_cookie_expiration' );
 /**
  * Make the protected-page password cookie a session cookie.
