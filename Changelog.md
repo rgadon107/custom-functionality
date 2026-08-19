@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - `/src/shortcodes/config/member-photo-directory.php`,
   - `/src/taxonomy/registrar.php`,
   - `/src/taxonomy/config/auction-category.php`.
+- `/src/api/registrar.php`: Stub for registering Zapier's POST data with the WordPress v1 REST API endpoints.
 
 ### Changed
 - `/bootstrap.php`: Increase plugin version number to `2.3.0`.
