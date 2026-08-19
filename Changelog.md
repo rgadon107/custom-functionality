@@ -14,22 +14,19 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - `/src/shortcodes/config/`,
   - `/src/taxonomy/config/`.
 - New files:
-  - `/src/api/registrar.php`, // For future use when registering v1 REST endpoints.
-  - `/src/custom/registrar.php`,
-  - `/src/custom/config/auction-item.php`,
-  - `/src/shortcodes/config/member-photo-directory.php`,
-  - `/src/taxonomy/registrar.php`,
-  - `/src/taxonomy/config/auction-category.php`.
+  - `/src/api/registrar.php`: // For future use when registering v1 REST endpoints.
+  - `/src/custom/registrar.php`: Generate labels for custom post-types and taxonomies. Register CPT and metadata from configurations.
+  - `/src/custom/config/auction-item.php`: Add custom post-type and metadata configuration array for an auction item.
+  - `/src/shortcodes/config/member-photo-directory.php`: Added file.
+  - `/src/taxonomy/registrar.php`: Add generic registrar for custom taxonomies.
+  - `/src/taxonomy/config/auction-category.php`: Add the `auction_category` taxonomy for the object_type (custom post-type) named `auction_item`.
 - `/src/api/registrar.php`: Stub for registering Zapier's POST data with the WordPress v1 REST API endpoints.
 
 ### Changed
 - `/bootstrap.php`: Increase plugin version number to `2.3.0`.
 - `/configuration/shorcodes/member-photo-directory.php`: Removed file and directory. Moved the file to `/src/shortcodes/config/member-photo-directory.php`.
 - `/src/shortcodes/config/member-photo-directory.php`: Change file path assigned to `$config_path`.
-
-### Fixed
-
-### Correction
+- `/src/hooks.php`: Register and initalize the registration of CPTs, metadata, and taxonomies for the `auction-item` CPT.
 
 ## [Version 2.2.2 - 2026-08-13](https://github.com/rgadon107/custom-functionality/pull/25)
 
