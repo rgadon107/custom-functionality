@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 ### Changed
 - `/bootstrap.php`: Increase plugin version number to `2.3.0`.
-- `/configuration/shorcodes/member-photo-directory.php`: Removed file and directory. Moved file to `/src/shortcodes/config/member-photo-directory.php`.
+- `/configuration/shorcodes/member-photo-directory.php`: Removed file and directory. Moved the file to `/src/shortcodes/config/member-photo-directory.php`.
 - `/src/shortcodes/config/member-photo-directory.php`: Change file path assigned to `$config_path`.
 
 ### Fixed
@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 ## [Version 2.2.2 - 2026-08-13](https://github.com/rgadon107/custom-functionality/pull/25)
 
 ### Changed
-- `/src/asset/handler.php`: Changed cookie expiration time to 1 hour. Require mobile browsers to require password login once browser session cookie expires.
+- `/src/asset/handler.php`: Changed cookie expiration time to 1 hour. Require mobile browsers to require a password login once the browser session cookie expires.
 
 ### Correction
 - `/boostrap.php`: Updated the plugin version number from `2.1.1` to `2.2.2`.
@@ -49,9 +49,9 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 Add a PDF viewer to the website with a shortcode, HTML view file, a conditional file loader script and some styling. Files are served based on the viewport size. The absolute path to the PDF file paths are stored in a custom configuration array passed to the shortcode. The configuration path names can be easily changed as needed without disturbing the logic to process and serve those files.
 
 ### Added
-- `/bootstrap.php`: Added relative file path of shortcode to autoload function.
+- `/bootstrap.php`: Added the relative file path of shortcode to the autoload function.
 - `/src/asset/handler.php`: Enqueue the scripts and styles to load and render the member photo directory view file.
-- `/src/shortcodes/member-photo-directory.php`: Register the [member_photo_directory] shortcode and return the HTMl template view.
+- `/src/shortcodes/member-photo-directory.php`: Register the [member_photo_directory] shortcode and return the HTML template view.
 - `/src/templates/member-photo-directory-view.php`: Add the template view to render the member photo directory file.
 - `/assets/scripts/member-photo-directory-loader.js`: Add scripts to conditionally load and render the member photo directory file.
 - `/assets/styles/member-photo-directory-viewer-styles.css`: Add styles to render the member photo directory file viewer.
@@ -64,7 +64,7 @@ Add a PDF viewer to the website with a shortcode, HTML view file, a conditional 
 - `/assets/scripts/member-photo-directory-loader.js`:
   - Refined the file to:
 	  - Select all potential view containers with `.querySelectorAll('.smart-pdf-viewer, #smart-pdf-viewer')`.
-	  - Simplify conditional to serve file based on viewport size.
+	  - Simplify conditional to serve a file based on viewport size.
 	  - Render front-end and console error messages if configuration URLs fail to resolve.
 	  - Process PDF views when using the `<details>` block or Popup Maker plugin.
 - `src/asset/handler.php`: Renamed 'member-photo-directory-viewer-styles' to 'member-photo-directory-styles'.
@@ -110,7 +110,7 @@ Debugging to get the Ninja Forms metadata key-value pairs sent to the Stripe che
 
 ## [Version 2.0.1 - 2026-06-15](https://github.com/rgadon107/custom-functionality/pull/18)
 This version modifies a function to ensure that an array is set to accept metadata key-value pairs sent by Ninja Forms to Stripe.
-The update corresponds with the addition of 2 new metadata fields to a Ninja Form - Stripe form action;
+The update corresponds with the addition of 2 (two) new metadata fields to a Ninja Form - Stripe form action;
 `customer_first_name` and `customer_last_name`.
 
 ### Changed
@@ -118,7 +118,7 @@ The update corresponds with the addition of 2 new metadata fields to a Ninja For
 
 ### Fixed
 - `/src/integrations/ninja-forms.php`: Modify `shorten_stripe_checkout_session_expiration( array $session_parameters )`.
-  - Check if array key is set and data type is array; else set an empty array.
+  - Check if the array key is set and the data type is an array; else set an empty array.
   - Refactor assignment of helper function `get_stripe_checkout_activity_type( $session_parameters )`.
 
 ## [Version 2.0.0 - 2026-06-15](https://github.com/rgadon107/custom-functionality/pull/17)
@@ -128,7 +128,7 @@ the default checkout session expiration time from 24 hours to 30 minutes. Stripe
 a card is rejected, or conditions on the Stripe server interfere with the completion of a checkout session.
 
 When a checkout session expires, Stripe calls a Zapier webhook that triggers a Zapier workflow. The workflow sends a customized email
-notifying the visitor that their payment was not processed, and encouraging them to register and submit a new payment.
+notifying the visitor that their payment was not processed, and encourages them to register and submit a new payment.
 
 ### Added
 - `/src/integrations/ninja-forms.php`:
@@ -161,7 +161,7 @@ This plugin update introduces a drop-down menu of counties on the membership app
 - `/bootstrap.php`: Plugin version bump to `1.8.3`.
 
 ### Fixed
-- Forced Ninja Forms to acknowledge and store the name of a county outside the Minneapolis - St. Paul metro area when a value of 'none_of_these' was selected in the 'County' field.
+- Forced Ninja Forms to acknowledge and store the name of a county outside the Minneapolis-St. Paul metro area when a value of 'none_of_these' was selected in the 'County' field.
 - `/src/integrations/ninja-forms.php`: Fixed version number in docblock of `function standardize_location_data()`.
 - `/Changelog.md`: Update pull request number.
 
@@ -173,7 +173,7 @@ This plugin update introduces a drop-down menu of counties on the membership app
 ## [Version 1.8.1 - 2026-05-16](https://github.com/rgadon107/custom-functionality/pull/14)
 ### Added
 - `/.editorconfig`: Configured editor settings targeting design pattern files and PHPStorm-specific settings.
-  - Eliminate newlines at the end of files, and markup indentation.
+  - Eliminate newlines at the end of files and markup indentation.
   - This will allow the WP parser to read the file and not insert `Classic` before patterns inserted into the editor.
 
 ### Changed
@@ -186,11 +186,11 @@ This plugin update introduces a drop-down menu of counties on the membership app
 - `/bootstrap.php`: Plugin version bump to `1.8.1`.
 
 ### Fixed
-- Eliminated leading whitespace before delimiters and newline at end of each file.
+- Eliminated leading whitespace before delimiters and newlines at the end of each file.
   - `accordion-meeting-topics.php`;
   - `message-after-registration-stop.php`; and
   - `message-before-registration-start.php`.
-- `/assets/styles/coblocks-accordion-styles.css`: Fix color contrast of link in accordion table row.
+- `/assets/styles/coblocks-accordion-styles.css`: Fix color contrast of the link in an accordion table row.
 
 ### Corrections
 - `/assets/styles/coblocks-accordion-styles.css`: In version `1.8.0`, changed the file name from `/coblocks-accordion-fix.css` to `/coblocks-accordion-styles.css`.
@@ -199,11 +199,11 @@ This plugin update introduces a drop-down menu of counties on the membership app
 ## [Version 1.8.0 - 2026-05-10](https://github.com/rgadon107/custom-functionality/pull/13)
 ### Added
 - `/includes/patterns/`: Added directory to manage logic to register design patterns with WordPress.
-- `/includes/patterns/pattern-loader.php`: Added file to register block patterns and categories with WordPress.
+- `/includes/patterns/pattern-loader.php`: Added a file to register block patterns and categories with WordPress.
 - `/src/patterns/accordion-meeting-topics.php`: Added a design pattern to register the accordion meeting topics block.
   - Added a `templateLock` property to the block attributes to prevent site editors from accidentally deleting or moving any portion of the block.
   - Added placeholder text to the accordion label and the table fields.
-- `/assets/styles/coblocks-accordion-fix.css`: Updates to style sheet.
+- `/assets/styles/coblocks-accordion-fix.css`: Updates to stylesheet.
   - Prevent the browser from jumping when accordion is opened.
   - Change the background-color of the accordion from dark green to dark blue.
   - Change the link visibility inside an accordion item.
@@ -223,7 +223,7 @@ This plugin update introduces a drop-down menu of counties on the membership app
   - `function load_and_register_pattern()`: Added the `$categories` variable to register with `register_block_pattern()`.
 - `/src/controller.php`: Deleted the file from the project.
 - `/src/asset/handler.php`: Refactor function`enqueue_plugin_scripts()` to add a custom configuration for new script files.
-- `/src/README.md`:  Update the `/src/README.md` file to document the addition of an `integrations` directory.
+- `/src/README.md`: Update the `/src/README.md` file to document the addition of an `integrations` directory.
 
 ### Fixed
 - `/includes/patterns/pattern-loader.php`: In `$patterns_to_register` array, updated the reference to `'message-after-registration-start.php'` pattern so it will now load.
@@ -235,7 +235,7 @@ This plugin update introduces a drop-down menu of counties on the membership app
 - `/src/integrations/ninja-forms.php`: Added filter for 'phone' field key to remove the `+1 ` preceding the phone number.
 
 ### Changed
-- `/src/integrations/ninja-forms.php`: Replaced complex `if elseif` control statement with `match` expression ( valid in PHP 8 ).
+- `/src/integrations/ninja-forms.php`: Replaced complex `if elseif` control statement with `match` expression (valid in PHP 8).
 - `/boostrap.php`: Plugin version bump to `1.7.3`.
 
 ## [Version 1.7.2 - 2026-05-02](https://github.com/rgadon107/custom-functionality/pull/11)
@@ -257,7 +257,7 @@ All Ninja Forms used on the `gardenclubmpls.org` website will now be filtered be
 
 ## [Version 1.7.1 - 2026-05-02](https://github.com/rgadon107/custom-functionality/pull/10)
 ### Fixed
-- `/src/controller.php`: Fix string in file path to resolve `500 Internal Server Error` on live staging server.
+- `/src/controller.php`: Fix string in filepath to resolve `500 Internal Server Error` on live staging server.
 
 ## [Version 1.7.0 - 2026-05-02](https://github.com/rgadon107/custom-functionality/pull/9)
 ### Added
