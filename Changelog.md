@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - `/src/asset/handler.php`:
   - Added helper function `_get_asset_paths()` to assign `_get_plugin_directory()` and `_get_plugin_url()` to the array `$asset_paths`.
   - Added function `__NAMESPACE__ . '\enqueue_block_editor_scripts'` to enqueue the block editor scripts for the `auction_item` metadata side panel.
+- `/src/admin/auction-item.php`:
+  - Added directory and file `auction-item.php` to manage the admin page for the `auction_item` custom post-type.
 
 ### Changed
 
