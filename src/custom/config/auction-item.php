@@ -31,6 +31,9 @@ return [
 				$sanitized = sanitize_textarea_field( $value );
 				return mb_substr( $sanitized, 0, 650 );
 			},
+			'auth_callback'     => function() {
+				return current_user_can( 'edit_posts' );
+			},
 		],
 		'donor_first_name' => [
 			'type'              => 'string',
@@ -38,6 +41,9 @@ return [
 			'single'            => true,
 			'show_in_rest'      => true,
 			'sanitize_callback' => 'sanitize_text_field',
+			'auth_callback'     => function() {
+				return current_user_can( 'edit_posts' );
+			},
 		],
 		'donor_last_name' => [
 			'type'              => 'string',
@@ -45,6 +51,9 @@ return [
 			'single'            => true,
 			'show_in_rest'      => true,
 			'sanitize_callback' => 'sanitize_text_field',
+			'auth_callback'     => function() {
+				return current_user_can( 'edit_posts' );
+			},
 		],
 		'auction_item_value' => [
 			'type'              => 'number',
@@ -55,6 +64,9 @@ return [
 				$clean = filter_var( $value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION );
 				return round( (float) $clean, 2 );
 			},
+			'auth_callback'     => function() {
+				return current_user_can( 'edit_posts' );
+			},
 		],
 		'auction_item_minimum_bid' => [
 			'type'              => 'number',
@@ -64,6 +76,9 @@ return [
 			'sanitize_callback' => function( $value ) {
 				$clean = filter_var( $value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION );
 				return round( (float) $clean, 2 );
+			},
+			'auth_callback'     => function() {
+				return current_user_can( 'edit_posts' );
 			},
 		],
 	],

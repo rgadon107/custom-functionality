@@ -8,11 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 ## [Version 2.3.1 - 2026-08-XX](https://github.com/rgadon107/custom-functionality/pull/27)
 
 ### Added
+- `/src/custom/config/auction-item.php`:
+	- Added `editor` to `[args][supports]` in the configuration array.
+		- This activates the Gutenberg editor for the `auction_item` custom post-type.
+	- Update the `['meta_fields']` array in the `auction_item` custom config.
+		- Append `['auth_callback']` to each array key within the parent array.
+		- This registers the CPT metadata fields with WordPress.
 
 ### Changed
-- `/src/custom/config/auction-item.php`:
-  - Added `editor` to `[args][supports]` in the configuration array.
-  - This activates the Gutenberg editor for the `auction_item` custom post-type.
+
 
 ### Fixed
 
