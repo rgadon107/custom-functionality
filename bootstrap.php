@@ -110,6 +110,8 @@ function _is_in_development_mode(): bool	{
  *
  * @since 1.0.0	Initial release.
  * @since 1.8.0 Modify this function to serve as a module controller for the entire plugin.
+ * @since 2.2.0 Add `/shortcodes/member-photo-directory.php`
+ * @since 2.3.1 Add `/admin/auction-item.php`.
  *
  * @return void
  */
@@ -118,6 +120,7 @@ function autoload_files(): void	{
 	$plugin_files	= [
 		'/includes/patterns/pattern-loader.php',
 		'/src/asset/handler.php',
+		'/src/admin/auction-item.php',
 		'/src/shortcodes/expire-content.php',
 		'/src/shortcodes/current-year.php',
 		'/src/shortcodes/member-photo-directory.php',

@@ -21,7 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Added directory and file `auction-item.php` to manage the admin page for the `auction_item` custom post-type.
 
 ### Changed
-
+- `/boostrap.php`: Updated `autoload_files()` by adding `/admin/auction-item.php`.
+	- Updated `autoload_files()` docblock.
 
 ### Fixed
 
