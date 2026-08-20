@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 	- Update the `['meta_fields']` array in the `auction_item` custom config.
 		- Append `['auth_callback']` to each array key within the parent array.
 		- This registers the CPT metadata fields with WordPress.
+- `/src/asset/handler.php`:
+  - Added helper function `_get_asset_paths()` to assign `_get_plugin_directory()` and `_get_plugin_url()` to the array `$asset_paths`.
+  - Added function `__NAMESPACE__ . '\enqueue_block_editor_scripts'` to enqueue the block editor scripts for the `auction_item` metadata side panel.
 
 ### Changed
 

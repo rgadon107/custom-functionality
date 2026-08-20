@@ -63,21 +63,20 @@ function enqueue_plugin_scripts(): void	{
 		],
 	];
 
-	$plugin_dir = _get_plugin_directory();
-	$plugin_url = _get_plugin_url();
+	$asset_paths = _get_asset_paths();
 
-	foreach ($scripts as $handle => $config) {
+	foreach ( $scripts as $handle => $config ) {
 
-		if (!$config['condition']) {
+		if ( !$config['condition'] ) {
 			continue;
 		}
 
-		if ( file_exists($plugin_dir . $config['file']) ) {
+		if ( file_exists($asset_paths['directory'] . $config['file'] ) ) {
 			wp_enqueue_script(
 				$handle,
-				$plugin_url . $config['file'],
+				$asset_paths['url'] . $config['file'],
 				$config['deps'],
-				_get_asset_version($config['file']),
+				_get_asset_version( $config['file'] ),
 				$config['in_footer']
 			);
 		}
@@ -104,20 +103,93 @@ function enqueue_plugin_styles(): void {
 		'member-photo-directory-styles'			=>	'/assets/styles/member-photo-directory-styles.css'
 	];
 
-	$plugin_dir = _get_plugin_directory();
-	$plugin_url = _get_plugin_url();
+	$asset_paths = _get_asset_paths();
 
 	foreach ( $styles as $handle => $file ) {
 		// Defensive check: Verify the file exists on disk before enqueuing
-		if ( file_exists( $plugin_dir . $file ) ) {
+		if ( file_exists( $asset_paths['directory'] . $file ) ) {
 			wp_enqueue_style(
 				$handle,
-				$plugin_url . $file,
+				$asset_paths['url']. $file,
 				[],
 				_get_asset_version( $file )
 			);
 		}
 	}
+}
+
+add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_block_editor_scripts' );
+/**
+ * Enqueues scripts for the WordPress Block Editor.
+ *
+ * @since 2.3.1
+ *
+ * @return void
+ */
+function enqueue_block_editor_scripts(): void {
+	$screen = get_current_screen();
+
+	// Evaluate target editor post-types
+	$is_auction_item = $screen && 'auction_item' === $screen->post_type;
+
+	$editor_scripts = [
+		'auction-item-meta-panel' => [
+			'file'      => '/assets/scripts/auction-item-meta-panel.js',
+			'deps'      => [
+				'wp-plugins',
+				'wp-edit-post',
+				'wp-components',
+				'wp-core-data',
+				'wp-data',
+				'wp-element',
+			],
+			'in_footer' => true,
+			'condition' => $is_auction_item,
+		],
+		// Future editor sidebar/block module scripts go here.
+	];
+
+	$asset_paths = _get_asset_paths();
+
+	foreach ( $editor_scripts as $handle => $config ) {
+
+		if ( ! $config['condition'] ) {
+			continue;
+		}
+
+		if ( file_exists( $asset_paths['directory'] . $config['file'] ) ) {
+			wp_enqueue_script(
+				$handle,
+				$asset_paths['url'] . $config['file'],
+				$config['deps'],
+				_get_asset_version( $config['file'] ),
+				$config['in_footer']
+			);
+		}
+	}
+}
+
+/**
+ * Gets reusable plugin asset paths.
+ *
+ * @since 2.3.1
+ *
+ * @return array{
+ *     directory: string,
+ *     url: string
+ * }
+ */
+function _get_asset_paths(): array {
+	static $asset_paths = null;
+
+	if ( null === $asset_paths ) {
+		$asset_paths = [
+			'directory' => _get_plugin_directory(),
+			'url'       => _get_plugin_url(),
+		];
+	}
+
+	return $asset_paths;
 }
 
 /**
