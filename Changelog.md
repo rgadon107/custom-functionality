@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 ### Changed
 - `/boostrap.php`: Updated `autoload_files()` by adding `/admin/auction-item.php`.
 	- Updated `autoload_files()` docblock.
+- `/src/hooks.php`: Changed the page slug to correctly target The Garden Spray archive page.
 
 ### Fixed
 
