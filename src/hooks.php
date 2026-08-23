@@ -66,7 +66,7 @@ add_action( 'template_redirect', __NAMESPACE__. '\exclude_page_cache' );
 /**
  * Exclude `The Garden Spray` newsletter archive page from server and browser caching.
  *
- * @since 2.2.1
+ * @since 2.2.1 Initial release.
  * @since 2.3.1 Refactored function match any page slug starting with 'gardenspray'.
  *
  * @return void
