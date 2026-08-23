@@ -71,7 +71,7 @@ add_action( 'template_redirect', __NAMESPACE__. '\exclude_page_cache' );
  */
 function exclude_page_cache(): void {
 	// Replace 'your-newsletter-slug' with the actual page slug or ID
-	if ( is_page( 'gardenspray' ) ) {
+	if ( is_page( 'gardenspray-archive' ) ) {
 
 		// 1. Tell WordPress.com / Batcache edge servers NOT to cache this page
 		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
