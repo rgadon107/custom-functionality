@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 ### Changed
 - `/boostrap.php`: Updated `autoload_files()` by adding `/admin/auction-item.php`.
 	- Updated `autoload_files()` docblock.
-- `/src/hooks.php`: Changed the page slug to correctly target The Garden Spray archive page.
+- `/src/hooks.php`: Refactored `exclude_page_cache()` to target any page slug that starts with the term 'gardenspray'.
 
 ### Fixed
 
@@ -57,6 +57,9 @@ Install the stub for an API to register v1 REST endpoints for the `members` cust
 - `/src/hooks.php`:
   - Load the `registrar.php` files for CPTs, metadata, and taxonomies into memory with `require_once`.
   - Register and initialize the registration of CPTs, metadata, and taxonomies for the `auction-item` CPT.
+
+### Fixed
+- `/src/hooks.php`: Update docblock for `modify_cookie_expiration( int $expires )`. 
 
 ## [Version 2.2.2 - 2026-08-13](https://github.com/rgadon107/custom-functionality/pull/25)
 
