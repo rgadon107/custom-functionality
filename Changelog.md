@@ -59,7 +59,7 @@ Install the stub for an API to register v1 REST endpoints for the `members` cust
   - Register and initialize the registration of CPTs, metadata, and taxonomies for the `auction-item` CPT.
 
 ### Fixed
-- `/src/hooks.php`: Update docblock for `modify_cookie_expiration( int $expires )`. 
+- `/src/hooks.php`: Update docblock for `modify_cookie_expiration( int $expires )`.
 
 ## [Version 2.2.2 - 2026-08-13](https://github.com/rgadon107/custom-functionality/pull/25)
 
