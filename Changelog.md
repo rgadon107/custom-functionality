@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Added function `__NAMESPACE__ . '\enqueue_block_editor_scripts'` to enqueue the block editor scripts for the `auction_item` metadata side panel.
 - `/src/admin/auction-item.php`:
   - Added directory and file `auction-item.php` to manage the admin page for the `auction_item` custom post-type.
+- `/assets/scripts/nf-checkbox-toggle.js`: Added 3 merge tags to the `targetKeys` array for gluten-free dessert checkboxes on the awards banquet registration form.
 
 ### Changed
 - `/boostrap.php`: Updated `autoload_files()` by adding `/admin/auction-item.php`.
