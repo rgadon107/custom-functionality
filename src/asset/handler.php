@@ -122,7 +122,7 @@ add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_block_edito
 /**
  * Enqueues scripts for the WordPress Block Editor.
  *
- * @since 2.3.1
+ * @since 2.3.1 Initial release.
  *
  * @return void
  */
@@ -172,7 +172,7 @@ function enqueue_block_editor_scripts(): void {
 /**
  * Gets reusable plugin asset paths.
  *
- * @since 2.3.1
+ * @since 2.3.1 Initial release.
  *
  * @return array{
  *     directory: string,
@@ -203,4 +203,36 @@ function _get_asset_paths(): array {
  */
 function _get_asset_version( string $relative_path ): bool|int	{
 	return filemtime( _get_plugin_directory() . $relative_path );
+}
+
+/**
+ * Appends a file modification timestamp to the absolute URL of an uploaded file as a version query parameter.
+ *
+ * @since 2.3.1 Initial release
+ *
+ * @param string $file_url The public URL of the uploaded media file.
+ *
+ * @return string The URL with ?v={timestamp} appended, or original URL if file is not found or target mismatched.
+ */
+function _get_media_asset_version( string $file_url ): string {
+	// Only target files containing 'GCM-Photo-Directory' in the URL/filename.
+	if ( ! str_contains( $file_url, 'GCM-Photo-Directory' ) ) {
+		return $file_url;
+	}
+
+	$upload_dir = wp_upload_dir();
+	$base_url   = $upload_dir['baseurl'];
+	$base_dir   = $upload_dir['basedir'];
+
+	if ( str_starts_with( $file_url, $base_url ) ) {
+		$relative_path = str_replace( $base_url, '', $file_url );
+		$absolute_path = $base_dir . $relative_path;
+
+		if ( file_exists( $absolute_path ) ) {
+			$timestamp = filemtime( $absolute_path );
+			return add_query_arg( 'v', $timestamp, $file_url );
+		}
+	}
+
+	return $file_url;
 }
