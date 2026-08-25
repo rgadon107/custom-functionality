@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Version 2.3.1 - 2026-08-XX](https://github.com/rgadon107/custom-functionality/pull/27)
+## [Version 2.3.1 - 2026-08-25](https://github.com/rgadon107/custom-functionality/pull/27)
 
 ### Added
 - `/src/custom/config/auction-item.php`:
@@ -16,7 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 		- This registers the CPT metadata fields with WordPress.
 - `/src/asset/handler.php`:
   - Added helper function `_get_asset_paths()` to assign `_get_plugin_directory()` and `_get_plugin_url()` to the array `$asset_paths`.
-  - Added function `__NAMESPACE__ . '\enqueue_block_editor_scripts'` to enqueue the block editor scripts for the `auction_item` metadata side panel.
+  - Added function `enqueue_block_editor_scripts` to enqueue the block editor scripts for the `auction_item` metadata side panel.
+  - Added `_get_media_asset_version( string $file_url )` to assign and append a query variable timestamp to the absolute URL of the photo directory file.
 - `/src/admin/auction-item.php`:
   - Added directory and file `auction-item.php` to manage the admin page for the `auction_item` custom post-type.
 - `/assets/scripts/nf-checkbox-toggle.js`: Added 3 merge tags to the `targetKeys` array for gluten-free dessert checkboxes on the awards banquet registration form.
@@ -25,10 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - `/boostrap.php`: Updated `autoload_files()` by adding `/admin/auction-item.php`.
 	- Updated `autoload_files()` docblock.
 - `/src/hooks.php`: Refactored `exclude_page_cache()` to target any page slug that starts with the term 'gardenspray'.
+- `/src/shortcodes/config/member-photo-directory.php`:
+  - Updated to use new asset versioning helper function.
 
 ### Fixed
-
-### Corrections
+- `/src/shortcodes/config/member-photo-directory.php`: Updated file docblock.
 
 ## [Version 2.3.0 - 2026-08-18](https://github.com/rgadon107/custom-functionality/pull/26)
 
