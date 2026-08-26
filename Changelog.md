@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 2.3.1 - 2026-08-25](https://github.com/rgadon107/custom-functionality/pull/27)
+
+### Added
+- `/src/custom/config/auction-item.php`:
+	- Added `editor` to `[args][supports]` in the configuration array.
+		- This activates the Gutenberg editor for the `auction_item` custom post-type.
+	- Update the `['meta_fields']` array in the `auction_item` custom config.
+		- Append `['auth_callback']` to each array key within the parent array.
+		- This registers the CPT metadata fields with WordPress.
+- `/src/asset/handler.php`:
+  - Added helper function `_get_asset_paths()` to assign `_get_plugin_directory()` and `_get_plugin_url()` to the array `$asset_paths`.
+  - Added function `enqueue_block_editor_scripts` to enqueue the block editor scripts for the `auction_item` metadata side panel.
+  - Added `_get_media_asset_version( string $file_url )` to assign and append a query variable timestamp to the absolute URL of the photo directory file.
+    - This helps to break the browser cache and serve the most recent file.
+- `/src/admin/auction-item.php`:
+  - Added directory and file `auction-item.php` to manage the admin page for the `auction_item` custom post-type.
+- `/assets/scripts/nf-checkbox-toggle.js`: Added 3 merge tags to the `targetKeys` array for gluten-free dessert checkboxes on the awards banquet registration form.
+
+### Changed
+- `/boostrap.php`:
+  - Updated `autoload_files()` by adding `/admin/auction-item.php`.
+  - Updated `autoload_files()` docblock.
+  - Updated plugin version number to `2.3.1`.
+  - Increase required minimum WP version number to `7.0`.
+- `/src/hooks.php`: Refactored `exclude_page_cache()` to target any page slug that starts with the term 'gardenspray'.
+- `/src/shortcodes/config/member-photo-directory.php`:
+  - Updated to use new asset versioning helper function.
+
+### Fixed
+- `/src/shortcodes/config/member-photo-directory.php`: Updated file docblock.
+
 ## [Version 2.3.0 - 2026-08-18](https://github.com/rgadon107/custom-functionality/pull/26)
 
 Register custom post-types, post metadata, and taxonomies for the `auction_item` custom post-type and `auction_category` taxonomy.
@@ -28,11 +59,14 @@ Install the stub for an API to register v1 REST endpoints for the `members` cust
 
 ### Changed
 - `/bootstrap.php`: Increase plugin version number to `2.3.0`.
-- `/configuration/shorcodes/member-photo-directory.php`: Removed file and directory. Moved the file to `/src/shortcodes/config/member-photo-directory.php`.
+- `/configuration/shortcodes/member-photo-directory.php`: Removed file and directory. Moved the file to `/src/shortcodes/config/member-photo-directory.php`.
 - `/src/shortcodes/config/member-photo-directory.php`: Change file path assigned to `$config_path`.
 - `/src/hooks.php`:
   - Load the `registrar.php` files for CPTs, metadata, and taxonomies into memory with `require_once`.
-  - Register and initalize the registration of CPTs, metadata, and taxonomies for the `auction-item` CPT.
+  - Register and initialize the registration of CPTs, metadata, and taxonomies for the `auction-item` CPT.
+
+### Fixed
+- `/src/hooks.php`: Update docblock for `modify_cookie_expiration( int $expires )`.
 
 ## [Version 2.2.2 - 2026-08-13](https://github.com/rgadon107/custom-functionality/pull/25)
 

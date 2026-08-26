@@ -10,8 +10,8 @@
  * Plugin Name:     Custom Functionality
  * Plugin URI:      https://github.com/rgadon107/custom-functionality
  * Description:     A plugin that contains custom functions, scripts, and styles to modify the behavior of WordPress. Built off the `starter-plugin` package developed for KnowTheCode.io.
- * Version:         2.3.0
- * Requires WP:     6.9.4
+ * Version:         2.3.1
+ * Requires WP:     7.0
  * Requires PHP:    8.3
  * Author:          Robert A Gadon
  * Author URI:      https://github.com/rgadon107/custom-functionality
@@ -110,6 +110,8 @@ function _is_in_development_mode(): bool	{
  *
  * @since 1.0.0	Initial release.
  * @since 1.8.0 Modify this function to serve as a module controller for the entire plugin.
+ * @since 2.2.0 Add `/shortcodes/member-photo-directory.php`
+ * @since 2.3.1 Add `/admin/auction-item.php`.
  *
  * @return void
  */
@@ -118,6 +120,7 @@ function autoload_files(): void	{
 	$plugin_files	= [
 		'/includes/patterns/pattern-loader.php',
 		'/src/asset/handler.php',
+		'/src/admin/auction-item.php',
 		'/src/shortcodes/expire-content.php',
 		'/src/shortcodes/current-year.php',
 		'/src/shortcodes/member-photo-directory.php',

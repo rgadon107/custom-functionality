@@ -26,6 +26,9 @@
 		'field:gf_dinner_order_1st_added_attendee_1768881004789',
 		'field:veg_dinner_order_2nd_added_attendee_1768881242386',
 		'field:gf_dinner_order_2nd_added_attendee_1768881245576',
+		'field:gf_dessert_ticket_purchaser_1755221725174',
+		'field:gf_dessert_1st_added_attendee_1755222173877',
+		'field:gf_dessert_2nd_added_attendee_1755223726400',
 	];
 
 	/**

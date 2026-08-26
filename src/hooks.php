@@ -29,7 +29,8 @@ add_filter( 'post_password_expires', __NAMESPACE__ . '\modify_cookie_expiration'
  * Make the protected-page password cookie a session cookie.
  * * Require visitors to reenter the password to access member-restricted content.
  *
- * @since 1.0.0
+ * @since 1.1.0
+ * @since 2.2.2 Changed cookie expiration time from 0 to 1 hour from when browser session starts.
  *
  * @param 	int $expires Expiration timestamp passed to set cookie.
  * @return 	int Create a session cookie that expires in 1 hour from when a browser session begins.
@@ -65,20 +66,26 @@ add_action( 'template_redirect', __NAMESPACE__. '\exclude_page_cache' );
 /**
  * Exclude `The Garden Spray` newsletter archive page from server and browser caching.
  *
- * @since 2.2.1
+ * @since 2.2.1 Initial release.
+ * @since 2.3.1 Refactored function match any page slug starting with 'gardenspray'.
  *
  * @return void
  */
 function exclude_page_cache(): void {
-	// Replace 'your-newsletter-slug' with the actual page slug or ID
-	if ( is_page( 'gardenspray' ) ) {
 
-		// 1. Tell WordPress.com / Batcache edge servers NOT to cache this page
+	if ( ! is_page() ) {
+		return;
+	}
+
+	$page = get_queried_object();
+
+	// Matches 'gardenspray', 'gardenspray-archive', or any slug starting with 'gardenspray'
+	if ( isset( $page->post_name ) && str_starts_with( $page->post_name, 'gardenspray' ) ) {
+
 		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
 			define( 'DONOTCACHEPAGE', true );
 		}
 
-		// 2. Send complete no-cache HTTP headers to browsers and proxies
 		nocache_headers();
 	}
 }
