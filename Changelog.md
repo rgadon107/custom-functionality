@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Added helper function `_get_asset_paths()` to assign `_get_plugin_directory()` and `_get_plugin_url()` to the array `$asset_paths`.
   - Added function `enqueue_block_editor_scripts` to enqueue the block editor scripts for the `auction_item` metadata side panel.
   - Added `_get_media_asset_version( string $file_url )` to assign and append a query variable timestamp to the absolute URL of the photo directory file.
+    - This helps to break the browser cache and serve the most recent file.
 - `/src/admin/auction-item.php`:
   - Added directory and file `auction-item.php` to manage the admin page for the `auction_item` custom post-type.
 - `/assets/scripts/nf-checkbox-toggle.js`: Added 3 merge tags to the `targetKeys` array for gluten-free dessert checkboxes on the awards banquet registration form.
