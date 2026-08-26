@@ -23,8 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - `/assets/scripts/nf-checkbox-toggle.js`: Added 3 merge tags to the `targetKeys` array for gluten-free dessert checkboxes on the awards banquet registration form.
 
 ### Changed
-- `/boostrap.php`: Updated `autoload_files()` by adding `/admin/auction-item.php`.
-	- Updated `autoload_files()` docblock.
+- `/boostrap.php`:
+  - Updated `autoload_files()` by adding `/admin/auction-item.php`.
+  - Updated `autoload_files()` docblock.
+  - Updated plugin version number to `2.3.1`.
+  - Increase required minimum WP version number to `7.0`.
 - `/src/hooks.php`: Refactored `exclude_page_cache()` to target any page slug that starts with the term 'gardenspray'.
 - `/src/shortcodes/config/member-photo-directory.php`:
   - Updated to use new asset versioning helper function.
