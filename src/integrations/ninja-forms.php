@@ -10,6 +10,8 @@
  * @license     GPL-2.0+
  */
 
+declare(strict_types=1);
+
 namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source\Integrations;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -274,3 +276,65 @@ function get_stripe_checkout_activity_type( array $session_parameters ): array {
  */
 add_filter( 'ninja_forms_enable_submission_scroll', '__return_false' );
 
+/**
+ * Helper function to log milestone durations during Ninja Forms processing.
+ *
+ * @since 2.3.2 Initial release
+ *
+ * @param string $label Milestone description for debug.log.
+ */
+function log_nf_milestone(string $label): void
+{
+	if (!isset($GLOBALS['nf_trace_start'])) {
+		return;
+	}
+
+	$now = microtime(true);
+	$step = round($now - ($GLOBALS['nf_trace_last'] ?? $now), 4);
+	$total = round($now - $GLOBALS['nf_trace_start'], 4);
+
+	error_log(sprintf('[NF TRACE] +%ss (Total: %ss) - %s', $step, $total, $label));
+	$GLOBALS['nf_trace_last'] = $now;
+}
+
+/**
+ * Temporary execution trace for Ninja Forms submissions.
+ *
+ * @since 2.3.2 Initial release
+ * @return void
+ */
+add_action('wp_ajax_ninja_forms_ajax_submit', function (): void {
+	$GLOBALS['nf_trace_start'] = microtime(true);
+	$GLOBALS['nf_trace_last'] = $GLOBALS['nf_trace_start'];
+
+	error_log('--- [NF TRACE START] AJAX Submit Hook Triggered ---');
+}, 1);
+
+/**
+ *
+ * @return void
+ * @since 2.3.2 Initial release
+ */
+add_action('ninja_forms_processing', function (array $form_data): void {
+	$form_id = $form_data['form_id'] ?? ($form_data['id'] ?? 'unknown');
+	log_nf_milestone(sprintf('Processing Started (Form ID: %s)', $form_id));
+}, 1);
+
+/**
+ *
+ * @return array
+ * @since 2.3.2 Initial release
+ */
+add_action('ninja_forms_submit_data', function (array $form_data): array {
+	log_nf_milestone('Submit Data Filter');
+	return $form_data;
+}, 99);
+
+/**
+ *
+ * @return void
+ * @since 2.3.2 Initial release
+ */
+add_action('ninja_forms_before_response', function (): void {
+	log_nf_milestone('Before Response (Form actions finished processing)');
+}, 1);
