@@ -232,7 +232,9 @@ function reduce_stripe_checkout_session_expiry_time( array $session_parameters )
  * 	it seamlessly falls back to analyzing the current page context using a regex
  * 	(regular expression) equivalent match condition against the request URI path.
  *
- * @since 2.0.0
+ * @since 2.0.0 Initial release.
+ * @since 2.3.2 Assign the metadata keys 'customer_first_name' and 'customer_last_name' to the $session_parameters array.
+ *	These parameters will be passed to both the Stripe checkout.session.payment_intent and checkout.session.expired objects.
  *
  * @param array $session_parameters The active Stripe checkout session configuration parameters.
  * @return array The resolved value of the 'activity_type' metadata key to append to the top-level Stripe checkout session data object.
@@ -255,15 +257,29 @@ function get_stripe_checkout_activity_type( array $session_parameters ): array {
 		};
 	}
 
-	// 2. Ensure metadata structure exists
+	// 2. Ensure both metadata structural arrays exist
 	if ( ! isset( $session_parameters['payment_intent_data']['metadata'] ) ) {
 		$session_parameters['payment_intent_data']['metadata'] = [];
 	}
+	if ( ! isset( $session_parameters['metadata'] ) ) {
+		$session_parameters['metadata'] = [];
+	}
 
-	// 3. Assign the determined string to the array key
-	$session_parameters['payment_intent_data']['metadata']['activity_type'] = $activity_type;
+	// 3. Extract names safely if they exist in the incoming payload or defaults
+	$first_name = $session_parameters['payment_intent_data']['metadata']['customer_first_name'] ?? '';
+	$last_name  = $session_parameters['payment_intent_data']['metadata']['customer_last_name'] ?? '';
 
-	// 4. Return the entire modified array (maintaining the contract)
+	// 4. Assign data to payment_intent_data (for financial records)
+	$session_parameters['payment_intent_data']['metadata']['activity_type']       = $activity_type;
+	$session_parameters['payment_intent_data']['metadata']['customer_first_name'] = $first_name;
+	$session_parameters['payment_intent_data']['metadata']['customer_last_name']  = $last_name;
+
+	// 5. PROMOTE data to the root-level metadata (so Checkout Session webhooks see it)
+	$session_parameters['metadata']['activity_type']       = $activity_type;
+	$session_parameters['metadata']['customer_first_name'] = $first_name;
+	$session_parameters['metadata']['customer_last_name']  = $last_name;
+
+	// 6. Return the entire modified array
 	return $session_parameters;
 }
 
@@ -335,6 +351,17 @@ add_action('ninja_forms_submit_data', function (array $form_data): array {
  * @return void
  * @since 2.3.2 Initial release
  */
-add_action('ninja_forms_before_response', function (): void {
-	log_nf_milestone('Before Response (Form actions finished processing)');
-}, 1);
+add_action( 'ninja_forms_before_response', function( array $form_data ): void {
+	log_nf_milestone( 'Before Response' );
+
+	// Inspect processed actions and any recorded submission errors
+	$actions = $form_data['actions'] ?? [];
+	$errors  = $form_data['errors'] ?? [];
+
+	error_log( sprintf( '[NF DEBUG] Actions Count: %d | Errors Count: %d', count( $actions ), count( $errors ) ) );
+
+	if ( ! empty( $errors ) ) {
+		error_log( '[NF ERRORS] ' . print_r( $errors, true ) );
+	}
+}, 1 );
+
