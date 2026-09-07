@@ -5,16 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased Version 2.3.2 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/28)
+## [Version 2.3.2 - 2026-09-07](https://github.com/rgadon107/custom-functionality/pull/28)
 
 ### Added
+- `src/integrations/ninja-forms.php`: Add tracing code to track the length of time required for Ninja Forms and WordPress to process an admin-ajax request on form submission.
 
 ### Changed
 - `/boostrap.php`: Updated plugin version number to `2.3.2`.
-
-### Fixed
-
-### Corrections
+- `/src/integrations/ninja-forms.php`:
+  - Update function `get_stripe_checkout_activity_type( array $session_parameters )`.
+    - Assign the metadata keys 'customer_first_name' and 'customer_last_name' to the $session_parameters array.
+    - These parameters will be passed to both the Stripe `checkout.session.payment_intent` and `checkout.session.expired` objects.
 
 ## [Version 2.3.1 - 2026-08-25](https://github.com/rgadon107/custom-functionality/pull/27)
 
