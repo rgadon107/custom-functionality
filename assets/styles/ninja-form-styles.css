@@ -96,39 +96,44 @@
 }
 
 /* Style a single checkbox to display the description below the element using the CSS "flex-wrap" property. */
-/* Ensure full-width container expansion for custom checkbox wrappers */
-.nf-field-container.full-width-checkbox-description,
-.nf-field-container.full-width-checkbox-description .field-wrap {
-	width: 100%;
-	max-width: 100%;
-	box-sizing: border-box;
+/* High-specificity overrides for custom full-width checkbox descriptions */
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description,
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description .field-wrap {
+	width: 100% !important;
+	max-width: 100% !important;
+	box-sizing: border-box !important;
 }
 
-/* Flexbox layout for single-line checkbox + label with wrapped full-width description */
-.nf-field-container.full-width-checkbox-description .field-wrap.checkbox-wrap {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	width: 100%;
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description .field-wrap.checkbox-wrap {
+	display: flex !important;
+	flex-wrap: wrap !important;
+	align-items: center !important;
+	width: 100% !important;
 }
 
 /* Checkbox element */
-.nf-field-container.full-width-checkbox-description .field-wrap .nf-field-element {
-	order: 1;
-	margin-right: 0.5rem;
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description .field-wrap .nf-field-element {
+	order: 1 !important;
+	margin-right: 0.5rem !important;
+	float: none !important;
 }
 
 /* Label element */
-.nf-field-container.full-width-checkbox-description .field-wrap .nf-field-label {
-	order: 2;
-	margin-bottom: 0;
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description .field-wrap .nf-field-label {
+	order: 2 !important;
+	margin-bottom: 0 !important;
+	float: none !important;
 }
 
-/* Force description to break to a new row and span 100% width matching adjacent HTML containers */
-.nf-field-container.full-width-checkbox-description .field-wrap .nf-field-description {
-	order: 3;
-	width: 100%;
-	flex-basis: 100%;
-	box-sizing: border-box;
-	margin-top: 0.5rem;
+/* Description forced to full container width on its own row */
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description .field-wrap .nf-field-description,
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description .field-wrap .nf-field-description p {
+	order: 3 !important;
+	width: 100% !important;
+	flex-basis: 100% !important;
+	max-width: 100% !important;
+	box-sizing: border-box !important;
+	margin-top: 0.5rem !important;
+	clear: both !important;
+	float: none !important;
 }
