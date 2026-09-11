@@ -23,20 +23,16 @@ function updateTargetVisibility(container, isOpen) {
 	if (!currentRow) return;
 
 	let nextRow = currentRow.nextElementSibling;
-	while (nextRow) {
-		const targetContainer = nextRow.querySelector('.accordion-target');
 
-		// Stop scanning if the next row is another accordion toggle or has no target
-		if (!targetContainer && nextRow.querySelector('.accordion-toggle')) {
+	while (nextRow) {
+		// Stop scanning if we hit the next accordion toggle header
+		if (nextRow.querySelector('.accordion-toggle')) {
 			break;
 		}
 
+		const targetContainer = nextRow.querySelector('.accordion-target');
 		if (targetContainer) {
-			if (isOpen) {
-				targetContainer.style.setProperty('display', 'block', 'important');
-			} else {
-				targetContainer.style.setProperty('display', 'none', 'important');
-			}
+			targetContainer.style.setProperty('display', isOpen ? 'block' : 'none', 'important');
 		}
 
 		nextRow = nextRow.nextElementSibling;
@@ -52,7 +48,7 @@ function toggleAccordion(toggleHeader) {
 	const container = toggleHeader.closest('.nf-field-container');
 	if (!container) return;
 
-	// Explicitly check current state before toggling
+	// Toggle the 'is-open' class on the container to trigger CSS icon rotation
 	const isCurrentlyOpen = container.classList.contains('is-open');
 	const newState = !isCurrentlyOpen;
 
@@ -78,7 +74,7 @@ function initAccordionListener() {
 	}, true);
 }
 
-// Bind listener safely after DOM body initialization
+// Ensure event listener binds AFTER document body exists
 if (document.readyState === 'loading') {
 	document.addEventListener('DOMContentLoaded', initAccordionListener);
 } else {
