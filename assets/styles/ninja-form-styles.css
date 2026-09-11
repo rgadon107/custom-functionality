@@ -62,14 +62,23 @@
 	margin-bottom: 0;
 }
 
-/* 3. Base Icon State (Caret pointing RIGHT when collapsed) */
+/* 2. Accordion Toggle Container & Header */
+.accordion-toggle h3 {
+	position: relative;
+	padding-left: 2.25rem; /* 36px / 16px */
+	cursor: pointer;
+	user-select: none;
+	margin-bottom: 0;
+}
+
+/* 3. Base Icon State (Caret pointing RIGHT when collapsed - rem units) */
 .accordion-toggle h3::before {
 	content: "";
 	position: absolute;
 	left: 0;
 	top: 50%;
-	width: 22px;
-	height: 22px;
+	width: 1.65rem;  /* 26.4px / 16px */
+	height: 1.65rem; /* 26.4px / 16px */
 	/* Native SVG faces right; no additional rotation needed when collapsed */
 	transform: translateY(-50%) rotate(0deg);
 	transition: transform 0.25s ease-in-out;
