@@ -8,9 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 ## [Unreleased Version 2.3.3 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/29)
 
 ### Added
+- `/assets/scripts/accordion-toggle-handler.js`: Add Ninja Forms `/accordion-toggle-handler.js` to build custom accordion feature in Ninja Form.
+- `/assets/styles/ninja-form-styles.css`: Add styles for Ninja Forms custom accordion handler.
 
 ### Changed
 - `/boostrap.php`: Updated plugin version number to `2.3.3`.
+- `/src/asset/handler.php`: Update `__NAMESPACE__ . '/enqueue_plugin_scripts()'` to register `/accordion-toggle-handler.js` script file.
 
 ### Fixed
 
