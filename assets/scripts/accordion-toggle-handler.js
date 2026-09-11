@@ -12,6 +12,12 @@
  * @link        https://developer.wordpress.org/coding-standards/wordpress-coding-standards/javascript/
  */
 
+/**
+ * Updates visibility of target fields in adjacent rows relative to a toggle container.
+ *
+ * @param {Element} container The .accordion-toggle container element.
+ * @param {boolean} isOpen    Whether the accordion section should be open.
+ */
 function updateTargetVisibility(container, isOpen) {
 	const currentRow = container.closest('.nf-row');
 	if (!currentRow) return;
@@ -19,36 +25,60 @@ function updateTargetVisibility(container, isOpen) {
 	let nextRow = currentRow.nextElementSibling;
 	while (nextRow) {
 		const targetContainer = nextRow.querySelector('.accordion-target');
-		if (!targetContainer) break;
 
-		targetContainer.style.setProperty('display', isOpen ? 'block' : 'none', 'important');
+		// Stop scanning if the next row is another accordion toggle or has no target
+		if (!targetContainer && nextRow.querySelector('.accordion-toggle')) {
+			break;
+		}
+
+		if (targetContainer) {
+			if (isOpen) {
+				targetContainer.style.setProperty('display', 'block', 'important');
+			} else {
+				targetContainer.style.setProperty('display', 'none', 'important');
+			}
+		}
+
 		nextRow = nextRow.nextElementSibling;
 	}
 }
 
+/**
+ * Toggles class state and updates associated targets for a header element.
+ *
+ * @param {Element} toggleHeader The element matching .accordion-toggle.
+ */
 function toggleAccordion(toggleHeader) {
 	const container = toggleHeader.closest('.nf-field-container');
 	if (!container) return;
 
-	container.classList.toggle('is-open');
-	const isOpen = container.classList.contains('is-open');
+	// Explicitly check current state before toggling
+	const isCurrentlyOpen = container.classList.contains('is-open');
+	const newState = !isCurrentlyOpen;
 
-	updateTargetVisibility(container, isOpen);
+	if (newState) {
+		container.classList.add('is-open');
+	} else {
+		container.classList.remove('is-open');
+	}
+
+	updateTargetVisibility(container, newState);
 }
 
+/**
+ * Binds global capture-phase click listener for accordion elements.
+ */
 function initAccordionListener() {
-	console.log('--- ACCORDION LISTENER ATTACHED TO DOCUMENT ---');
 	document.addEventListener('click', function(e) {
 		const toggleHeader = e.target.closest('.accordion-toggle');
 		if (toggleHeader) {
-			console.log('Accordion header clicked!');
 			e.preventDefault();
 			toggleAccordion(toggleHeader);
 		}
 	}, true);
 }
 
-// Ensure event listener binds AFTER document body exists
+// Bind listener safely after DOM body initialization
 if (document.readyState === 'loading') {
 	document.addEventListener('DOMContentLoaded', initAccordionListener);
 } else {
