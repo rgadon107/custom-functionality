@@ -2,7 +2,7 @@
  * Ninja Forms Accordion Toggle Handler
  *
  * Handles collapsible content sections within Ninja Forms, including
- * multi-part form page transitions. Toggles visibility for fields marked
+ * multipart form page transitions. Toggles visibility for fields marked
  * with `.accordion-target` when a `.accordion-toggle` header is clicked.
  *
  * @package     WordPress
@@ -14,49 +14,57 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
-	// Helper function to toggle accordion target fields
-	function toggleAccordion(toggleHeader) {
-		// Find the top-level field container if toggleHeader is an inner div
-		const mainContainer = toggleHeader.closest('.nf-field-container') || toggleHeader;
-		mainContainer.classList.toggle('is-open');
+	/**
+	 * Updates visibility of target fields sibling to a given toggle container.
+	 *
+	 * @param {Element} container The .accordion-toggle container element.
+	 * @param {boolean} isOpen    Whether the accordion section should be open.
+	 */
+	function updateTargetVisibility(container, isOpen) {
+		const currentNfField = container.closest('nf-field') || container.closest('.nf-cell');
+		if (!currentNfField) return;
 
-		// Traverses sibling .nf-field-containers
-		let nextElem = mainContainer.nextElementSibling;
-		while (nextElem && (nextElem.classList.contains('accordion-target') || nextElem.querySelector('.accordion-target'))) {
-			const isHidden = nextElem.style.display === 'none' || getComputedStyle(nextElem).display === 'none';
-			nextElem.style.display = isHidden ? 'block' : 'none';
-			nextElem = nextElem.nextElementSibling;
+		let nextNfField = currentNfField.nextElementSibling;
+		while (nextNfField) {
+			const targetContainer = nextNfField.querySelector('.accordion-target');
+			if (!targetContainer) break;
+
+			targetContainer.style.display = isOpen ? 'block' : 'none';
+			nextNfField = nextNfField.nextElementSibling;
 		}
 	}
 
 	/**
-	 * 1. Event Delegation: Listens for clicks anywhere on the page, even if fields re-render
+	 * Toggles class state and updates associated targets for a header element.
+	 *
+	 * @param {Element} toggleHeader The clicked element matching .accordion-toggle.
 	 */
-	document.body.addEventListener('click', function(e) {
-		// Check if click was inside an accordion header, or directly on the h3 inside an html-wrap
-		const toggleHeader = e.target.closest('.accordion-toggle') || e.target.closest('.nf-field-container.accordion-toggle');
+	function toggleAccordion(toggleHeader) {
+		const container = toggleHeader.closest('.nf-field-container');
+		if (!container) return;
 
+		container.classList.toggle('is-open');
+		const isOpen = container.classList.contains('is-open');
+
+		updateTargetVisibility(container, isOpen);
+	}
+
+	// 1. Event Delegation: Listens for clicks anywhere inside .accordion-toggle
+	document.body.addEventListener('click', function(e) {
+		const toggleHeader = e.target.closest('.accordion-toggle');
 		if (toggleHeader) {
 			e.preventDefault();
 			toggleAccordion(toggleHeader);
 		}
 	});
 
-	// 2. Ninja Forms Native Event Listener: Runs every time a step changes or form re-renders
+	// 2. Ninja Forms Native Event Listener: Handles multipart transitions and page loads
 	if (typeof Marionette !== 'undefined' && typeof nfRadio !== 'undefined') {
 		nfRadio.channel('form').on('render:view', function() {
-
-			// Ensure all target fields start hidden on fresh step renders
-			document.querySelectorAll('.accordion-toggle').forEach(function(toggleHeader) {
-				let nextElem = toggleHeader.nextElementSibling;
-				const isOpen = toggleHeader.classList.contains('is-open');
-
-				while (nextElem && nextElem.classList.contains('accordion-target')) {
-					nextElem.style.display = isOpen ? 'block' : 'none';
-					nextElem = nextElem.nextElementSibling;
-				}
+			document.querySelectorAll('.nf-field-container.accordion-toggle').forEach(function(container) {
+				const isOpen = container.classList.contains('is-open');
+				updateTargetVisibility(container, isOpen);
 			});
-
 		});
 	}
 
