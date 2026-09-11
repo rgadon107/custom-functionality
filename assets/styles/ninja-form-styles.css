@@ -94,3 +94,30 @@
 .accordion-toggle.is-open h3::before {
 	transform: translateY(-50%) rotate(90deg);
 }
+
+/* Style a single checkbox to display the description below the element using the CSS "flex-wrap" property. */
+/* Enable flex wrapping for checkbox field wrappers */
+.nf-field-container .field-wrap.checkbox-wrap {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+/* Force the element (checkbox) and label into the first row */
+.nf-field-container .field-wrap.checkbox-wrap .nf-field-element {
+	order: 1;
+	margin-right: 0.5rem; /* Space between checkbox and label */
+}
+
+.nf-field-container .field-wrap.checkbox-wrap .nf-field-label {
+	order: 2;
+	margin-bottom: 0;
+}
+
+/* Force the description to break onto its own new line below label/checkbox */
+.nf-field-container .field-wrap.checkbox-wrap .nf-field-description {
+	order: 3;
+	width: 100%;       /* Takes full width to force a line break */
+	flex-basis: 100%;  /* Ensures full-width flex basis across browsers */
+	margin-top: 0.5rem; /* Spacing below the checkbox row */
+}
