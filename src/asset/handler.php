@@ -62,7 +62,7 @@ function enqueue_plugin_scripts(): void	{
 			'condition' => true,
 		],
 		'accordion-toggle-handler'	=>	[
-			'file'	=> 'assets/scripts/accordion-toggle-handler.js',
+			'file'	=> '/assets/scripts/accordion-toggle-handler.js',
 			'deps'	=> [],
 			'in_footer' => true,
 			'condition' => true,
