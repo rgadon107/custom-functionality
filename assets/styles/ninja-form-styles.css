@@ -96,28 +96,39 @@
 }
 
 /* Style a single checkbox to display the description below the element using the CSS "flex-wrap" property. */
-/* Enable flex wrapping for checkbox field wrappers */
-.nf-field-container .field-wrap.checkbox-wrap {
+/* Ensure full-width container expansion for custom checkbox wrappers */
+.nf-field-container.full-width-checkbox-description,
+.nf-field-container.full-width-checkbox-description .field-wrap {
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+/* Flexbox layout for single-line checkbox + label with wrapped full-width description */
+.nf-field-container.full-width-checkbox-description .field-wrap.checkbox-wrap {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
+	width: 100%;
 }
 
-/* Force the element (checkbox) and label into the first row */
-.nf-field-container .field-wrap.checkbox-wrap .nf-field-element {
+/* Checkbox element */
+.nf-field-container.full-width-checkbox-description .field-wrap .nf-field-element {
 	order: 1;
-	margin-right: 0.5rem; /* Space between checkbox and label */
+	margin-right: 0.5rem;
 }
 
-.nf-field-container .field-wrap.checkbox-wrap .nf-field-label {
+/* Label element */
+.nf-field-container.full-width-checkbox-description .field-wrap .nf-field-label {
 	order: 2;
 	margin-bottom: 0;
 }
 
-/* Force the description to break onto its own new line below label/checkbox */
-.nf-field-container .field-wrap.checkbox-wrap .nf-field-description {
+/* Force description to break to a new row and span 100% width matching adjacent HTML containers */
+.nf-field-container.full-width-checkbox-description .field-wrap .nf-field-description {
 	order: 3;
-	width: 100%;       /* Takes full width to force a line break */
-	flex-basis: 100%;  /* Ensures full-width flex basis across browsers */
-	margin-top: 0.5rem; /* Spacing below the checkbox row */
+	width: 100%;
+	flex-basis: 100%;
+	box-sizing: border-box;
+	margin-top: 0.5rem;
 }
