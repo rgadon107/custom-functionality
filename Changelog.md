@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 ### Added
 - `/assets/scripts/accordion-toggle-handler.js`: Add Ninja Forms `/accordion-toggle-handler.js` to build custom accordion feature in Ninja Form.
-- `/assets/styles/ninja-form-styles.css`: Add styles for Ninja Forms custom accordion handler.
+- `/assets/styles/ninja-form-styles.css`:
+  - Add styles for Ninja Forms custom accordion handler.
+  - Style a single checkbox to display the description below the element using the CSS "flex-wrap" property.
 
 ### Changed
 - `/boostrap.php`: Updated plugin version number to `2.3.3`.
