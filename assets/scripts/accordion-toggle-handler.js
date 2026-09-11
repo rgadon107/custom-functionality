@@ -12,12 +12,6 @@
  * @link        https://developer.wordpress.org/coding-standards/wordpress-coding-standards/javascript/
  */
 
-/**
- * Updates visibility of target fields in adjacent rows relative to a toggle container.
- *
- * @param {Element} container The .accordion-toggle container element.
- * @param {boolean} isOpen    Whether the accordion section should be open.
- */
 function updateTargetVisibility(container, isOpen) {
 	const currentRow = container.closest('.nf-row');
 	if (!currentRow) return;
@@ -27,16 +21,11 @@ function updateTargetVisibility(container, isOpen) {
 		const targetContainer = nextRow.querySelector('.accordion-target');
 		if (!targetContainer) break;
 
-		targetContainer.style.display = isOpen ? 'block' : 'none';
+		targetContainer.style.setProperty('display', isOpen ? 'block' : 'none', 'important');
 		nextRow = nextRow.nextElementSibling;
 	}
 }
 
-/**
- * Toggles class state and updates associated targets for a header element.
- *
- * @param {Element} toggleHeader The element matching .accordion-toggle.
- */
 function toggleAccordion(toggleHeader) {
 	const container = toggleHeader.closest('.nf-field-container');
 	if (!container) return;
@@ -47,11 +36,21 @@ function toggleAccordion(toggleHeader) {
 	updateTargetVisibility(container, isOpen);
 }
 
-// Global capture-phase click delegator
-document.addEventListener('click', function(e) {
-	const toggleHeader = e.target.closest('.accordion-toggle');
-	if (toggleHeader) {
-		e.preventDefault();
-		toggleAccordion(toggleHeader);
-	}
-}, true);
+function initAccordionListener() {
+	console.log('--- ACCORDION LISTENER ATTACHED TO DOCUMENT ---');
+	document.addEventListener('click', function(e) {
+		const toggleHeader = e.target.closest('.accordion-toggle');
+		if (toggleHeader) {
+			console.log('Accordion header clicked!');
+			e.preventDefault();
+			toggleAccordion(toggleHeader);
+		}
+	}, true);
+}
+
+// Ensure event listener binds AFTER document body exists
+if (document.readyState === 'loading') {
+	document.addEventListener('DOMContentLoaded', initAccordionListener);
+} else {
+	initAccordionListener();
+}
