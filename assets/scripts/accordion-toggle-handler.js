@@ -32,7 +32,11 @@ function updateTargetVisibility(container, isOpen) {
 
 		const targetContainer = nextRow.querySelector('.accordion-target');
 		if (targetContainer) {
-			targetContainer.style.setProperty('display', isOpen ? 'block' : 'none', 'important');
+			if (isOpen) {
+				targetContainer.style.setProperty('display', 'block', 'important');
+			} else {
+				targetContainer.style.setProperty('display', 'none', 'important');
+			}
 		}
 
 		nextRow = nextRow.nextElementSibling;
@@ -48,33 +52,39 @@ function toggleAccordion(toggleHeader) {
 	const container = toggleHeader.closest('.nf-field-container');
 	if (!container) return;
 
-	// Toggle the 'is-open' class on the container to trigger CSS icon rotation
-	const isCurrentlyOpen = container.classList.contains('is-open');
-	const newState = !isCurrentlyOpen;
+	// Toggle class explicitly and capture new state
+	const isOpen = container.classList.toggle('is-open');
 
-	if (newState) {
-		container.classList.add('is-open');
-	} else {
-		container.classList.remove('is-open');
-	}
+	updateTargetVisibility(container, isOpen);
+}
 
-	updateTargetVisibility(container, newState);
+/**
+ * Ensures initial display state matches the presence/absence of .is-open on page load.
+ */
+function syncInitialAccordionState() {
+	document.querySelectorAll('.nf-field-container.accordion-toggle').forEach(function(container) {
+		const isOpen = container.classList.contains('is-open');
+		updateTargetVisibility(container, isOpen);
+	});
 }
 
 /**
  * Binds global capture-phase click listener for accordion elements.
  */
 function initAccordionListener() {
+	syncInitialAccordionState();
+
 	document.addEventListener('click', function(e) {
 		const toggleHeader = e.target.closest('.accordion-toggle');
 		if (toggleHeader) {
 			e.preventDefault();
+			e.stopPropagation();
 			toggleAccordion(toggleHeader);
 		}
 	}, true);
 }
 
-// Ensure event listener binds AFTER document body exists
+// Bind listener safely after DOM body initialization
 if (document.readyState === 'loading') {
 	document.addEventListener('DOMContentLoaded', initAccordionListener);
 } else {
