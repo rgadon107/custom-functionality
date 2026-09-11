@@ -49,60 +49,33 @@
 		updateTargetVisibility(container, isOpen);
 	}
 
-	/**
-	 * Scans and attaches click events to all current accordion toggles.
-	 */
-	function initAccordions() {
+	// 1. Direct Root-Level Click Delegator (Fires immediately on any page click)
+	document.addEventListener('click', function(e) {
+		const toggleHeader = e.target.closest('.accordion-toggle');
+		if (toggleHeader) {
+			e.preventDefault();
+			toggleAccordion(toggleHeader);
+		}
+	}, true);
+
+	// 2. Initial state sync on form render / multi-step change
+	function syncInitialStates() {
 		document.querySelectorAll('.nf-field-container.accordion-toggle').forEach(function(container) {
-			const clickableElement = container.querySelector('h3') || container;
-
-			if (clickableElement.dataset.accordionBound === 'true') return;
-			clickableElement.dataset.accordionBound = 'true';
-			clickableElement.style.cursor = 'pointer';
-
-			clickableElement.addEventListener('click', function(e) {
-				e.preventDefault();
-				e.stopPropagation();
-				toggleAccordion(container);
-			});
-
 			const isOpen = container.classList.contains('is-open');
 			updateTargetVisibility(container, isOpen);
 		});
 	}
 
-	// 1. Capture-phase fallback listener for clicks at document root
-	document.addEventListener('click', function(e) {
-		const toggleHeader = e.target.closest('.accordion-toggle');
-		if (toggleHeader) {
-			toggleAccordion(toggleHeader);
-		}
-	}, true);
-
-	// 2. Ninja Forms Marionette & Backbone Event Subscriptions
-	function setupRadioListeners() {
-		if (typeof nfRadio === 'undefined') return;
-
-		// Triggers when multi-part steps change or view re-renders
+	// Subscribe state sync to Ninja Forms radio events if available
+	if (typeof nfRadio !== 'undefined') {
 		nfRadio.channel('form').on('render:view after:renderFields', function() {
-			setTimeout(initAccordions, 50);
+			setTimeout(syncInitialStates, 50);
 		});
-
-		// Triggers as individual field views attach to DOM
 		nfRadio.channel('fields').on('render:view', function() {
-			setTimeout(initAccordions, 50);
+			setTimeout(syncInitialStates, 50);
 		});
-	}
-
-	// Initialize immediately if DOM is ready, or wait for ready state
-	if (document.readyState === 'interactive' || document.readyState === 'complete') {
-		setupRadioListeners();
-		initAccordions();
 	} else {
-		document.addEventListener('DOMContentLoaded', function() {
-			setupRadioListeners();
-			initAccordions();
-		});
+		document.addEventListener('DOMContentLoaded', syncInitialStates);
 	}
 
 })();
