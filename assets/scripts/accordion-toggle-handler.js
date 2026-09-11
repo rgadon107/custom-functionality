@@ -16,20 +16,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// Helper function to toggle accordion target fields
 	function toggleAccordion(toggleHeader) {
-		toggleHeader.classList.toggle('is-open');
+		// Find the top-level field container if toggleHeader is an inner div
+		const mainContainer = toggleHeader.closest('.nf-field-container') || toggleHeader;
+		mainContainer.classList.toggle('is-open');
 
-		// Find and toggle visibility of all adjacent elements marked with 'accordion-target'
-		let nextElem = toggleHeader.nextElementSibling;
-		while (nextElem && nextElem.classList.contains('accordion-target')) {
+		// Traverses sibling .nf-field-containers
+		let nextElem = mainContainer.nextElementSibling;
+		while (nextElem && (nextElem.classList.contains('accordion-target') || nextElem.querySelector('.accordion-target'))) {
 			const isHidden = nextElem.style.display === 'none' || getComputedStyle(nextElem).display === 'none';
 			nextElem.style.display = isHidden ? 'block' : 'none';
 			nextElem = nextElem.nextElementSibling;
 		}
 	}
 
-	// 1. Event Delegation: Listens for clicks anywhere on the page, even if fields re-render
+	/**
+	 * 1. Event Delegation: Listens for clicks anywhere on the page, even if fields re-render
+	 */
 	document.body.addEventListener('click', function(e) {
-		const toggleHeader = e.target.closest('.accordion-toggle');
+		// Check if click was inside an accordion header, or directly on the h3 inside an html-wrap
+		const toggleHeader = e.target.closest('.accordion-toggle') || e.target.closest('.nf-field-container.accordion-toggle');
+
 		if (toggleHeader) {
 			e.preventDefault();
 			toggleAccordion(toggleHeader);
