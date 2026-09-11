@@ -61,6 +61,12 @@ function enqueue_plugin_scripts(): void	{
 			'in_footer' => true,
 			'condition' => true,
 		],
+		'accordion-toggle-handler'	=>	[
+			'file'	=> 'assets/scripts/accordion-toggle-handler.js',
+			'deps'	=> [],
+			'in_footer' => true,
+			'condition' => true,
+		]
 	];
 
 	$asset_paths = _get_asset_paths();
