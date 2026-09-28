@@ -46,3 +46,109 @@
 	color: var(--brand-green-dark);
 	text-decoration: underline var(--brand-green-dark) 2px;
 }
+
+/* Style an accordion block with SVG icon before block header for membership form. */
+/* 1. Base style for target content (Hidden by default) */
+.nf-field-container.accordion-target {
+	display: none;
+}
+
+/* 2. Accordion Toggle Container & Header */
+.accordion-toggle h3 {
+	position: relative;
+	padding-left: 32px; /* Space reserved for the SVG icon */
+	cursor: pointer;
+	user-select: none;
+	margin-bottom: 0;
+}
+
+/* 2. Accordion Toggle Container & Header */
+.accordion-toggle h3 {
+	position: relative;
+	padding-left: 2.25rem; /* 36px / 16px */
+	cursor: pointer;
+	user-select: none;
+	margin-bottom: 0;
+}
+
+/* 3. Base Icon State (Caret pointing RIGHT when collapsed - rem units) */
+.accordion-toggle h3::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 1.65rem;  /* 26.4px / 16px */
+	height: 1.65rem; /* 26.4px / 16px */
+	/* Native SVG faces right; no additional rotation needed when collapsed */
+	transform: translateY(-50%) rotate(0deg);
+	transition: transform 0.25s ease-in-out;
+
+	/* Encoded Data URI of the solid caret SVG vector */
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M8.5 17C8.5 17.4045 8.74364 17.7691 9.11732 17.9239C9.49099 18.0787 9.92111 17.9931 10.2071 17.7071L15.2071 12.7071C15.5976 12.3166 15.5976 11.6834 15.2071 11.2929L10.2071 6.29289C9.92111 6.00689 9.49099 5.92134 9.11732 6.07612C8.74364 6.2309 8.5 6.59554 8.5 7V17Z' fill='%23000000'/%3E%3C/svg%3E");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+/* 4. Active Icon State (Caret rotates DOWN when expanded) */
+.accordion-toggle.is-open h3::before {
+	transform: translateY(-50%) rotate(90deg);
+}
+
+/* ==========================================================================
+   Ninja Forms Custom Checkbox Layout
+   Single-line checkbox/label with full-width wrapped description block
+   ========================================================================== */
+
+/* 1. High-specificity container & field-wrap expansion */
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description,
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description .field-wrap {
+	width: 100% !important;
+	max-width: 100% !important;
+	box-sizing: border-box !important;
+}
+
+/* 2. Flexbox container setup */
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description .field-wrap.checkbox-wrap {
+	display: flex !important;
+	flex-wrap: wrap !important;
+	align-items: center !important;
+	width: 100% !important;
+}
+
+/* 3. Checkbox element (Row 1, Item 1) */
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description .field-wrap .nf-field-element {
+	order: 1 !important;
+	margin-right: 0.5rem !important;
+	float: none !important;
+}
+
+/* 4. Label element (Row 1, Item 2) */
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description .field-wrap .nf-field-label {
+	order: 2 !important;
+	margin-bottom: 0 !important;
+	float: none !important;
+}
+
+/* 5. Description wrapper forced to full container width (Row 2) */
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description.label-right .field-wrap .nf-field-description,
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description .field-wrap .nf-field-description,
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description .field-wrap div[id^="nf-description-"] {
+	order: 3 !important;
+	width: 100% !important;
+	min-width: 100% !important;
+	max-width: 100% !important;
+	flex: 0 0 100% !important;
+	flex-basis: 100% !important;
+	box-sizing: border-box !important;
+	margin-top: 0.5rem !important;
+	clear: both !important;
+	float: none !important;
+}
+
+/* 6. Description paragraph inner element expansion */
+html body .nf-form-layout .nf-field-container.full-width-checkbox-description .field-wrap .nf-field-description p {
+	width: 100% !important;
+	max-width: 100% !important;
+	margin-bottom: 0 !important;
+}

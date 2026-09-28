@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 2.3.3 - 2026-09-28](https://github.com/rgadon107/custom-functionality/pull/29)
+
+### Added
+- `/assets/scripts/accordion-toggle-handler.js`: Add Ninja Forms `/accordion-toggle-handler.js` to build custom accordion feature in Ninja Form.
+- `/assets/styles/ninja-form-styles.css`:
+  - Add styles for Ninja Forms custom accordion handler.
+  - Style a single checkbox to display the description below the element using the CSS "flex-wrap" property.
+
+### Changed
+- `/boostrap.php`: Updated plugin version number to `2.3.3`.
+- `/src/asset/handler.php`: Update `__NAMESPACE__ . '/enqueue_plugin_scripts()'` to register `/accordion-toggle-handler.js` script file.
+
 ## [Version 2.3.2 - 2026-09-07](https://github.com/rgadon107/custom-functionality/pull/28)
 
 ### Added
