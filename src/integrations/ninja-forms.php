@@ -56,8 +56,8 @@ function cleanup_form_submission_data(array $form_data): array	{
 		if ( str_contains( $key_lowercase, 'county_outside_msp_metro' ) ) {
 			// Find the companion dropdown field in the payload and ensure its value matches the logic
 			foreach ( $form_data['fields'] as $search_id => $search_field ) {
-				if ( str_contains( strtolower( $search_field['key'] ?? '' ), 'county_1780529684228' ) ) {
-					$form_data['fields'][$search_id]['value'] = 'none_of_these';
+				if ( str_contains( strtolower( $search_field['key'] ?? '' ), 'county_new_1790575767223' ) ) {
+					$form_data['fields'][$search_id]['value'] = 'None Of These';
 					break;
 				}
 			}

@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 2.3.4 - 2026-10-10](https://github.com/rgadon107/custom-functionality/pull/30)
+
+### Changed
+- `/boostrap.php`: Updated plugin version number to `2.3.4`.
+- `/src/integrations/ninja-forms.php`: Update a control statement in `cleanup_form_submission_data()` to match the updated 'County' field in the membership form.
+
 ## [Version 2.3.3 - 2026-09-28](https://github.com/rgadon107/custom-functionality/pull/29)
 
 ### Added
