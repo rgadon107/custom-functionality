@@ -11,7 +11,7 @@
 use function gardenClubOfMpls\CustomFunctionalityPlugin\Asset\_get_media_asset_version;
 
 $upload_dir      = wp_upload_dir();
-$upload_base_url = trailingslashit( $upload_dir['baseurl'] ) . '2026/08/';
+$upload_base_url = trailingslashit( $upload_dir['baseurl'] ) . '2026/10/';
 
 return array(
 	'desktop_url' => _get_media_asset_version( $upload_base_url . '2026-GCM-Photo-Directory-Desktop.pdf' ),
