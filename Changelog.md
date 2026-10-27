@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Version 2.3.6 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/32)
+
+### Added
+
+### Changed
+- `/boostrap.php`: Version number updated to `2.3.6`.
+
+### Fixed
+
+### Corrections
+
 ## [Version 2.3.5 - 2026-10-26](https://github.com/rgadon107/custom-functionality/pull/31)
 
 ### Changed
