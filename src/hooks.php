@@ -131,6 +131,7 @@ function initialize_custom_post_types(): void {
 	// Array of configuration file paths to load.
 	$cpt_configs = [
 		__DIR__ . '/custom/config/auction-item.php',
+		__DIR__ . '/custom/config/events.php',
 		// Future CPT configs go here: __DIR__ . '/custom/config/members.php',
 	];
 
