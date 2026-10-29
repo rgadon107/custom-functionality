@@ -8,9 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 ## [Version 2.3.6 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/32)
 
 ### Added
+- `/sandbox/testing.php`: Add a local development module for testing code.
 
 ### Changed
-- `/boostrap.php`: Version number updated to `2.3.6`.
+- `/boostrap.php`:
+  - Version number updated to `2.3.6`.
+  - `_is_in_development_mode()`: Add environment check for local/development environments.
+  - `launch()`: Load `/sandbox/` module when environment mode is 'local' or 'development'.
 
 ### Fixed
 
