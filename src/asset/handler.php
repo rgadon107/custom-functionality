@@ -137,13 +137,14 @@ function enqueue_block_editor_scripts(): void {
 
 	// Evaluate target editor post-types
 	$is_auction_item = $screen && 'auction_item' === $screen->post_type;
+	$is_events 		 = $screen && 'events' === $screen->post_type;
 
 	$editor_scripts = [
 		'auction-item-meta-panel' => [
 			'file'      => '/assets/scripts/auction-item-meta-panel.js',
 			'deps'      => [
 				'wp-plugins',
-				'wp-edit-post',
+				'wp-editor',
 				'wp-components',
 				'wp-core-data',
 				'wp-data',
@@ -152,7 +153,19 @@ function enqueue_block_editor_scripts(): void {
 			'in_footer' => true,
 			'condition' => $is_auction_item,
 		],
-		// Future editor sidebar/block module scripts go here.
+		'event-meta-panel' => [
+			'file'      => '/assets/scripts/event-meta-panel.js',
+			'deps'      => [
+				'wp-plugins',
+				'wp-editor',
+				'wp-components',
+				'wp-core-data',
+				'wp-data',
+				'wp-element',
+			],
+			'in_footer' => true,
+			'condition' => $is_events,
+		]
 	];
 
 	$asset_paths = _get_asset_paths();
