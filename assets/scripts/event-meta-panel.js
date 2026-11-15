@@ -2,21 +2,22 @@
  * Event Metadata Sidebar Panel for the WordPress Block Editor.
  *
  * Registers a custom Gutenberg plugin sidebar panel (`gcm-event-meta-panel`)
- * on the `events` custom post-type edit screen. Exposes input controls for
+ * on the `events` custom post type edit screen. Exposes input controls for
  * temporal, location, presenter, and logistics metadata keys registered via
  * `register_post_meta()` with `show_in_rest` enabled, syncing values in real
  * time with the Block Editor data store and Block Bindings API.
  *
+ * Enqueued script dependencies (registered via PHP in /src/asset/handler.php):
+ * - wp-plugins
+ * - wp-editor
+ * - wp-components
+ * - wp-core-data
+ * - wp-data
+ * - wp-element
+ *
  * @package    gardenClubOfMpls\CustomFunctionalityPlugin
  * @subpackage Assets\Scripts
  * @since      2.3.6
- *
- * @requires   wp-plugins
- * @requires   wp-editor
- * @requires   wp-components
- * @requires   wp-core-data
- * @requires   wp-data
- * @requires   wp-element
  */
 
 ( function ( wp ) {
