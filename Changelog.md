@@ -9,12 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 ### Added
 - `/sandbox/testing.php`: Add a local development module for testing code.
+- `src/custom/config/events.php`:
+  - Added 2 helper functions to the 'Events' post-type configuration array file for handling metadata.
+    - `sanitize_event_date()` - Sanitize and validate an event date string against the YYYY-MM-DD format.
+	- `authorize_event_meta_edit()` - Authorize REST API and editor modifications for protected event metadata keys.
+  - Register the `$config['meta_fields']` array along with the 'events' custom post-type.
+- `/assets/scripts/event-meta-panel.js`:
+  - Add file to activate the 'Events' metadata sidebar panel in the WordPress block editor.
+  - Via the Block Bindings API, the metadata sidebar panel is now linked to post-meta JSON wrapping the HTML in the editor.
 
 ### Changed
 - `/boostrap.php`:
   - Version number updated to `2.3.6`.
   - `_is_in_development_mode()`: Add environment check for local/development environments.
   - `launch()`: Load `/sandbox/` module when environment mode is 'local' or 'development'.
+- `/src/asset/handler.php`:
+  - Updated function `enqueue_block_editor_scripts()`:
+    - Add conditional check `$is_events`.
+    - Register 'event-meta-panel' JavaScript file and dependencies to display a metadata sidebar in the WordPress editor for the 'events' post-type.
 
 ### Fixed
 
