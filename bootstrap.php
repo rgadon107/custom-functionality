@@ -120,6 +120,7 @@ function _get_plugin_url(): string	{
  * @since 1.8.0 Modify this function to serve as a module controller for the entire plugin.
  * @since 2.2.0 Add `/shortcodes/member-photo-directory.php`
  * @since 2.3.1 Add `/admin/auction-item.php`.
+ * @since 2.3.6	Add `/src/custom/bindings.php`.
  *
  * @return void
  */
