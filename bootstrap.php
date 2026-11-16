@@ -133,6 +133,7 @@ function autoload_files(): void	{
 		'/src/shortcodes/current-year.php',
 		'/src/shortcodes/member-photo-directory.php',
 		'/src/hooks.php',
+		'/src/custom/bindings.php',
 	];
 
 	foreach ( $plugin_files as $file ) {

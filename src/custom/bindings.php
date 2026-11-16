@@ -10,7 +10,7 @@
  *
  * @package    gardenClubOfMpls\CustomFunctionalityPlugin
  * @subpackage Source\Custom
- * @since      2.3.7
+ * @since      2.3.6
  */
 
 declare(strict_types=1);
