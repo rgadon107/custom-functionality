@@ -9,14 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 ### Added
 - `/sandbox/testing.php`: Add a local development module for testing code.
+
 - `src/custom/config/events.php`:
   - Added 2 helper functions to the 'Events' post-type configuration array file for handling metadata.
     - `sanitize_event_date()` - Sanitize and validate an event date string against the YYYY-MM-DD format.
 	- `authorize_event_meta_edit()` - Authorize REST API and editor modifications for protected event metadata keys.
   - Register the `$config['meta_fields']` array along with the 'events' custom post-type.
+
 - `/assets/scripts/event-meta-panel.js`:
   - Add file to activate the 'Events' metadata sidebar panel in the WordPress block editor.
   - Via the Block Bindings API, the metadata sidebar panel is now linked to post-meta JSON wrapping the HTML in the editor.
+
+- `/src/custom/bindings.php`: Add file to plugin and declare 2 functions:
+  - `register_event_block_bindings()` -  Registers custom block binding sources for formatted event metadata.
+  - `get_formatted_event_date_binding()` - Retrieves and formats an event date meta value as "Tuesday, January 12, 2027".
+
+- `/bootstrap.php` file: Add file path `/src/custom/bindings.php` to autoload() function.
 
 ### Changed
 - `/boostrap.php`:
