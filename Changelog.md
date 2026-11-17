@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Version 2.3.6 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/32)
+## [Version 2.4.0 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/32)
 
 ### Added
 - `/sandbox/testing.php`: Add a local development module for testing code.
@@ -24,17 +24,26 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - `register_event_block_bindings()` -  Registers custom block binding sources for formatted event metadata.
   - `get_formatted_event_date_binding()` - Retrieves and formats an event date meta value as "Tuesday, January 12, 2027".
 
+- `/src/custom/template-loader.php`: Register and load block templates for custom post-types using WP's `register_block_template()`.
+
+- `/src/hooks.php`: Register custom post-type block templates with the site editor on the WP `init` hook.
+
+- `/src/templates/` directory and files:
+  - Added directory to hold template files for use with each registered custom post-type.
+  - Added first template file `single-events.html` for use with the `events` post-type.
+
 - `/bootstrap.php` file: Add file path `/src/custom/bindings.php` to autoload() function.
 
 ### Changed
 - `/boostrap.php`:
-  - Version number updated to `2.3.6`.
+  - Version number updated to `2.4.0`.
+  - Requires WP updated to `7.1`.
   - `_is_in_development_mode()`: Add environment check for local/development environments.
   - `launch()`: Load `/sandbox/` module when environment mode is 'local' or 'development'.
 - `/src/asset/handler.php`:
   - Updated function `enqueue_block_editor_scripts()`:
     - Add conditional check `$is_events`.
-    - Register 'event-meta-panel' JavaScript file and dependencies to display a metadata sidebar in the WordPress editor for the 'events' post-type.
+    - Register `event-meta-panel.js` file and dependencies to display a metadata sidebar in the WordPress editor for the 'events' post-type.
 
 ### Fixed
 
