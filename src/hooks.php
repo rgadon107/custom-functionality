@@ -15,6 +15,7 @@ namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source;
 use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_cpt_from_config;
 use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_meta_from_config;
 use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Taxonomy\register_taxonomy_from_config;
+use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_cpt_block_templates;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -144,3 +145,11 @@ function initialize_custom_post_types(): void {
 		}
 	}
 }
+
+/**
+ * Registers custom post type block templates with the Site Editor on the `init` hook.
+ *
+ * @since 2.4.0
+ * @see   \gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_cpt_block_templates()
+ */
+add_action( 'init', register_cpt_block_templates(...) );
