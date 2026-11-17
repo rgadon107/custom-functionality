@@ -133,9 +133,9 @@ function autoload_files(): void	{
 		'/src/shortcodes/expire-content.php',
 		'/src/shortcodes/current-year.php',
 		'/src/shortcodes/member-photo-directory.php',
+		'/src/custom/template-loader.php',
 		'/src/hooks.php',
 		'/src/custom/bindings.php',
-		'/src/custom/template-loader.php',
 	];
 
 	foreach ( $plugin_files as $file ) {
