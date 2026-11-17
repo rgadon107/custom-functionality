@@ -135,6 +135,7 @@ function autoload_files(): void	{
 		'/src/shortcodes/member-photo-directory.php',
 		'/src/hooks.php',
 		'/src/custom/bindings.php',
+		'/src/custom/template-loader.php',
 	];
 
 	foreach ( $plugin_files as $file ) {
