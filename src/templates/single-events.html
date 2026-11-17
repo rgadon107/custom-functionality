@@ -1,0 +1,24 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
+<main class="wp-block-group">
+	<!-- wp:post-title {"level":1} /-->
+
+	<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap"}} -->
+	<div class="wp-block-group">
+		<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"gcm/formatted-event-date","args":{"key":"_event_start_date"}}}}} -->
+		<p>Start Date</p>
+		<!-- /wp:paragraph -->
+
+		<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"core/post-meta","args":{"key":"_event_location_name"}}}}} -->
+		<p>Location</p>
+		<!-- /wp:paragraph -->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:post-featured-image /-->
+	<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
