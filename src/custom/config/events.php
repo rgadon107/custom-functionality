@@ -125,7 +125,7 @@ return [
 			'description'       => 'Street address of the event venue',
 			'single'            => true,
 			'default'           => '',
-			'sanitize_callback' => 'sanitize_text_field',
+			'sanitize_callback' => 'sanitize_textarea_field',
 			'auth_callback'     => __NAMESPACE__ . '\authorize_event_meta_edit',
 			'show_in_rest'      => true,
 		],
