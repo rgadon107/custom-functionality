@@ -24,6 +24,7 @@ function register_pattern_categories(): void	{
 		'accordion-meeting-topics-table' 	=> array('label' => __('Accordion: Meeting Topics Table', 'custom-functionality')),
 		'message-before-registration-start' => array('label' => __('Message: Before Registration Start', 'custom-functionality')),
 		'message-after-registration-stop' 	=> array('label' => __('Message: After Registration Stop', 'custom-functionality')),
+		'event-secondary-session'			=> array('label' => __('Event: Secondary Session', 'custom-functionality')),
 	);
 
 	foreach ($categories as $slug => $settings) {
@@ -46,6 +47,7 @@ function register_plugin_block_patterns(): void {
 		'message-before-registration-start.php',
 		'message-after-registration-stop.php',
 		'accordion-meeting-topics.php',
+		'event-secondary-session.php'
 		];
 
 	foreach ( $patterns_to_register as $file ) {
