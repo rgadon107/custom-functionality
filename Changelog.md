@@ -20,9 +20,10 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Add file to activate the 'Events' metadata sidebar panel in the WordPress block editor.
   - Via the Block Bindings API, the metadata sidebar panel is now linked to post-meta JSON wrapping the HTML in the editor.
 
-- `/src/custom/bindings.php`: Add file to plugin and declare 2 functions:
-  - `register_event_block_bindings()` -  Registers custom block binding sources for formatted event metadata.
+- `/src/custom/bindings.php`: Add file to plugin and declare 3 functions:
+  - `register_event_block_bindings()` - Wrapper function to register custom block binding sources for event metadata.
   - `get_formatted_event_date_binding()` - Retrieves and formats an event date meta value as "Tuesday, January 12, 2027".
+  - `get_event_meta_binding()` - Retrieves an event meta value as a sanitized string, returning '' when empty so template placeholder text is cleared on the frontend.
 
 - `/src/custom/template-loader.php`: Register and load block templates for custom post-types using WP's `register_block_template()`.
 
