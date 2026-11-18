@@ -54,10 +54,13 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Requires WP updated to `7.1`.
   - `_is_in_development_mode()`: Add environment check for local/development environments.
   - `launch()`: Load `/sandbox/` module when environment mode is 'local' or 'development'.
+
 - `/src/asset/handler.php`:
   - Updated function `enqueue_block_editor_scripts()`:
     - Add conditional check `$is_events`.
     - Register `event-meta-panel.js` file and dependencies to display a metadata sidebar in the WordPress editor for the 'events' post-type.
+
+- `/src/templates/single-events.html`:  Updated template file to fix styles in `.event-description` section.
 
 ### Fixed
 - `/src/custom/bindings.php`: Refactored `register_event_block_bindings()` to declare an array and loop through it to register block bindings for metadata.
