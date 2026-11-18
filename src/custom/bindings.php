@@ -10,7 +10,7 @@
  *
  * @package    gardenClubOfMpls\CustomFunctionalityPlugin
  * @subpackage Source\Custom
- * @since      2.3.6
+ * @since      2.4.0 Initial release.
  */
 
 declare(strict_types=1);
@@ -23,7 +23,7 @@ add_action('init', __NAMESPACE__ . '\register_event_block_bindings');
  *
  * @return void
  *
- * @since 2.3.6 Initial release
+ * @since 2.4.0 Initial release
  *
  */
 function register_event_block_bindings(): void	{
@@ -33,6 +33,15 @@ function register_event_block_bindings(): void	{
 			'label'				 => __('Formatted Event Date', 'custom-functionality'),
 			'get_value_callback' => __NAMESPACE__ . '\get_formatted_event_date_binding',
 			'uses_context' 		 => ['postId'],
+		],
+	);
+
+	register_block_bindings_source(
+		'gcm/event-meta',
+		[
+			'label'              => __( 'Event Metadata (Empty on Blank)', 'custom-functionality' ),
+			'get_value_callback' => __NAMESPACE__ . '\get_event_meta_binding',
+			'uses_context'       => [ 'postId' ],
 		]
 	);
 }
@@ -44,7 +53,7 @@ function register_event_block_bindings(): void	{
  * @param \WP_Block $block_instance The block instance being rendered.
  * @return string|null The formatted date string, or null if empty/invalid.
  *
- * @since 2.3.6 Initial release
+ * @since 2.4.0 Initial release
  *
  */
 function get_formatted_event_date_binding(array $source_args, \WP_Block $block_instance): ?string	{
@@ -57,7 +66,7 @@ function get_formatted_event_date_binding(array $source_args, \WP_Block $block_i
 	$raw_value = get_post_meta((int)$post_id, $meta_key, true);
 
 	if (!is_string($raw_value) || '' === $raw_value) {
-		return null;
+		return '';
 	}
 
 	$date = \DateTimeImmutable::createFromFormat('Y-m-d', $raw_value, wp_timezone());
@@ -67,4 +76,31 @@ function get_formatted_event_date_binding(array $source_args, \WP_Block $block_i
 
 	// 'l, F j, Y' outputs: Tuesday, January 12, 2027
 	return wp_date('l, F j, Y', $date->getTimestamp());
+}
+
+/**
+ * Retrieves an event meta value as a sanitized string, returning '' when empty
+ * so template placeholder text is cleared on the frontend.
+ *
+ * @param array     $source_args    Arguments passed from the block binding attributes.
+ * @param \WP_Block $block_instance The block instance being rendered.
+ * @return string|null The meta value string, empty string if blank, or null if no post ID/key.
+ *
+ * @since 2.4.0 Intial release.
+ */
+function get_event_meta_binding( array $source_args, \WP_Block $block_instance ): ?string {
+	$post_id  = $block_instance->context['postId'] ?? get_the_ID();
+	$meta_key = $source_args['key'] ?? '';
+
+	if ( ! $post_id || '' === $meta_key ) {
+		return null;
+	}
+
+	$raw_value = get_post_meta( (int) $post_id, $meta_key, true );
+
+	if ( ! is_string( $raw_value ) || '' === trim( $raw_value ) ) {
+		return '';
+	}
+
+	return esc_html( $raw_value );
 }
