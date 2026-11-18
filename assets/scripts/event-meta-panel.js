@@ -98,7 +98,7 @@
 				createElement(
 					PanelRow,
 					null,
-					createElement( TextControl, {
+					createElement( TextareaControl, {
 						label: 'Location Address',
 						value: meta._event_location_address || '',
 						onChange: ( val ) => updateMeta( '_event_location_address', val ),
@@ -112,6 +112,7 @@
 						type: 'url',
 						value: meta._event_location_map_url || '',
 						onChange: ( val ) => updateMeta( '_event_location_map_url', val ),
+						rows: 3,
 					} )
 				)
 			),
