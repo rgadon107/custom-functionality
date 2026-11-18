@@ -38,7 +38,7 @@ function register_pattern_categories(): void	{
  * Process a configuration list of design pattern files stored in the plugin's
  * `src/patterns` directory and register them with WordPress.
  *
- * @since 1.0.0
+ * @since 1.8.0 Initial release.
  * @return void
  */
 function register_plugin_block_patterns(): void {
@@ -60,6 +60,8 @@ function register_plugin_block_patterns(): void {
  *
  * @param string $file The filename of the pattern file to load.
  * @return void
+ *
+ * @since 1.8.0 Initial release.
  */
 function load_and_register_pattern( string $file ): void {
 
