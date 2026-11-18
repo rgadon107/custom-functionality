@@ -44,6 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 - `/includes/patterns/pattern-loader.php`: Register `event-secondary-session` block pattern category, and load and register pattern `event-secondary-session.php`.
 
+- `/src/patterns/event-secondary-session.php`: Add custom design pattern file `event-secondary-session.php`. Update `metadata.name` properties to semantically name event title, presenter, and event description groups.
+
 - `/bootstrap.php` file: Add file path `/src/custom/bindings.php` to autoload() function.
 
 ### Changed
