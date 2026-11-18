@@ -33,6 +33,14 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Added directory to hold template files for use with each registered custom post-type.
   - Added first template file `single-events.html` for use with the `events` post-type.
 
+- `/src/custom/template-loader.php`: Register and load block templates for custom post-types using WP's `register_block_template()`.
+
+- `/src/hooks.php`: Register custom post-type block templates with the site editor on the WP `init` hook.
+
+- `/src/templates/` directory and files:
+  - Added directory to hold template files for use with each registered custom post-type.
+  - Added first template file `single-events.html` for use with the `events` post-type.
+
 - `/bootstrap.php` file: Add file path `/src/custom/bindings.php` to autoload() function.
 
 ### Changed
