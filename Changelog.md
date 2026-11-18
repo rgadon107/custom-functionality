@@ -65,6 +65,8 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Updated template file to fix styles in `.event-description` section.
   - Updated template file to add margin-bottom to bottom of event card.
 
+- `/assets/scripts/event-meta-panel.js`: Change argument for `createElement()` from TextControl to TextareaControl for `meta._event_location_address`. Allow text area field to accept newlines.
+
 ### Fixed
 - `/src/custom/bindings.php`: Refactored `register_event_block_bindings()` to declare an array and loop through it to register block bindings for metadata.
 
