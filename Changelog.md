@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
     - `sanitize_event_date()` - Sanitize and validate an event date string against the YYYY-MM-DD format.
 	- `authorize_event_meta_edit()` - Authorize REST API and editor modifications for protected event metadata keys.
   - Register the `$config['meta_fields']` array along with the 'events' custom post-type.
+  - Updated `$config['meta_fields']['_event_location_address']['sanitize_callback']` to 'sanitize_textarea_field'. This allows newlines in the textarea field.
 
 - `/assets/scripts/event-meta-panel.js`:
   - Add file to activate the 'Events' metadata sidebar panel in the WordPress block editor.
@@ -60,7 +61,9 @@ and this project adheres to [Semantic Versioning](https://semver.org).
     - Add conditional check `$is_events`.
     - Register `event-meta-panel.js` file and dependencies to display a metadata sidebar in the WordPress editor for the 'events' post-type.
 
-- `/src/templates/single-events.html`:  Updated template file to fix styles in `.event-description` section.
+- `/src/templates/single-events.html`:
+  - Updated template file to fix styles in `.event-description` section.
+  - Updated template file to add margin-bottom to bottom of event card.
 
 ### Fixed
 - `/src/custom/bindings.php`: Refactored `register_event_block_bindings()` to declare an array and loop through it to register block bindings for metadata.
