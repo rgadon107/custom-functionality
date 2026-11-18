@@ -42,6 +42,8 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Added directory to hold template files for use with each registered custom post-type.
   - Added first template file `single-events.html` for use with the `events` post-type.
 
+- `/includes/patterns/pattern-loader.php`: Register `event-secondary-session` block pattern category, and load and register pattern `event-secondary-session.php`.
+
 - `/bootstrap.php` file: Add file path `/src/custom/bindings.php` to autoload() function.
 
 ### Changed
@@ -59,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - `/src/custom/bindings.php`: Refactored `register_event_block_bindings()` to declare an array and loop through it to register block bindings for metadata.
 
 ### Corrections
+- `/includes/patterns/pattern-loader.php`: Updated docblocks in file.
 
 ## [Version 2.3.5 - 2026-10-26](https://github.com/rgadon107/custom-functionality/pull/31)
 
