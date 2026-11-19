@@ -96,7 +96,7 @@ function _get_plugin_url(): string	{
  * Checks if this plugin is in development mode.
  *
  * @since  1.0.0
- * @since  2.3.6 Add environment check for local/development environments.
+ * @since  2.4.0 Add environment check for local/development environments.
  * @ignore
  * @access private
  *
@@ -120,7 +120,7 @@ function _get_plugin_url(): string	{
  * @since 1.8.0 Modify this function to serve as a module controller for the entire plugin.
  * @since 2.2.0 Add `/shortcodes/member-photo-directory.php`
  * @since 2.3.1 Add `/admin/auction-item.php`.
- * @since 2.3.6	Add `/src/custom/bindings.php`.
+ * @since 2.4.0	Add `/src/custom/bindings.php`, and `/src/custom/template-loader.php`.
  *
  * @return void
  */
@@ -164,7 +164,7 @@ function autoload_files(): void	{
  * Launch the plugin.
  *
  * @since 1.0.0
- * @since 2.3.6 Load `/sandbox/` module when environment mode is 'local' or 'development'.
+ * @since 2.4.0 Load `/sandbox/` module when environment mode is 'local' or 'development'.
  *
  * @return void
  */
