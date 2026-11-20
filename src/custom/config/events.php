@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom;
 
+use DateTime;
+
 /**
  * Sanitizes and validates an event date string against the YYYY-MM-DD format.
  *
@@ -22,15 +24,15 @@ function sanitize_event_date( mixed $value ): string {
 	}
 
 	$sanitized = sanitize_text_field( $value );
-	$date      = \DateTime::createFromFormat( 'Y-m-d', $sanitized );
+	$date      = DateTime::createFromFormat( 'Y-m-d', $sanitized );
 
 	return ( $date && $date->format( 'Y-m-d' ) === $sanitized ) ? $sanitized : '';
 }
 
 /**
- * Sanitizes and validates an event date-time string (YYYY-MM-DD HH:MM or YYYY-MM-DDTHH:MM).
+ * Sanitize and validate an event date-time string (YYYY-MM-DD HH:MM or YYYY-MM-DDTHH:MM).
  *
- * Accepts HTML5 datetime-local values ('Y-m-d\TH:i') or plain dates ('Y-m-d'),
+ * Accept HTML5 datetime-local values ('Y-m-d\TH:i') or plain dates ('Y-m-d'),
  * normalizing valid timestamps to 'Y-m-d H:i' for consistent storage and comparison.
  *
  * @since 2.4.0 Intial release.
@@ -49,18 +51,18 @@ function sanitize_event_datetime( mixed $value ): string {
 	$normalized = str_replace( 'T', ' ', $sanitized );
 
 	// Attempt to parse the normalized string into a DateTime object using 'Y-m-d H:i'.
-	$date_time = \DateTime::createFromFormat( 'Y-m-d H:i', $normalized );
+	$date_time = DateTime::createFromFormat( 'Y-m-d H:i', $normalized );
 
 	// Verify both that a valid DateTime instance was created and that round-trip
-	// formatting matches the input exactly (preventing rollover dates like Feb 30).
-	if ( $date_time instanceof \DateTime && $date_time->format( 'Y-m-d H:i' ) === $normalized ) {
+	// formatting matches the input exactly (preventing rollover dates like February 30).
+	if ( $date_time instanceof DateTime && $date_time->format( 'Y-m-d H:i' ) === $normalized ) {
 		return $normalized;
 	}
 
 	// Fallback: attempt to parse as a date-only string ('Y-m-d') when no time is provided.
-	$date_only = \DateTime::createFromFormat( 'Y-m-d', $normalized );
+	$date_only = DateTime::createFromFormat( 'Y-m-d', $normalized );
 
-	if ( $date_only instanceof \DateTime && $date_only->format( 'Y-m-d' ) === $normalized ) {
+	if ( $date_only instanceof DateTime && $date_only->format( 'Y-m-d' ) === $normalized ) {
 		return $normalized;
 	}
 
