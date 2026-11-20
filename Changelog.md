@@ -30,7 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 - `/src/custom/template-loader.php`: Register and load block templates for custom post-types using WP's `register_block_template()`.
 
-- `/src/hooks.php`: Register custom post-type block templates with the site editor on the WP `init` hook.
+- `/src/hooks.php`:
+  - Register custom post-type block templates with the site editor on the WP `init` hook.
+  - Register callback to 'render_block' filter to render dynamic HTML anchor ID onto the `.custom-tight-card` Group block in single-events.html.
 
 - `/src/templates/` directory and files:
   - Added directory to hold template files for use with each registered custom post-type.
