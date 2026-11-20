@@ -122,7 +122,7 @@
 						label: 'Registration Opens',
 						help: 'Leave blank for immediate registration.',
 						type: 'datetime-local',
-						value: ( meta._event_reg_start_date || '' ).replace( ' ', 'T' ),
+						value: ( meta._event_registration_start_date || '' ).replace( ' ', 'T' ),
 						onChange: ( val ) => updateMeta( '_event_reg_start_date', val ),
 					} )
 				),
@@ -133,7 +133,7 @@
 						label: 'Registration Closes',
 						help: 'Date and time when the registration button closes.',
 						type: 'datetime-local',
-						value: ( meta._event_reg_stop_date || '' ).replace( ' ', 'T' ),
+						value: ( meta._event_registration_stop_date || '' ).replace( ' ', 'T' ),
 						onChange: ( val ) => updateMeta( '_event_reg_stop_date', val ),
 					} )
 				),
