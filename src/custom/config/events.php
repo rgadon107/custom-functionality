@@ -199,6 +199,26 @@ return [
 			'auth_callback'     => __NAMESPACE__ . '\authorize_event_meta_edit',
 			'show_in_rest'      => true,
 		],
+		'_event_registration_before_message' => [
+			'type'              => 'string',
+			'label'             => __( 'Pre-Registration Message', 'custom-functionality' ),
+			'description'       => 'Custom message displayed before event registration opens.',
+			'single'            => true,
+			'default'           => '',
+			'sanitize_callback' => 'wp_kses_post',
+			'auth_callback'     => __NAMESPACE__ . '\authorize_event_meta_edit',
+			'show_in_rest'      => true,
+		],
+		'_event_registration_after_message' => [
+			'type'              => 'string',
+			'label'             => __( 'Registration Closed Message', 'custom-functionality' ),
+			'description'       => 'Custom message displayed after event registration closes.',
+			'single'            => true,
+			'default'           => '',
+			'sanitize_callback' => 'wp_kses_post',
+			'auth_callback'     => __NAMESPACE__ . '\authorize_event_meta_edit',
+			'show_in_rest'      => true,
+		],
 
 		// Presenter Group
 		'_event_speaker_name' => [
