@@ -201,6 +201,7 @@
 					null,
 					createElement( TextControl, {
 						label: 'Presenter Website URL',
+						help: 'Links to the Presenter Organization.',
 						type: 'url',
 						value: meta._event_speaker_url || '',
 						onChange: ( val ) => updateMeta( '_event_speaker_url', val ),
@@ -221,7 +222,7 @@
 					null,
 					createElement( TextareaControl, {
 						label: 'Event Schedule',
-						help: 'Supports basic HTML formatting.',
+						help: 'Field entries support basic HTML formatting.',
 						rows: 4,
 						value: meta._event_schedule || '',
 						onChange: ( val ) => updateMeta( '_event_schedule', val ),
@@ -232,7 +233,7 @@
 					null,
 					createElement( TextareaControl, {
 						label: 'Dinner Preregistration Notice',
-						help: 'Supports basic HTML formatting.',
+						help: 'Announce when dinner registration for the event will close.',
 						rows: 3,
 						value: meta._event_preregistration_notice || '',
 						onChange: ( val ) => updateMeta( '_event_preregistration_notice', val ),
@@ -243,6 +244,7 @@
 					null,
 					createElement( TextControl, {
 						label: 'Volunteer Signup URL',
+						help: 'Copy and paste the URL to the volunteer sign-up link.',
 						type: 'url',
 						value: meta._event_volunteer_url || '',
 						onChange: ( val ) => updateMeta( '_event_volunteer_url', val ),
@@ -253,7 +255,7 @@
 					null,
 					createElement( TextControl, {
 						label: 'Event HTML Anchor ID',
-						help: 'Optional. Omit # (e.g., annual-gala). Defaults to the event URL slug if blank.',
+						help: 'Optional. Omit # preceding ID. If blank, the anchor will default to the event URL slug ( /events/{slug} ).',
 						value: meta._event_anchor_id || '',
 						onChange: ( val ) => updateMeta( '_event_anchor_id', val ),
 					} )
