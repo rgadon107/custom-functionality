@@ -11,11 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - `/sandbox/testing.php`: Add a local development module for testing code.
 
 - `src/custom/config/events.php`:
-  - Added 2 helper functions to the 'Events' post-type configuration array file for handling metadata.
+  - Added 3 helper functions to the 'Events' post-type configuration array file for handling metadata.
     - `sanitize_event_date()` - Sanitize and validate an event date string against the YYYY-MM-DD format.
+    - `sanitize_event_datetime()` - Sanitize and validate an event date-time string (YYYY-MM-DD HH:MM or YYYY-MM-DDTHH:MM).
 	- `authorize_event_meta_edit()` - Authorize REST API and editor modifications for protected event metadata keys.
   - Register the `$config['meta_fields']` array along with the 'events' custom post-type.
   - Register `$config['meta_fields']['_event_anchor_id']` to the Events custom post-type to display field in editor of `single-events.html` template.
+  - Register `$config['meta_fields']['_event_registration_start_date']` and `$config['meta_fields']['_event_registration_stop_date']` metadata fields.
+  - Register `$config['meta_fields'][_event_registration_before_message']` and `$config['meta_fields'][_event_registration_after_message']` metadata fields.
   - Updated `$config['meta_fields']['_event_location_address']['sanitize_callback']` to 'sanitize_textarea_field'. This allows newlines in the textarea field.
 
 - `/assets/scripts/event-meta-panel.js`:
@@ -33,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - `/src/hooks.php`:
   - Register custom post-type block templates with the site editor on the WP `init` hook.
   - Register callback to 'render_block' filter to render dynamic HTML anchor ID onto the `.custom-tight-card` Group block in single-events.html.
+  - Register callback to 'render_block' filter to schedule the visibility of event registration blocks and messages in single-events.html.
 
 - `/src/templates/` directory and files:
   - Added directory to hold template files for use with each registered custom post-type.
@@ -65,10 +69,15 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 - `/assets/scripts/event-meta-panel.js`:
   - Change argument for `createElement()` from TextControl to TextareaControl for `meta._event_location_address`. Allow text area field to accept newlines.
-  - Add sidebar metadata field `Event HTML Anchor ID` in `single-events.html` template.
+  - Add sidebar metadata field `Event HTML Anchor ID` in the `single-events.html` editor sidebar.
+  - Add sidebar metadata fields `Registration Opens` and `Registration Closes` in the `single-events.html` editor sidebar.
+  - Add sidebar metadata fields `Pre-Registration Message` and `Registration Closed Message` in the `single-events.html` editor sidebar.
 
 ### Fixed
 - `/src/custom/bindings.php`: Refactored `register_event_block_bindings()` to declare an array and loop through it to register block bindings for metadata.
+- `/src/hooks.php`:
+  - Resolved PHPStorm warning by adding `use DateTime` declaration at the top of the file, and removing the `\` before calling the global `DateTime` object.
+- `/src/custom/config/events.php`: Added `@noinspection` to top of docblock to turn off warning from IDE.
 
 ### Corrections
 - `/includes/patterns/pattern-loader.php`: Updated docblocks in file.
