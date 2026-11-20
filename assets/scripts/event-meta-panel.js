@@ -17,7 +17,7 @@
  *
  * @package    gardenClubOfMpls\CustomFunctionalityPlugin
  * @subpackage Assets\Scripts
- * @since      2.3.6
+ * @since      2.4.0 Intial release.
  */
 
 ( function ( wp ) {
@@ -100,6 +100,7 @@
 					null,
 					createElement( TextareaControl, {
 						label: 'Location Address',
+						rows: 3,
 						value: meta._event_location_address || '',
 						onChange: ( val ) => updateMeta( '_event_location_address', val ),
 					} )
@@ -112,7 +113,6 @@
 						type: 'url',
 						value: meta._event_location_map_url || '',
 						onChange: ( val ) => updateMeta( '_event_location_map_url', val ),
-						rows: 3,
 					} )
 				)
 			),
@@ -202,6 +202,16 @@
 						type: 'url',
 						value: meta._event_volunteer_url || '',
 						onChange: ( val ) => updateMeta( '_event_volunteer_url', val ),
+					} )
+				),
+				createElement(
+					PanelRow,
+					null,
+					createElement( TextControl, {
+						label: 'Event HTML Anchor ID',
+						help: 'Optional. Omit # (e.g., annual-gala). Defaults to the event URL slug if blank.',
+						value: meta._event_anchor_id || '',
+						onChange: ( val ) => updateMeta( '_event_anchor_id', val ),
 					} )
 				)
 			)

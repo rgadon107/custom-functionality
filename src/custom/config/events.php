@@ -11,7 +11,7 @@ namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom;
  * in 'Y-m-d' format before saving it to post metadata. Returns an empty
  * string if validation fails.
  *
- * @since 2.3.6
+ * @since 2.4.0 Intial release
  *
  * @param mixed $value The raw meta value submitted for sanitization.
  * @return string The validated date string in YYYY-MM-DD format, or an empty string.
@@ -33,7 +33,7 @@ function sanitize_event_date( mixed $value ): string {
  * Callback for the `auth_{$object_type}_meta_{$meta_key}` filter to verify
  * whether the current user has permission to edit the specified event post.
  *
- * @since 2.3.6
+ * @since 2.4.0 Intial release.
  *
  * @param bool   $allowed  Whether the user can add or edit the post meta. Default false.
  * @param string $meta_key The meta key being checked.
@@ -183,6 +183,15 @@ return [
 		],
 
 		// Logistics & Scheduling
+		'_event_anchor_id' => [
+			'type'              => 'string',
+			'description'       => 'Custom HTML anchor ID for the top of the event card.',
+			'single'            => true,
+			'default'           => '',
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'sanitize_title',
+			'auth_callback'     => __NAMESPACE__ . '\authorize_event_meta_edit',
+		],
 		'_event_schedule' => [
 			'type'              => 'string',
 			'label'             => __( 'Event Schedule', 'custom-functionality' ),
