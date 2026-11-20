@@ -16,6 +16,7 @@ use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_c
 use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_meta_from_config;
 use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Taxonomy\register_taxonomy_from_config;
 use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_cpt_block_templates;
+use WP_HTML_Tag_Processor;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -153,3 +154,48 @@ function initialize_custom_post_types(): void {
  * @see   \gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_cpt_block_templates()
  */
 add_action( 'init', register_cpt_block_templates(...) );
+
+add_filter( 'render_block', __NAMESPACE__ . '\inject_event_card_anchor', 10, 2 );
+/**
+ * Injects a dynamic HTML anchor ID onto the .custom-tight-card Group block
+ * in single-events.html using '_event_anchor_id' or falling back to the post slug.
+ *
+ * @param string $block_content The rendered HTML of the block.
+ * @param array  $block         The full block array, including name and attributes.
+ * @return string Modified block HTML with the injected id attribute.
+ */
+function inject_event_card_anchor( string $block_content, array $block ): string {
+	if (
+		( $block['blockName'] ?? '' ) !== 'core/group' ||
+		empty( $block['attrs']['className'] ) ||
+		! str_contains( $block['attrs']['className'], 'custom-tight-card' )
+	) {
+		return $block_content;
+	}
+
+	if ( ! \is_singular( 'events' ) ) {
+		return $block_content;
+	}
+
+	$post_id = \get_the_ID();
+	if ( ! $post_id ) {
+		return $block_content;
+	}
+
+	$custom_anchor = \get_post_meta( $post_id, '_event_anchor_id', true );
+	$anchor_id     = is_string( $custom_anchor ) && '' !== trim( $custom_anchor )
+		? \sanitize_title( $custom_anchor )
+		: \get_post_field( 'post_name', $post_id );
+
+	if ( empty( $anchor_id ) ) {
+		return $block_content;
+	}
+
+	$tags = new WP_HTML_Tag_Processor( $block_content );
+	if ( $tags->next_tag() ) {
+		$tags->set_attribute( 'id', $anchor_id );
+		$block_content = $tags->get_updated_html();
+	}
+
+	return $block_content;
+}
