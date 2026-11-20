@@ -69,18 +69,20 @@ function sanitize_event_datetime( mixed $value ): string {
 	return '';
 }
 
+/** @noinspection PhpUnusedParameterInspection */
 /**
  * Authorizes REST API and editor modifications for protected event metadata keys.
  *
  * Callback for the `auth_{$object_type}_meta_{$meta_key}` filter to verify
  * whether the current user has permission to edit the specified event post.
  *
- * @since 2.4.0 Intial release.
- *
  * @param bool   $allowed  Whether the user can add or edit the post meta. Default false.
  * @param string $meta_key The meta key being checked.
  * @param int    $post_id  The ID of the event post being edited.
  * @return bool True if the current user can edit the post, false otherwise.
+ *
+ * @since 2.4.0 Intial release.
+ *
  */
 function authorize_event_meta_edit( bool $allowed, string $meta_key, int $post_id ): bool {
 	return current_user_can( 'edit_post', $post_id );
