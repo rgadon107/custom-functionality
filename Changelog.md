@@ -39,10 +39,6 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 - `/src/hooks.php`: Register custom post-type block templates with the site editor on the WP `init` hook.
 
-- `/src/templates/` directory and files:
-  - Added directory to hold template files for use with each registered custom post-type.
-  - Added first template file `single-events.html` for use with the `events` post-type.
-
 - `/includes/patterns/pattern-loader.php`: Register `event-secondary-session` block pattern category, and load and register pattern `event-secondary-session.php`.
 
 - `/src/patterns/event-secondary-session.php`: Add custom design pattern file `event-secondary-session.php`. Update `metadata.name` properties to semantically name event title, presenter, and event description groups.
@@ -63,7 +59,6 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 - `/src/templates/single-events.html`:
   - Updated template file to fix styles in `.event-description` section.
-  - Updated template file to add margin-bottom to bottom of event card.
 
 - `/assets/scripts/event-meta-panel.js`: Change argument for `createElement()` from TextControl to TextareaControl for `meta._event_location_address`. Allow text area field to accept newlines.
 
