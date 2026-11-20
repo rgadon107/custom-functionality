@@ -235,8 +235,8 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 
 	$tz         = \wp_timezone();
 	$now        = new \DateTimeImmutable( 'now', $tz );
-	$start_raw  = trim( (string) \get_post_meta( $post_id, '_event_reg_start_date', true ) );
-	$stop_raw   = trim( (string) \get_post_meta( $post_id, '_event_reg_stop_date', true ) );
+	$start_raw  = trim( (string) \get_post_meta( $post_id, '_event_registration_start_date', true ) );
+	$stop_raw   = trim( (string) \get_post_meta( $post_id, '_event_registration_stop_date', true ) );
 
 	// 1. Check if current time is BEFORE registration opens
 	if ( '' !== $start_raw ) {

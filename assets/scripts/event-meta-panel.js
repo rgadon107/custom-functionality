@@ -114,7 +114,29 @@
 						value: meta._event_location_map_url || '',
 						onChange: ( val ) => updateMeta( '_event_location_map_url', val ),
 					} )
-				)
+				),
+				createElement(
+					PanelRow,
+					null,
+					createElement( TextControl, {
+						label: 'Registration Opens',
+						help: 'Leave blank for immediate registration.',
+						type: 'datetime-local',
+						value: ( meta._event_reg_start_date || '' ).replace( ' ', 'T' ),
+						onChange: ( val ) => updateMeta( '_event_reg_start_date', val ),
+					} )
+				),
+				createElement(
+					PanelRow,
+					null,
+					createElement( TextControl, {
+						label: 'Registration Closes',
+						help: 'Date and time when the registration button closes.',
+						type: 'datetime-local',
+						value: ( meta._event_reg_stop_date || '' ).replace( ' ', 'T' ),
+						onChange: ( val ) => updateMeta( '_event_reg_stop_date', val ),
+					} )
+				),
 			),
 
 			// Panel 2: Presenter Group
