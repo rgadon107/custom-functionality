@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
     - `sanitize_event_date()` - Sanitize and validate an event date string against the YYYY-MM-DD format.
 	- `authorize_event_meta_edit()` - Authorize REST API and editor modifications for protected event metadata keys.
   - Register the `$config['meta_fields']` array along with the 'events' custom post-type.
+  - Register `$config['meta_fields']['_event_anchor_id']` to the Events custom post-type to display field in editor of `single-events.html` template.
   - Updated `$config['meta_fields']['_event_location_address']['sanitize_callback']` to 'sanitize_textarea_field'. This allows newlines in the textarea field.
 
 - `/assets/scripts/event-meta-panel.js`:
@@ -60,7 +61,9 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - `/src/templates/single-events.html`:
   - Updated template file to fix styles in `.event-description` section.
 
-- `/assets/scripts/event-meta-panel.js`: Change argument for `createElement()` from TextControl to TextareaControl for `meta._event_location_address`. Allow text area field to accept newlines.
+- `/assets/scripts/event-meta-panel.js`:
+  - Change argument for `createElement()` from TextControl to TextareaControl for `meta._event_location_address`. Allow text area field to accept newlines.
+  - Add sidebar metadata field `Event HTML Anchor ID` in `single-events.html` template.
 
 ### Fixed
 - `/src/custom/bindings.php`: Refactored `register_event_block_bindings()` to declare an array and loop through it to register block bindings for metadata.
