@@ -137,6 +137,28 @@
 						onChange: ( val ) => updateMeta( '_event_reg_stop_date', val ),
 					} )
 				),
+				createElement(
+					PanelRow,
+					null,
+					createElement( TextareaControl, {
+						label: 'Pre-Registration Message',
+						help: 'Displayed before registration opens (supports basic HTML). Leave blank to display default message.',
+						rows: 3,
+						value: meta._event_registration_before_message || '',
+						onChange: ( val ) => updateMeta( '_event_registration_before_message', val ),
+					} )
+				),
+				createElement(
+					PanelRow,
+					null,
+					createElement( TextareaControl, {
+						label: 'Registration Closed Message',
+						help: 'Displayed after registration closes (supports basic HTML). Leave blank to display default message.',
+						rows: 3,
+						value: meta._event_registration_after_message || '',
+						onChange: ( val ) => updateMeta( '_event_registration_after_message', val ),
+					} )
+				),
 			),
 
 			// Panel 2: Presenter Group
