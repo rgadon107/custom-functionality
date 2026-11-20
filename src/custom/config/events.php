@@ -28,6 +28,46 @@ function sanitize_event_date( mixed $value ): string {
 }
 
 /**
+ * Sanitizes and validates an event date-time string (YYYY-MM-DD HH:MM or YYYY-MM-DDTHH:MM).
+ *
+ * Accepts HTML5 datetime-local values ('Y-m-d\TH:i') or plain dates ('Y-m-d'),
+ * normalizing valid timestamps to 'Y-m-d H:i' for consistent storage and comparison.
+ *
+ * @since 2.4.0 Intial release.
+ *
+ * @param mixed $value The raw meta value submitted for sanitization.
+ * @return string Normalized 'Y-m-d H:i' string, or an empty string if invalid.
+ */
+function sanitize_event_datetime( mixed $value ): string {
+	if ( ! is_string( $value ) || '' === trim( $value ) ) {
+		return '';
+	}
+
+	$sanitized = sanitize_text_field( trim( $value ) );
+
+	// Normalize HTML5 datetime-local separator ('T') to a space.
+	$normalized = str_replace( 'T', ' ', $sanitized );
+
+	// Attempt to parse the normalized string into a DateTime object using 'Y-m-d H:i'.
+	$date_time = \DateTime::createFromFormat( 'Y-m-d H:i', $normalized );
+
+	// Verify both that a valid DateTime instance was created and that round-trip
+	// formatting matches the input exactly (preventing rollover dates like Feb 30).
+	if ( $date_time instanceof \DateTime && $date_time->format( 'Y-m-d H:i' ) === $normalized ) {
+		return $normalized;
+	}
+
+	// Fallback: attempt to parse as a date-only string ('Y-m-d') when no time is provided.
+	$date_only = \DateTime::createFromFormat( 'Y-m-d', $normalized );
+
+	if ( $date_only instanceof \DateTime && $date_only->format( 'Y-m-d' ) === $normalized ) {
+		return $normalized;
+	}
+
+	return '';
+}
+
+/**
  * Authorizes REST API and editor modifications for protected event metadata keys.
  *
  * Callback for the `auth_{$object_type}_meta_{$meta_key}` filter to verify
@@ -136,6 +176,26 @@ return [
 			'single'            => true,
 			'default'           => '',
 			'sanitize_callback' => 'esc_url_raw',
+			'auth_callback'     => __NAMESPACE__ . '\authorize_event_meta_edit',
+			'show_in_rest'      => true,
+		],
+		'_event_registration_start_date' => [
+			'type'              => 'string',
+			'label'             => __( 'Registration Open Date & Time', 'custom-functionality' ),
+			'description'       => 'Date and time when registration opens (YYYY-MM-DD HH:MM).',
+			'single'            => true,
+			'default'           => '',
+			'sanitize_callback' => __NAMESPACE__ . '\sanitize_event_datetime',
+			'auth_callback'     => __NAMESPACE__ . '\authorize_event_meta_edit',
+			'show_in_rest'      => true,
+		],
+		'_event_registration_stop_date' => [
+			'type'              => 'string',
+			'label'             => __( 'Registration Close Date & Time', 'custom-functionality' ),
+			'description'       => 'Date and time when registration closes (YYYY-MM-DD HH:MM).',
+			'single'            => true,
+			'default'           => '',
+			'sanitize_callback' => __NAMESPACE__ . '\sanitize_event_datetime',
 			'auth_callback'     => __NAMESPACE__ . '\authorize_event_meta_edit',
 			'show_in_rest'      => true,
 		],
