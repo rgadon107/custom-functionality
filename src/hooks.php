@@ -205,15 +205,14 @@ function inject_event_card_anchor( string $block_content, array $block ): string
 }
 
 /**
- * Controls scheduled visibility for event registration blocks in single-events.html
+ * Controls scheduled visibility for registration blocks in single-events.html
  * and renders styled before/after status messages when outside the active window.
+ *
+ * @since 2.4.0
  *
  * @param string $block_content The rendered block HTML.
  * @param array  $block         The parsed block array.
  * @return string Modified block HTML or custom status message markup.
- *
- * @since 2.4.0 Initial release.
- *
  */
 function filter_scheduled_event_blocks( string $block_content, array $block ): string {
 	if ( ! \is_singular( 'events' ) || empty( $block['attrs']['className'] ) ) {
@@ -233,14 +232,17 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 		return $block_content;
 	}
 
-	$tz         = \wp_timezone();
-	$now        = new \DateTimeImmutable( 'now', $tz );
-	$start_raw  = trim( (string) \get_post_meta( $post_id, '_event_registration_start_date', true ) );
-	$stop_raw   = trim( (string) \get_post_meta( $post_id, '_event_registration_stop_date', true ) );
+	$tz        = \wp_timezone();
+	$now       = new \DateTimeImmutable( 'now', $tz );
+	$start_raw = trim( (string) \get_post_meta( $post_id, '_event_registration_start_date', true ) );
+	$stop_raw  = trim( (string) \get_post_meta( $post_id, '_event_registration_stop_date', true ) );
 
 	// 1. Check if current time is BEFORE registration opens
 	if ( '' !== $start_raw ) {
-		$start_dt = \DateTimeImmutable::createFromFormat( 'Y-m-d H:i:s', $start_raw . ' 00:00:00', $tz );
+		$start_normalized = substr( str_replace( 'T', ' ', $start_raw ), 0, 16 );
+		$start_dt         = 10 === strlen( $start_normalized )
+			? \DateTimeImmutable::createFromFormat( 'Y-m-d H:i:s', $start_normalized . ' 00:00:00', $tz )
+			: \DateTimeImmutable::createFromFormat( 'Y-m-d H:i', $start_normalized, $tz );
 
 		if ( $start_dt && $now < $start_dt ) {
 			// Suppress the preregistration notice before registration opens
@@ -252,9 +254,9 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 			$message       = '' !== $custom_before
 				? $custom_before
 				: sprintf(
-				/* translators: %s: Formatted registration opening date */
+				/* translators: %s: Formatted registration opening date and time */
 					\__( 'Registration opens %s.', 'custom-functionality' ),
-					\wp_date( 'l, F j, Y', $start_dt->getTimestamp() )
+					\wp_date( 'l, F j, Y \a\t g:i A', $start_dt->getTimestamp() )
 				);
 
 			return sprintf(
@@ -266,7 +268,10 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 
 	// 2. Check if current time is AFTER registration closes
 	if ( '' !== $stop_raw ) {
-		$stop_dt = \DateTimeImmutable::createFromFormat( 'Y-m-d H:i:s', $stop_raw . ' 23:59:59', $tz );
+		$stop_normalized = substr( str_replace( 'T', ' ', $stop_raw ), 0, 16 );
+		$stop_dt         = 10 === strlen( $stop_normalized )
+			? \DateTimeImmutable::createFromFormat( 'Y-m-d H:i:s', $stop_normalized . ' 23:59:59', $tz )
+			: \DateTimeImmutable::createFromFormat( 'Y-m-d H:i', $stop_normalized, $tz );
 
 		if ( $stop_dt && $now > $stop_dt ) {
 			// Suppress the preregistration notice after registration closes
