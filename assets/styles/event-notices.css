@@ -36,8 +36,8 @@
    ========================================================================== */
 
 /* Shared layout for scheduled single-event status notices */
-.event-registration-status.is-upcoming,
-.event-registration-status.is-closed {
+.entry-content .custom-tight-card .event-registration-status.is-upcoming,
+.entry-content .custom-tight-card .event-registration-status.is-closed {
 	padding: 1.5rem;
 	margin: 1rem 0;
 	font-style: italic;
@@ -48,14 +48,14 @@
 }
 
 /* Pre-registration notice (_event_registration_before_message) */
-.event-registration-status.is-upcoming {
+.entry-content .custom-tight-card .event-registration-status.is-upcoming {
 	background-color: var(--brand-green-dark);
 	border-color: var(--brand-green-dark);
 	color: var(--brand-white-lime);
 }
 
 /* Post-registration closed notice (_event_registration_after_message) */
-.event-registration-status.is-closed {
+.entry-content .custom-tight-card .event-registration-status.is-closed {
 	background-color: var(--brand-green-dark);
 	border-color: var(--brand-green-dark);
 	color: var(--brand-white-lime);
