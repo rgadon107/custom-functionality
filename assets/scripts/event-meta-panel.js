@@ -52,6 +52,54 @@
 			setMeta( { ...meta, [ key ]: value } );
 		};
 
+		// Helper to render paired Date + Time controls that read/write 'YYYY-MM-DD HH:MM' on a single meta key
+		const renderDateTimeControl = ( label, helpText, metaKey, defaultTime ) => {
+			const rawValue = meta[ metaKey ] || '';
+			const [ currentDate = '', currentTime = '' ] = rawValue.replace( 'T', ' ' ).split( ' ' );
+
+			const handleDateChange = ( newDate ) => {
+				if ( ! newDate ) {
+					updateMeta( metaKey, '' );
+					return;
+				}
+				updateMeta( metaKey, `${ newDate } ${ currentTime || defaultTime }` );
+			};
+
+			const handleTimeChange = ( newTime ) => {
+				if ( ! currentDate ) {
+					return;
+				}
+				updateMeta( metaKey, `${ currentDate } ${ newTime || defaultTime }` );
+			};
+
+			return createElement(
+				Fragment,
+				null,
+				createElement(
+					PanelRow,
+					null,
+					createElement( TextControl, {
+						label: `${ label } (Date)`,
+						help: helpText,
+						type: 'date',
+						value: currentDate,
+						onChange: handleDateChange,
+					} )
+				),
+				createElement(
+					PanelRow,
+					null,
+					createElement( TextControl, {
+						label: `${ label } (Time)`,
+						type: 'time',
+						value: currentTime,
+						disabled: ! currentDate,
+						onChange: handleTimeChange,
+					} )
+				)
+			);
+		};
+
 		return createElement(
 			Fragment,
 			null,
@@ -115,33 +163,17 @@
 						onChange: ( val ) => updateMeta( '_event_location_map_url', val ),
 					} )
 				),
-				createElement(
-					PanelRow,
-					null,
-					createElement( TextControl, {
-						label: 'Registration Opens',
-						help: 'Leave blank for immediate registration. Defaults to 12:00 AM if only a date is picked.',
-						type: 'datetime-local',
-						value: ( meta._event_registration_start_date || '' ).replace( ' ', 'T' ),
-						onChange: ( val ) => {
-							const normalized = val && val.length === 10 ? `${ val }T00:00` : val;
-							updateMeta( '_event_registration_start_date', normalized );
-						},
-					} )
+				renderDateTimeControl(
+					'Registration Opens',
+					'Leave blank for immediate registration. Time defaults to 12:00 AM if omitted.',
+					'_event_registration_start_date',
+					'00:00'
 				),
-				createElement(
-					PanelRow,
-					null,
-					createElement( TextControl, {
-						label: 'Registration Closes',
-						help: 'Date and time when registration closes. Defaults to 11:59 PM if only a date is picked.',
-						type: 'datetime-local',
-						value: ( meta._event_registration_stop_date || '' ).replace( ' ', 'T' ),
-						onChange: ( val ) => {
-							const normalized = val && val.length === 10 ? `${ val }T23:59` : val;
-							updateMeta( '_event_registration_stop_date', normalized );
-						},
-					} )
+				renderDateTimeControl(
+					'Registration Closes',
+					'Date and time when registration closes. Time defaults to 11:59 PM if omitted.',
+					'_event_registration_stop_date',
+					'23:59'
 				),
 				createElement(
 					PanelRow,
@@ -164,7 +196,7 @@
 						value: meta._event_registration_after_message || '',
 						onChange: ( val ) => updateMeta( '_event_registration_after_message', val ),
 					} )
-				),
+				)
 			),
 
 			// Panel 2: Presenter Group
