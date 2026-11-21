@@ -97,28 +97,44 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_styles', 20 )
  * @since 1.5.0	Enqueued 'ninja-form-email-signup-form-styles'
  * @since 1.6.0	Refactored callback and enqueued 'coblocks-accordian-fix'.
  * @since 2.2.0 Enqueued 'member-photo-directory-viewer-styles'
+ * @since 2.4.0 Added 'color-variables' dependency to 'event-registration-notice-styles'.
  *
  * @return void
  */
 function enqueue_plugin_styles(): void {
 	$styles = [
-		'event-registration-notice-styles'    	=>	'/assets/styles/event-notices.css',
-		'ninja-form-email-signup-form-styles' 	=>	'/assets/styles/ninja-form-styles.css',
-		'coblocks-accordion-styles'           	=>	'/assets/styles/coblocks-accordion-styles.css',
-		'color-variables'					  	=>	'/assets/styles/color-variables.css',
-		'member-photo-directory-styles'			=>	'/assets/styles/member-photo-directory-styles.css'
+		'color-variables' => [
+			'file' => '/assets/styles/color-variables.css',
+			'deps' => [],
+		],
+		'event-registration-notice-styles' => [
+			'file' => '/assets/styles/event-notices.css',
+			'deps' => [ 'color-variables' ],
+		],
+		'ninja-form-email-signup-form-styles' => [
+			'file' => '/assets/styles/ninja-form-styles.css',
+			'deps' => [],
+		],
+		'coblocks-accordion-styles' => [
+			'file' => '/assets/styles/coblocks-accordion-styles.css',
+			'deps' => [],
+		],
+		'member-photo-directory-styles' => [
+			'file' => '/assets/styles/member-photo-directory-styles.css',
+			'deps' => [],
+		],
 	];
 
 	$asset_paths = _get_asset_paths();
 
-	foreach ( $styles as $handle => $file ) {
+	foreach ( $styles as $handle => $config ) {
 		// Defensive check: Verify the file exists on disk before enqueuing
-		if ( file_exists( $asset_paths['directory'] . $file ) ) {
+		if ( file_exists( $asset_paths['directory'] . $config['file'] ) ) {
 			wp_enqueue_style(
 				$handle,
-				$asset_paths['url']. $file,
-				[],
-				_get_asset_version( $file )
+				$asset_paths['url'] . $config['file'],
+				$config['deps'],
+				_get_asset_version( $config['file'] )
 			);
 		}
 	}
