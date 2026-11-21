@@ -75,9 +75,13 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 ### Fixed
 - `/src/custom/bindings.php`: Refactored `register_event_block_bindings()` to declare an array and loop through it to register block bindings for metadata.
+
 - `/src/hooks.php`:
   - Resolved PHPStorm warning by adding `use DateTime` declaration at the top of the file, and removing the `\` before calling the global `DateTime` object.
+
 - `/src/custom/config/events.php`: Added `@noinspection` to top of docblock to turn off warning from IDE.
+
+- `/assets/scripts/event-meta-panel.js`: Set the 'Registration Opens' and 'Registration Closes' metadata fields to default to a time unless customized (T00:00 for open and T23:59 for close).
 
 ### Corrections
 - `/includes/patterns/pattern-loader.php`: Updated docblocks in file.
