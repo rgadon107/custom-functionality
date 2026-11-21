@@ -248,7 +248,7 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 				return '';
 			}
 
-			$custom_before = trim( (string) \get_post_meta( $post_id, '_event_reg_before_message', true ) );
+			$custom_before = trim( (string) \get_post_meta( $post_id, '_event_registration_before_message', true ) );
 			$message       = '' !== $custom_before
 				? $custom_before
 				: sprintf(
@@ -274,7 +274,7 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 				return '';
 			}
 
-			$custom_after = trim( (string) \get_post_meta( $post_id, '_event_reg_after_message', true ) );
+			$custom_after = trim( (string) \get_post_meta( $post_id, '_event_registration_after_message', true ) );
 			$message      = '' !== $custom_after
 				? $custom_after
 				: \__( 'Registration for this event has closed.', 'custom-functionality' );

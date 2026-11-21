@@ -134,7 +134,7 @@
 						help: 'Date and time when the registration button closes.',
 						type: 'datetime-local',
 						value: ( meta._event_registration_stop_date || '' ).replace( ' ', 'T' ),
-						onChange: ( val ) => updateMeta( '_event_registration_start_date', val ),
+						onChange: ( val ) => updateMeta( '_event_registration_stop_date', val ),
 					} )
 				),
 				createElement(
