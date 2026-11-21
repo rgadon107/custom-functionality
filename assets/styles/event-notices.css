@@ -1,6 +1,9 @@
 /* Styling for the pre-event message displayed by the [expire] shortcode */
 #expire-message-wrap.message-before-registration-start,
-#expire-message-wrap.message-after-registration-stop	{
+#expire-message-wrap.message-after-registration-stop,
+.single-events #expire-message-wrap.message-before-registration-start,
+.single-events #expire-message-wrap.message-after-registration-stop
+{
 	padding: 1.5rem;
 	margin: 1rem 0;
 	font-style: italic;
@@ -17,7 +20,7 @@
 }
 
 /* Styling for the post-event message displayed by the [expire] shortcode */
-#expire-message-wrap.message-after-registration-stop	{
+.single-events #expire-message-wrap.message-after-registration-stop	{
 	background-color: #527a55; /* Ixion-child: var(--brand-green-dark) */
 	border: 1px solid #527a55;
 	color: #f8faf8 /* Ixion-child: var(--brand-white-lime) */
