@@ -290,7 +290,7 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 				: \__( 'Registration for this event has closed.', 'custom-functionality' );
 
 			return sprintf(
-				'<div id="expire-message-wrap"><p class="message-after-registration-stop event-registration-status is-closed has-brand-text-main-color has-text-color wp-block-paragraph">%s</p></div>',
+				'<div id="expire-message-wrap"><p class="message-after-registration-stop">%s</p></div>',
 				\wp_kses_post( $message )
 			);
 		}
