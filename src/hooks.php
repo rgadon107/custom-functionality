@@ -251,12 +251,17 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 			}
 
 			$custom_before = trim( (string) \get_post_meta( $post_id, '_event_registration_before_message', true ) );
-			$message       = '' !== $custom_before
+			$is_midnight = '00:00' === $start_dt->format( 'H:i' );
+			$formatted   = $is_midnight
+				? \wp_date( 'l, F j, Y', $start_dt->getTimestamp() )
+				: \wp_date( 'l, F j, Y \a\t g:i A', $start_dt->getTimestamp() );
+
+			$message = '' !== $custom_before
 				? $custom_before
 				: sprintf(
-				/* translators: %s: Formatted registration opening date and time */
+				/* translators: %s: Formatted registration opening date (and optional time) */
 					\__( 'Registration opens %s.', 'custom-functionality' ),
-					\wp_date( 'l, F j, Y \a\t g:i A', $start_dt->getTimestamp() )
+					$formatted
 				);
 
 			return sprintf(
