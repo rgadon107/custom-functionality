@@ -265,7 +265,7 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 				);
 
 			return sprintf(
-				'<div id="expire-message-wrap"></div><p class="message-before-registration-start event-registration-status is-upcoming has-brand-green-dark-color has-brand-green-light-background-color has-text-color has-background wp-block-paragraph">%s</p></div>',
+				'<p class="event-registration-status is-upcoming wp-block-paragraph">%s</p>',
 				\wp_kses_post( $message )
 			);
 		}
@@ -290,7 +290,7 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 				: \__( 'Registration for this event has closed.', 'custom-functionality' );
 
 			return sprintf(
-				'<div id="expire-message-wrap"><p class="message-after-registration-stop">%s</p></div>',
+				'<p class="event-registration-status is-closed wp-block-paragraph">%s</p>',
 				\wp_kses_post( $message )
 			);
 		}
