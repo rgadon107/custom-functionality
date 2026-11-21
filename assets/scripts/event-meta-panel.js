@@ -120,10 +120,13 @@
 					null,
 					createElement( TextControl, {
 						label: 'Registration Opens',
-						help: 'Leave blank for immediate registration.',
+						help: 'Leave blank for immediate registration. Defaults to 12:00 AM if only a date is picked.',
 						type: 'datetime-local',
 						value: ( meta._event_registration_start_date || '' ).replace( ' ', 'T' ),
-						onChange: ( val ) => updateMeta( '_event_registration_start_date', val ),
+						onChange: ( val ) => {
+							const normalized = val && val.length === 10 ? `${ val }T00:00` : val;
+							updateMeta( '_event_registration_start_date', normalized );
+						},
 					} )
 				),
 				createElement(
@@ -131,10 +134,13 @@
 					null,
 					createElement( TextControl, {
 						label: 'Registration Closes',
-						help: 'Date and time when the registration button closes.',
+						help: 'Date and time when registration closes. Defaults to 11:59 PM if only a date is picked.',
 						type: 'datetime-local',
 						value: ( meta._event_registration_stop_date || '' ).replace( ' ', 'T' ),
-						onChange: ( val ) => updateMeta( '_event_registration_stop_date', val ),
+						onChange: ( val ) => {
+							const normalized = val && val.length === 10 ? `${ val }T23:59` : val;
+							updateMeta( '_event_registration_stop_date', normalized );
+						},
 					} )
 				),
 				createElement(
