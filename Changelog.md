@@ -100,6 +100,9 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Added an inline-style to `div.register-button` (increased "margin-bottom" property).
   - Updated the file HTML to add a 'Read More' / 'Read Less' button to hide / show content below the post header.
 
+- `/src/templates/archive-events.html`:
+  - Add `entry-content` class attribute to `<main>` element tag.
+
 - `/assets/scripts/event-meta-panel.js`:
   - Change argument for `createElement()` from TextControl to TextareaControl for `meta._event_location_address`. Allow text area field to accept newlines.
   - Add sidebar metadata field `Event HTML Anchor ID` in the `single-events.html` editor sidebar.
