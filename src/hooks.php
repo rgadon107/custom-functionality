@@ -14,8 +14,9 @@ namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source;
 
 use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_cpt_from_config;
 use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_meta_from_config;
-use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Taxonomy\register_taxonomy_from_config;
 use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_cpt_block_templates;
+use gardenClubOfMpls\CustomFunctionalityPlugin\Source\Taxonomy as Taxonomy;
+use gardenClubOfMpls\CustomFunctionalityPlugin\Source\Taxonomy\Config as TaxonomyConfig;
 use WP_HTML_Tag_Processor;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -147,10 +148,54 @@ function initialize_custom_post_types(): void {
 	}
 }
 
+add_action( 'init', __NAMESPACE__ . '\register_plugin_taxonomies', 10 );
+add_action( 'init', __NAMESPACE__ . '\seed_plugin_taxonomy_terms', 20 );
+
+/**
+ * Registers all custom taxonomies defined in plugin configuration files.
+ *
+ * @since 2.4.0 Initial release.
+ *
+ * @return void
+ */
+function register_plugin_taxonomies(): void {
+	$taxonomy_configs = [
+		TaxonomyConfig\get_event_category_taxonomy_config(),
+		// Future taxonomies drop right in here:
+		// TaxonomyConfig\get_member_role_taxonomy_config(),
+		// TaxonomyConfig\get_photo_category_taxonomy_config(),
+		// TaxonomyConfig\get_newsletter_issue_taxonomy_config(),
+	];
+
+	foreach ( $taxonomy_configs as $config ) {
+		Taxonomy\register_taxonomy_from_config( $config );
+	}
+}
+
+/**
+ * Seeds default terms for all custom taxonomies that define a 'terms' payload.
+ *
+ * @since 2.4.0 Intial release.
+ *
+ * @return void
+ */
+function seed_plugin_taxonomy_terms(): void {
+	$taxonomy_configs = [
+		TaxonomyConfig\get_event_category_taxonomy_config(),
+		// TaxonomyConfig\get_member_role_taxonomy_config(),
+		// TaxonomyConfig\get_photo_category_taxonomy_config(),
+		// TaxonomyConfig\get_newsletter_issue_taxonomy_config(),
+	];
+
+	foreach ( $taxonomy_configs as $config ) {
+		Taxonomy\seed_taxonomy_terms_from_config( $config );
+	}
+}
+
 /**
  * Registers custom post type block templates with the Site Editor on the `init` hook.
  *
- * @since 2.4.0 Initial release
+ * @since 2.4.0 Initial release.
  * @see   \gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_cpt_block_templates()
  */
 add_action( 'init', register_cpt_block_templates(...) );
