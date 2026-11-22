@@ -120,7 +120,7 @@ function _get_plugin_url(): string	{
  * @since 1.8.0 Modify this function to serve as a module controller for the entire plugin.
  * @since 2.2.0 Add `/shortcodes/member-photo-directory.php`
  * @since 2.3.1 Add `/admin/auction-item.php`.
- * @since 2.4.0	Add `/src/custom/bindings.php`, `/src/custom/template-loader.php`, and `/src/taxonomy/seeder.php`.
+ * @since 2.4.0	Add `/src/custom/bindings.php`, `/src/custom/template-loader.php`, `/src/taxonomy/registrar.php`, `/src/taxonomy/seeder.php`, and `/src/taxonomy/config/events.php`.
  *
  * @return void
  */
