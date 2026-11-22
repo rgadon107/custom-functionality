@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Register custom post-type block templates with the site editor on the WP `init` hook.
   - Register callback to 'render_block' filter to render dynamic HTML anchor ID onto the `.custom-tight-card` Group block in single-events.html.
   - Register callback to 'render_block' filter to schedule the visibility of event registration blocks and messages in single-events.html.
+  - `sort_events_front_end_archive()`: Register callback to 'pre_get_posts' to order the front-end 'events' post-type archive chronologically by the `_event_start_date` meta_field.
 
 - `/src/templates/*` directory and files:
   - Added directory to hold template files for use with each registered custom post-type.
