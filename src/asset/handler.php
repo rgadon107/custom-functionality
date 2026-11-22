@@ -162,6 +162,7 @@ add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_block_edito
  * Enqueues scripts for the WordPress Block Editor.
  *
  * @since 2.3.1 Initial release.
+ * @since 2.4.0 Added configuration for 'event-meta-panel'.
  *
  * @return void
  */
