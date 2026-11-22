@@ -130,7 +130,7 @@ function enqueue_plugin_styles(): void {
 			'deps' => [],
 		],
 		'custom-event-accordion-style'	=>	[
-			'file' => 'assets/styles/event-accordion.css',
+			'file' => '/assets/styles/event-accordion.css',
 			'deps' => [],
 		]
 	];
