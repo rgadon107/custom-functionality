@@ -129,6 +129,10 @@ function enqueue_plugin_styles(): void {
 			'file' => '/assets/styles/member-photo-directory-styles.css',
 			'deps' => [],
 		],
+		'custom-event-accordion-style'	=>	[
+			'file' => 'assets/styles/event-accordion.css',
+			'deps' => [],
+		]
 	];
 
 	$asset_paths = _get_asset_paths();
