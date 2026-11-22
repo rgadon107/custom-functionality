@@ -25,6 +25,7 @@ function register_pattern_categories(): void	{
 		'message-before-registration-start' => array('label' => __('Message: Before Registration Start', 'custom-functionality')),
 		'message-after-registration-stop' 	=> array('label' => __('Message: After Registration Stop', 'custom-functionality')),
 		'event-secondary-session'			=> array('label' => __('Event: Secondary Session', 'custom-functionality')),
+		'events-calendar'					=> array('label' => __('Events Calendar', 'custom-functionality')),
 	);
 
 	foreach ($categories as $slug => $settings) {
