@@ -19,7 +19,7 @@ namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom;
  * Registers block templates for custom post types from `/src/templates/`.
  *
  * @return void
- * @since 2.4.0
+ * @since 2.4.0 Initial release.
  *
  */
 function register_cpt_block_templates(): void
@@ -32,16 +32,16 @@ function register_cpt_block_templates(): void
 
 	$templates = [
 		'custom-functionality//single-events' => [
-			'title' => __('Single Event', 'custom-functionality'),
-			'description' => __('Displays a single event with metadata and schedule details.', 'custom-functionality'),
-			'post_types' => ['events'],
-			'file' => $templates_dir . 'single-events.html',
+			'title' 		=> __('Single Event', 'custom-functionality'),
+			'description' 	=> __('Displays a single event with metadata and schedule details.', 'custom-functionality'),
+			'post_types' 	=> ['events'],
+			'file' 			=> $templates_dir . 'single-events.html',
 		],
 		'custom-functionality//archive-events' => [
-			'title' => __('Events Archive', 'custom-functionality'),
-			'description' => __('Displays a chronological listing of upcoming and past events.', 'custom-functionality'),
-			'post_types' => ['events'],
-			'file' => $templates_dir . 'archive-events.html',
+			'title' 		=> __('Events Archive', 'custom-functionality'),
+			'description' 	=> __('Displays a chronological listing of upcoming and past events.', 'custom-functionality'),
+			'post_types' 	=> ['events'],
+			'file' 			=> $templates_dir . 'archive-events.html',
 		],
 	];
 
