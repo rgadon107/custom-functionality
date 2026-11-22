@@ -134,7 +134,9 @@ function autoload_files(): void	{
 		'/src/shortcodes/current-year.php',
 		'/src/shortcodes/member-photo-directory.php',
 		'/src/custom/template-loader.php',
+		'/src/taxonomy/registrar.php',
 		'/src/taxonomy/seeder.php',
+		'/src/taxonomy/config/events.php',
 		'/src/hooks.php',
 		'/src/custom/bindings.php',
 	];
