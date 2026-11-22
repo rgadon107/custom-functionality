@@ -21,9 +21,18 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Register `$config['meta_fields'][_event_registration_before_message']` and `$config['meta_fields'][_event_registration_after_message']` metadata fields.
   - Updated `$config['meta_fields']['_event_location_address']['sanitize_callback']` to 'sanitize_textarea_field'. This allows newlines in the textarea field.
 
+- `/src/admin/events.php`: Initial release of file.
+  - Added custom admin columns, sorting, filtering, and quick edit capability for the 'events' custom post-type.
+
 - `/assets/scripts/event-meta-panel.js`:
   - Add file to activate the 'Events' metadata sidebar panel in the WordPress block editor.
   - Via the Block Bindings API, the metadata sidebar panel is now linked to post-meta JSON wrapping the HTML in the editor.
+  - The meta_fields registered in the 'Events' custom post-type are now rendered in the WP block editor and bound to the `core/meta` objects in the 'single-events.html' template
+  - Register helper function `renderDataTimeControl` to handle date and time changes for 'Registration Opens' and 'Registration Closes' fields.
+
+- `/assets/scripts/event-accordion.js`:
+  - Add event accordion script file. Handles expanding and collapsing the event details container on the
+	single-events.html template, updating button labels, chevron visibility, an ARIA accessibility states.
 
 - `/src/custom/bindings.php`: Add file to plugin and declare 4 functions:
   - `register_event_block_bindings()` - Wrapper function to register custom block binding sources for event metadata.
@@ -44,13 +53,24 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 - `/src/custom/template-loader.php`: Register and load block templates for custom post-types using WP's `register_block_template()`.
 
-- `/src/hooks.php`: Register custom post-type block templates with the site editor on the WP `init` hook.
+- `/src/hooks.php`: Added the following functions:
+  - `register_cpt_block_templates(...)`: Register custom post-type block templates with the site editor on the WP `init` hook.
+  - `inject_event_card_anchor()`: Injects a dynamic HTML anchor ID onto the `.custom-tight-card` group block in 'single-events.html'.
+  - `filter_scheduled_event_blocks()`: Control scheduled visibility for registration blocks in 'single-events.html' and render default or custom before/after status messages when outside the active window.
+  - `register_plugin_taxonomies()`: Register all custom taxonomies defined in the plugin configuration files on the `init` hook.
+  - `seed_plugin_taxonomy_terms()`: Seeds default terms for all custom taxonomies that define a 'terms' payload.
 
 - `/includes/patterns/pattern-loader.php`: Register `event-secondary-session` block pattern category, and load and register pattern `event-secondary-session.php`.
 
-- `/src/patterns/event-secondary-session.php`: Add custom design pattern file `event-secondary-session.php`. Update `metadata.name` properties to semantically name event title, presenter, and event description groups.
+- `/src/patterns/event-secondary-session.php`: Added custom design pattern file `event-secondary-session.php`. Update `metadata.name` properties to semantically name event title, presenter, and event description groups.
 
-- `/bootstrap.php` file: Add file path `/src/custom/bindings.php` to autoload() function.
+- `/bootstrap.php`: Added the following file paths to the autoload_files() function:
+	- `/src/admin/events.php`
+    - `/src/custom/bindings.php`
+    - `/src/custom/template-loader.php`
+    - `/src/taxonomy/registrar.php`
+    - `/src/taxonomy/seeder.php`
+    - `/src/taxonomy/config/events.php`
 
 ### Changed
 - `/boostrap.php`:
@@ -60,18 +80,31 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - `launch()`: Load `/sandbox/` module when environment mode is 'local' or 'development'.
 
 - `/src/asset/handler.php`:
-  - Updated function `enqueue_block_editor_scripts()`:
-    - Add conditional check `$is_events`.
-    - Register `event-meta-panel.js` file and dependencies to display a metadata sidebar in the WordPress editor for the 'events' post-type.
+  - `enqueue_plugin_scripts()`:
+    - Enqueued 'custom-event-accordion-script' conditionally on single 'events' posts.
+    - The script manages the interactivity of the 'Read More' toggle on 'single-events.html'.
+  - `enqueue_plugin_styles()`:
+    - Refactored `$styles` array to expose `deps` (dependencies) array.
+    - Added 'color-variables' dependency to 'event-registration-notice-styles'.
+    - Enqueued 'custom-event-accordion-style' conditionally on single 'events' posts.
+  - `enqueue_block_editor_scripts()`: Updated function.
+    - Added conditional check for 'events' post-type.
+    - Registered `event-meta-panel.js` file and dependencies to display a metadata sidebar in the WordPress editor for the 'events' post-type.
 
 - `/src/templates/single-events.html`:
   - Updated template file to fix styles in `.event-description` section.
+  - Added an inline-style to `div.register-button` (increased "margin-bottom" property).
+  - Updated the file HTML to add a 'Read More' / 'Read Less' button to hide / show content below the post header.
 
 - `/assets/scripts/event-meta-panel.js`:
   - Change argument for `createElement()` from TextControl to TextareaControl for `meta._event_location_address`. Allow text area field to accept newlines.
   - Add sidebar metadata field `Event HTML Anchor ID` in the `single-events.html` editor sidebar.
   - Add sidebar metadata fields `Registration Opens` and `Registration Closes` in the `single-events.html` editor sidebar.
   - Add sidebar metadata fields `Pre-Registration Message` and `Registration Closed Message` in the `single-events.html` editor sidebar.
+
+- `/assets/styles/event-notices.css`:
+  - Added styles targeting the '_event_registration_before_message' and '_event_registration_after_message' meta_fields shown by 'single-events.html'.
+  - Documented the styles remaining targeting messages rendered by the `[expire]` and `[expire_inner]` shortcodes.
 
 ### Fixed
 - `/src/custom/bindings.php`: Refactored `register_event_block_bindings()` to declare an array and loop through it to register block bindings for metadata.
