@@ -68,6 +68,10 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 - `/src/patterns/event-secondary-session.php`: Added custom design pattern file `event-secondary-session.php`. Update `metadata.name` properties to semantically name event title, presenter, and event description groups.
 
+- `/includes/patterns/pattern-loader.php`: Register 'events-calendar' design pattern category to render the 'events' posts archive.
+
+- `/src/patterns/events-calendar.php`: Added custom design pattern to render a header and query loop to display the 'events' archive in an Events Calendar.
+
 - `/bootstrap.php`: Added the following file paths to the autoload_files() function:
 	- `/src/admin/events.php`
     - `/src/custom/bindings.php`
