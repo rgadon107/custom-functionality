@@ -47,9 +47,9 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Register callback to 'render_block' filter to render dynamic HTML anchor ID onto the `.custom-tight-card` Group block in single-events.html.
   - Register callback to 'render_block' filter to schedule the visibility of event registration blocks and messages in single-events.html.
 
-- `/src/templates/` directory and files:
+- `/src/templates/*` directory and files:
   - Added directory to hold template files for use with each registered custom post-type.
-  - Added first template file `single-events.html` for use with the `events` post-type.
+  - Added 2 `events` post-type template files; `single-events.html` and `archive-events.html`.
 
 - `/src/custom/template-loader.php`:
   - `register_block_templates()`:
