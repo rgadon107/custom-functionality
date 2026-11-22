@@ -1,0 +1,49 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"site-main events-archive","layout":{"type":"constrained"}} -->
+<main class="wp-block-group site-main events-archive">
+
+	<!-- wp:query-title {"type":"archive","showPrefix":false,"className":"events-archive__title"} /-->
+
+	<!-- wp:query {"queryId":1,"query":{"perPage":10,"pages":0,"offset":0,"postType":"events","order":"asc","orderBy":"date","inherit":true},"className":"events-archive__query"} -->
+	<div class="wp-block-query events-archive__query">
+
+		<!-- wp:post-template {"className":"events-archive__list","layout":{"type":"default"}} -->
+		<!-- wp:group {"tagName":"article","className":"event-card","layout":{"type":"constrained"}} -->
+		<article class="wp-block-group event-card">
+
+			<!-- wp:post-title {"isLink":true,"level":2,"className":"event-card__title"} /-->
+
+			<!-- wp:paragraph {"className":"event-card__date","metadata":{"bindings":{"content":{"source":"gcm/formatted-event-date"}}}} -->
+			<p class="event-card__date"></p>
+			<!-- /wp:paragraph -->
+
+			<!-- wp:paragraph {"className":"event-card__location","metadata":{"bindings":{"content":{"source":"gcm/event-meta","args":{"key":"_event_location_name"}}}}} -->
+			<p class="event-card__location"></p>
+			<!-- /wp:paragraph -->
+
+			<!-- wp:post-excerpt {"moreText":"View Event Details","className":"event-card__excerpt"} /-->
+
+		</article>
+		<!-- /wp:group -->
+		<!-- /wp:post-template -->
+
+		<!-- wp:query-pagination {"className":"events-archive__pagination","layout":{"type":"flex","justifyContent":"space-between"}} -->
+		<!-- wp:query-pagination-previous /-->
+		<!-- wp:query-pagination-numbers /-->
+		<!-- wp:query-pagination-next /-->
+		<!-- /wp:query-pagination -->
+
+		<!-- wp:query-no-results -->
+		<!-- wp:paragraph {"className":"events-archive__empty"} -->
+		<p class="events-archive__empty">There are currently no upcoming events scheduled.</p>
+		<!-- /wp:paragraph -->
+		<!-- /wp:query-no-results -->
+
+	</div>
+	<!-- /wp:query -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
