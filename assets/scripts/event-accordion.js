@@ -2,7 +2,7 @@
  * Event Accordion Toggle
  *
  * Handles expanding and collapsing the event details container on the
- * single-events template, updating button labels, chevron visibility,
+ * single-events.html template, updating button labels, chevron visibility,
  * and ARIA accessibility states.
  *
  * @package Custom_Functionality
