@@ -66,6 +66,12 @@ function enqueue_plugin_scripts(): void	{
 			'deps'	=> [],
 			'in_footer' => true,
 			'condition' => true,
+		],
+		'custom-event-accordion-script'	=>	[
+			'file'	=> '/assets/scripts/event-accordion.js',
+			'deps'	=> [],
+			'in_footer' => true,
+			'condition' => true,
 		]
 	];
 
