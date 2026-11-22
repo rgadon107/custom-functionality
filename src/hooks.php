@@ -360,3 +360,39 @@ function sort_events_front_end_archive( \WP_Query $query ): void {
 		$query->set( 'order', 'ASC' );
 	}
 }
+
+add_filter( 'render_block_core/post-excerpt', __NAMESPACE__ . '\render_full_event_description_in_loop', 10, 3 );
+/**
+ * Replaces the core/post-excerpt output with the full formatted event post_content
+ * inside .event-description blocks so secondary sessions and full copy render inside
+ * the collapsible accordion without triggering Gutenberg's editor post-content error.
+ *
+ * @since 2.4.0 Initial release.
+ *
+ * @param string    $block_content The rendered block HTML.
+ * @param array     $block         The full block array.
+ * @param \WP_Block $instance      The block instance with postId context.
+ * @return string
+ */
+function render_full_event_description_in_loop( string $block_content, array $block, \WP_Block $instance ): string {
+	if ( empty( $block['attrs']['className'] ) || ! str_contains( $block['attrs']['className'], 'event-description' ) ) {
+		return $block_content;
+	}
+
+	$post_id = $instance->context['postId'] ?? get_the_ID();
+	if ( ! $post_id ) {
+		return $block_content;
+	}
+
+	$raw_content = get_post_field( 'post_content', (int) $post_id );
+	if ( '' === trim( (string) $raw_content ) ) {
+		return '';
+	}
+
+	$rendered_content = apply_filters( 'the_content', $raw_content );
+
+	return sprintf(
+		'<div class="entry-content event-description wp-block-post-content has-brand-text-main-color has-text-color">%s</div>',
+		$rendered_content
+	);
+}
