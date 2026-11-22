@@ -1,0 +1,19 @@
+/* Styles for the event accordion in the 'single-events.hmtl' template file. */
+/* Hide the accordion sections and up-chevron by default */
+.event-accordion-hidden,
+.hidden-icon {
+	display: none;
+}
+
+/* Basic button alignment for text + chevron */
+#event-read-more-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-weight: 600;
+	padding: 8px 0;
+	color: inherit;
+}
