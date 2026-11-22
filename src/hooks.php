@@ -114,7 +114,7 @@ function initialize_custom_taxonomies(): void {
 		if ( file_exists( $file_path ) ) {
 			$config = require $file_path;
 
-			register_taxonomy_from_config( $config );
+			Taxonomy\register_taxonomy_from_config( $config );
 		}
 	}
 }
@@ -161,10 +161,6 @@ add_action( 'init', __NAMESPACE__ . '\seed_plugin_taxonomy_terms', 20 );
 function register_plugin_taxonomies(): void {
 	$taxonomy_configs = [
 		TaxonomyConfig\get_event_category_taxonomy_config(),
-		// Future taxonomies drop right in here:
-		// TaxonomyConfig\get_member_role_taxonomy_config(),
-		// TaxonomyConfig\get_photo_category_taxonomy_config(),
-		// TaxonomyConfig\get_newsletter_issue_taxonomy_config(),
 	];
 
 	foreach ( $taxonomy_configs as $config ) {
