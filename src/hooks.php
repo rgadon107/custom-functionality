@@ -339,3 +339,24 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 
 	return $block_content;
 }
+
+add_action( 'pre_get_posts', __NAMESPACE__ . '\sort_events_front_end_archive' );
+/**
+ * Orders the front-end 'events' post type archive chronologically by the `_event_start_date` meta_field.
+ *
+ * @since 2.4.0 Initial release
+ *
+ * @param \WP_Query $query The WP_Query instance (passed by reference).
+ * @return void
+ */
+function sort_events_front_end_archive( \WP_Query $query ): void {
+	if ( is_admin() || ! $query->is_main_query() ) {
+		return;
+	}
+
+	if ( $query->is_post_type_archive( 'events' ) || $query->is_tax( 'event-category' ) ) {
+		$query->set( 'meta_key', '_event_start_date' );
+		$query->set( 'orderby', 'meta_value' );
+		$query->set( 'order', 'ASC' );
+	}
+}
