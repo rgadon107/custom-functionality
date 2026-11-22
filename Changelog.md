@@ -51,7 +51,10 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Added directory to hold template files for use with each registered custom post-type.
   - Added first template file `single-events.html` for use with the `events` post-type.
 
-- `/src/custom/template-loader.php`: Register and load block templates for custom post-types using WP's `register_block_template()`.
+- `/src/custom/template-loader.php`:
+  - `register_block_templates()`:
+    - Added function to register and load block templates for each registered custom post-type.
+    - Registered 2 block templates for the 'events' post-type; `single-events.html` and `archive-events.html`.
 
 - `/src/hooks.php`: Added the following functions:
   - `register_cpt_block_templates(...)`: Register custom post-type block templates with the site editor on the WP `init` hook.
