@@ -48,7 +48,8 @@ function register_plugin_block_patterns(): void {
 		'message-before-registration-start.php',
 		'message-after-registration-stop.php',
 		'accordion-meeting-topics.php',
-		'event-secondary-session.php'
+		'event-secondary-session.php',
+		'events-calendar.php'
 		];
 
 	foreach ( $patterns_to_register as $file ) {
