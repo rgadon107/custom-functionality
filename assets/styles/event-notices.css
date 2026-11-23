@@ -60,3 +60,28 @@
 	border-color: var(--brand-green-dark);
 	color: var(--brand-white-lime);
 }
+
+/* Style 'event-category' taxonomy term badges on events templates. */
+.entry-content .custom-tight-card .event-card-header {
+	width: 100%;
+	margin-bottom: 0.25rem;
+}
+
+.entry-content .custom-tight-card .event-card-header .event-date {
+	margin: 0;
+}
+
+.entry-content .custom-tight-card .event-category-badge {
+	margin: 0;
+	padding: 0.2rem 0.65rem;
+	border-radius: 999px;
+	background-color: var(--brand-green-dark);
+	color: var(--brand-white-lime);
+	font-style: italic;
+	font-weight: 600;
+	line-height: 1.2;
+}
+
+.entry-content .custom-tight-card .event-category-badge:empty {
+	display: none;
+}
