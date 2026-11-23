@@ -17,6 +17,8 @@ declare(strict_types=1);
 
 namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom;
 
+use WP_Block;
+
 add_action('init', __NAMESPACE__ . '\register_event_block_bindings');
 /**
  * Registers custom block binding sources for formatted event metadata.
@@ -62,13 +64,13 @@ function register_event_block_bindings(): void {
  * Retrieves and formats an event date meta value as "Tuesday, January 12, 2027".
  *
  * @param array $source_args Arguments passed from the block binding attributes.
- * @param \WP_Block $block_instance The block instance being rendered.
+ * @param WP_Block $block_instance The block instance being rendered.
  * @return string|null The formatted date string, or null if empty/invalid.
  *
  * @since 2.4.0 Initial release
  *
  */
-function get_formatted_event_date_binding(array $source_args, \WP_Block $block_instance): ?string	{
+function get_formatted_event_date_binding(array $source_args, WP_Block $block_instance): ?string	{
 	$post_id = $block_instance->context['postId'] ?? get_the_ID();
 	if (!$post_id) {
 		return null;
@@ -95,13 +97,13 @@ function get_formatted_event_date_binding(array $source_args, \WP_Block $block_i
  * so template placeholder text is cleared on the frontend.
  *
  * @param array     $source_args    Arguments passed from the block binding attributes.
- * @param \WP_Block $block_instance The block instance being rendered.
+ * @param WP_Block $block_instance The block instance being rendered.
  * @return string|null The meta value string, empty string if blank, or null if no post ID/key.
  *
  * @since 2.4.0 Intial release.
  *
  */
-function get_event_meta_binding( array $source_args, \WP_Block $block_instance ): ?string {
+function get_event_meta_binding( array $source_args, WP_Block $block_instance ): ?string {
 	$post_id  = $block_instance->context['postId'] ?? get_the_ID();
 	$meta_key = $source_args['key'] ?? '';
 
@@ -123,13 +125,13 @@ function get_event_meta_binding( array $source_args, \WP_Block $block_instance )
  * for single-line event card paragraphs.
  *
  * @param array     $source_args    Arguments passed from the block binding attributes.
- * @param \WP_Block $block_instance The block instance being rendered.
+ * @param WP_Block $block_instance The block instance being rendered.
  * @return string|null Formatted HTML string, empty string if blank, or null if invalid.
  *
  * @since 2.4.0 Intial release
  *
  */
-function get_event_card_composite_binding( array $source_args, \WP_Block $block_instance ): ?string {
+function get_event_card_composite_binding( array $source_args, WP_Block $block_instance ): ?string {
 	$post_id = $block_instance->context['postId'] ?? get_the_ID();
 	$field   = $source_args['field'] ?? '';
 
@@ -159,7 +161,7 @@ function get_event_card_composite_binding( array $source_args, \WP_Block $block_
 			$org_html = '';
 			if ( '' !== $org ) {
 				$org_html = '' !== $url
-					? sprintf( '<a href="%s"><strong>%s</strong></a>', esc_url( $url ), esc_html( $org ) )
+					? '<a href="' . esc_url( $url ) . '"><strong>' . esc_html( $org ) . '</strong></a>'
 					: sprintf( '<strong>%s</strong>', esc_html( $org ) );
 			}
 
@@ -188,7 +190,7 @@ function get_event_card_composite_binding( array $source_args, \WP_Block $block_
 			$inner = implode( '<br>', $lines );
 
 			return '' !== $map_url
-				? sprintf( '<a href="%s" target="_blank" rel="noreferrer noopener">%s</a>', esc_url( $map_url ), $inner )
+				? '<a href="' . esc_url( $map_url ) . '" target="_blank" rel="noreferrer noopener">' . $inner . '</a>'
 				: $inner;
 
 		default:
@@ -206,10 +208,10 @@ function get_event_card_composite_binding( array $source_args, \WP_Block $block_
  * @since 2.4.0 Initial release.
  *
  * @param array     $source_args    Arguments passed from the block binding attributes.
- * @param \WP_Block $block_instance The block instance being rendered.
+ * @param WP_Block $block_instance The block instance being rendered.
  * @return string|null Formatted term HTML, empty string if excluded/none, or null if invalid.
  */
-function get_event_category_badge_binding( array $source_args, \WP_Block $block_instance ): ?string {
+function get_event_category_badge_binding( array $source_args, WP_Block $block_instance ): ?string {
 	$post_id = $block_instance->context['postId'] ?? get_the_ID();
 	if ( ! $post_id ) {
 		return null;
