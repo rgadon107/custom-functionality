@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Version 2.4.0 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/32)
+## [Version 2.4.0 - 2026-11-23](https://github.com/rgadon107/custom-functionality/pull/32)
 
 ### Added
 - `/sandbox/testing.php`: Add a local development module for testing code.
@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - `/assets/scripts/event-accordion.js`:
   - Add event accordion script file. Handles expanding and collapsing the event details container on the
 	single-events.html template, updating button labels, chevron visibility, an ARIA accessibility states.
+  - Replaced `getElementById()` with `querySelectorAll()` to search on specific class attributes (instead of IDs) to operate the 'Read More' toggle.
 
 - `/src/custom/bindings.php`: Add file to plugin and declare 4 functions:
   - `register_event_block_bindings()` - Wrapper function to register custom block binding sources for event metadata.
@@ -41,12 +42,6 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - `get_event_card_composite_binding()` - Builds composite HTML strings (byline, organization link, location link) for single-line event card paragraphs.
 
 - `/src/custom/template-loader.php`: Register and load block templates for custom post-types using WP's `register_block_template()`.
-
-- `/src/hooks.php`:
-  - Register custom post-type block templates with the site editor on the WP `init` hook.
-  - Register callback to 'render_block' filter to render dynamic HTML anchor ID onto the `.custom-tight-card` Group block in single-events.html.
-  - Register callback to 'render_block' filter to schedule the visibility of event registration blocks and messages in single-events.html.
-  - `sort_events_front_end_archive()`: Register callback to 'pre_get_posts' to order the front-end 'events' post-type archive chronologically by the `_event_start_date` meta_field.
 
 - `/src/templates/*` directory and files:
   - Added directory to hold template files for use with each registered custom post-type.
@@ -60,11 +55,17 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - `/src/hooks.php`: Added the following functions:
   - `register_cpt_block_templates(...)`: Register custom post-type block templates with the site editor on the WP `init` hook.
   - `inject_event_card_anchor()`: Injects a dynamic HTML anchor ID onto the `.custom-tight-card` group block in 'single-events.html'.
-  - `filter_scheduled_event_blocks()`: Control scheduled visibility for registration blocks in 'single-events.html' and render default or custom before/after status messages when outside the active window.
+
   - `register_plugin_taxonomies()`: Register all custom taxonomies defined in the plugin configuration files on the `init` hook.
   - `seed_plugin_taxonomy_terms()`: Seeds default terms for all custom taxonomies that define a 'terms' payload.
-  - `sort_events_front_end_archive()`: Register callback to 'pre_get_posts' to order the front-end 'events' post-type archive chronologically by the `_event_start_date` meta_field.
+  - `sort_events_front_end_archive()`:
+    - Register callback to 'pre_get_posts' to order the front-end 'events' post-type archive chronologically by the `_event_start_date` meta_field.
+    - Modify callback to exclude the display of past events using a meta_query.
   - `render_full_event_description_in_loop()`: Replace the 'core/post-excerpt' output with the fully formatted event post_content inside `.event-description blocks`.
+  - `filter_scheduled_event_blocks()`:
+    - Control scheduled visibility for registration blocks in 'single-events.html' and render default or custom before/after status messages when outside the active window.
+    - Added `\WP_Block $block_instance` context resolution and updated guards so registration scheduling runs in query loops and archives as well as singular `events` views.
+  - `filter_events_calendar_query_loop()`: Filters the standalone Events Query Loop (`/src/patterns/events-calendar.php`) to sort chronologically by `_event_start_date` and exclude events whose stop/start date has passed.
 
 - `/includes/patterns/pattern-loader.php`: Register `event-secondary-session` block pattern category, and load and register pattern `event-secondary-session.php`.
 
@@ -75,6 +76,8 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - `/src/patterns/events-calendar.php`: Added custom design pattern to render a header and query loop to display the 'events' archive in an Events Calendar.
 
 - `/src/shortcodes/events-calendar.php`: Register 'events-calendar' shortcode to render events post-archive in the WP editor.
+
+- `/assets/styles/event-accordion.css`: Added styles for 'Read More' accordion toggle in single- and archive-events templates, and events-calendar.php design pattern.
 
 - `/bootstrap.php`: Added the following file paths to the autoload_files() function:
 	- `/src/admin/events.php`
@@ -94,7 +97,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 - `/src/asset/handler.php`:
   - `enqueue_plugin_scripts()`:
-    - Enqueued 'custom-event-accordion-script' conditionally on single 'events' posts.
+    - Enqueued 'custom-event-accordion-script' to run on single event views, event archives, event category archives, and any singular page containing [gcm_events_calendar].
     - The script manages the interactivity of the 'Read More' toggle on 'single-events.html'.
   - `enqueue_plugin_styles()`:
     - Refactored `$styles` array to expose `deps` (dependencies) array.
@@ -108,9 +111,18 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - Updated template file to fix styles in `.event-description` section.
   - Added an inline-style to `div.register-button` (increased "margin-bottom" property).
   - Updated the file HTML to add a 'Read More' / 'Read Less' button to hide / show content below the post header.
+  - Removed ID attributes and changed some to classes.
+	  - Removed id="event-accordion-content".
+	  - Removed id="event-read-more-btn" and aria-controls="event-accordion-content".
+	  - Converted #toggle-label, #chevron-down, and #chevron-up to .toggle-label, .chevron-down, and .chevron-up.
+  - Updated single-events file to display select event-category badges on event posts.
 
 - `/src/templates/archive-events.html`:
   - Add `entry-content` class attribute to `<main>` element tag.
+  - Update 'archive-events.html' file.
+	  - Incorporate the full `.custom-tight-card` layout, custom Block Bindings, and the class-based 'Read More / Read Less' accordion.
+	  - Every card in the archive renders identically to 'single-events.html' and the [gcm_events_calendar] shortcode without duplicate id attributes.
+  - Updated archive-events file to display select event-category badges on event posts.
 
 - `/assets/scripts/event-meta-panel.js`:
   - Change argument for `createElement()` from TextControl to TextareaControl for `meta._event_location_address`. Allow text area field to accept newlines.
@@ -120,9 +132,21 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 - `/assets/styles/event-notices.css`:
   - Added styles targeting the '_event_registration_before_message' and '_event_registration_after_message' meta_fields shown by 'single-events.html'.
-  - Documented the styles remaining targeting messages rendered by the `[expire]` and `[expire_inner]` shortcodes.
+  - Documented the remaining styles targeting messages rendered by the `[expire]` and `[expire_inner]` shortcodes.
+  - Added styles for 'event-category' taxonomy term badges applied to events templates.
+  - Override the Ixion parent theme's style for `.hentry` affecting archive-events.html rendering on front-end.
 
-- `/src/patterns/events-calendar.php`:  Change `wp.post-content` to `wp.post-excerpt` to clear React parsing error of post-content in archive.
+- `/includes/patterns/pattern-loader.php`:
+  - Register the 'events-calendar' design pattern with `register_pattern_categories()`.
+  - Register the block pattern file 'events-calendar.php'
+
+- `/src/patterns/events-calendar.php`:
+  - Change `wp.post-content` to `wp.post-excerpt` to clear React parsing error of post-content in archive.
+  - Updated pattern file to display select event-category badges on each event post within the archive rendered by the [gcm_events_calendar] shortcode.
+
+- `/src/custom/bindings.php`:
+  - Register 'gcm/event-category-badge' to `register_event_block_bindings()`. This allows the display of select 'event-category' terms in a single- and archive-events template.
+  - Declare`get_event_category_badge_binding()` which is called during the binding registration.
 
 ### Fixed
 - `/src/custom/bindings.php`: Refactored `register_event_block_bindings()` to declare an array and loop through it to register block bindings for metadata.
