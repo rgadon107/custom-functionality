@@ -139,7 +139,6 @@ function enqueue_plugin_styles(): void {
 		'custom-event-accordion-style' => [
 			'file'      => '/assets/styles/event-accordion.css',
 			'deps'      => [],
-			'condition' => is_singular( 'events' ),
 		],
 	];
 
