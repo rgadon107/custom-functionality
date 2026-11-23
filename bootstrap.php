@@ -127,6 +127,7 @@ function _get_plugin_url(): string	{
  *      - `/src/taxonomy/registrar.php`
  *      - `/src/taxonomy/seeder.php`
  *      - `/src/taxonomy/config/events.php`
+ * 		- `/src/shortcodes/events-calendar.php`
  *
  * @return void
  */
@@ -140,6 +141,7 @@ function autoload_files(): void	{
 		'/src/shortcodes/expire-content.php',
 		'/src/shortcodes/current-year.php',
 		'/src/shortcodes/member-photo-directory.php',
+		'/src/shortcodes/events-calendar.php',
 		'/src/custom/template-loader.php',
 		'/src/taxonomy/registrar.php',
 		'/src/taxonomy/seeder.php',
