@@ -6,9 +6,17 @@
 	<!-- wp:group {"className":"custom-tight-card","layout":{"type":"flow"}} -->
 	<div class="wp-block-group custom-tight-card">
 
-		<!-- wp:heading {"level":3,"textColor":"brand-text-main","className":"event-date","metadata":{"bindings":{"content":{"source":"gcm/formatted-event-date","args":{"key":"_event_start_date"}}}}} -->
-		<h3 class="wp-block-heading event-date has-brand-text-main-color has-text-color">Event Date</h3>
-		<!-- /wp:heading -->
+		<!-- wp:group {"className":"event-card-header","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
+		<div class="wp-block-group event-card-header">
+			<!-- wp:heading {"level":3,"textColor":"brand-text-main","className":"event-date","metadata":{"bindings":{"content":{"source":"gcm/formatted-event-date","args":{"key":"_event_start_date"}}}}} -->
+			<h3 class="wp-block-heading event-date has-brand-text-main-color has-text-color">Event Date</h3>
+			<!-- /wp:heading -->
+
+			<!-- wp:paragraph {"fontSize":"small","className":"event-category-badge","metadata":{"bindings":{"content":{"source":"gcm/event-category-badge"}}}} -->
+			<p class="event-category-badge has-small-font-size"></p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:group -->
 
 		<!-- wp:post-title {"text-align":"left","level":2,"placeholder":"Enter event title","textColor":"brand-text-main","className":"event-title"} /-->
 
