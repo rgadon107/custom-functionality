@@ -1,0 +1,49 @@
+/* ================================================================================
+	Styles the 'Read More'accordion in:
+	- '/src/template/single-events.html';
+	- '/src/templates/archive-events.html;
+	- '/src/patterns/events-calendar.php'; and
+	- '/src/shortcodes/events-calendar.php'.
+	=============================================================================== */
+
+/* Hide the accordion sections and up-chevron by default */
+.event-accordion-hidden,
+.hidden-icon {
+	display: none;
+}
+
+/* Base button alignment and reset for text + chevron */
+.custom-tight-card button.event-read-more-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	background: transparent;
+	border: none;
+	box-shadow: none;
+	cursor: pointer;
+	font-weight: 600;
+	padding: 8px 0;
+	color: var(--brand-text-main, inherit);
+	transition: opacity 0.2s ease;
+}
+
+/* Override parent theme Ixion button:hover / :focus / :active styles */
+.custom-tight-card button.event-read-more-btn:hover,
+.custom-tight-card button.event-read-more-btn:focus,
+.custom-tight-card button.event-read-more-btn:active {
+	background: transparent;
+	box-shadow: none;
+	color: var(--brand-green-dark, inherit);
+	text-decoration: underline;
+}
+
+/* Optional: Keep a clean keyboard focus ring for accessibility */
+.custom-tight-card button.event-read-more-btn:focus-visible {
+	outline: 2px solid var(--brand-green-dark, currentColor);
+	outline-offset: 2px;
+}
+
+/* Remove Ixion parent theme's `.hentry` padding-bottom property on Events Query Loop items */
+li.wp-block-post.type-events.hentry {
+	padding-bottom: 0;
+}

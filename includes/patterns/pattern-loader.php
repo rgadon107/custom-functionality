@@ -24,6 +24,8 @@ function register_pattern_categories(): void	{
 		'accordion-meeting-topics-table' 	=> array('label' => __('Accordion: Meeting Topics Table', 'custom-functionality')),
 		'message-before-registration-start' => array('label' => __('Message: Before Registration Start', 'custom-functionality')),
 		'message-after-registration-stop' 	=> array('label' => __('Message: After Registration Stop', 'custom-functionality')),
+		'event-secondary-session'			=> array('label' => __('Event: Secondary Session', 'custom-functionality')),
+		'events-calendar'					=> array('label' => __('Events Calendar', 'custom-functionality')),
 	);
 
 	foreach ($categories as $slug => $settings) {
@@ -37,7 +39,7 @@ function register_pattern_categories(): void	{
  * Process a configuration list of design pattern files stored in the plugin's
  * `src/patterns` directory and register them with WordPress.
  *
- * @since 1.0.0
+ * @since 1.8.0 Initial release.
  * @return void
  */
 function register_plugin_block_patterns(): void {
@@ -46,6 +48,8 @@ function register_plugin_block_patterns(): void {
 		'message-before-registration-start.php',
 		'message-after-registration-stop.php',
 		'accordion-meeting-topics.php',
+		'event-secondary-session.php',
+		'events-calendar.php'
 		];
 
 	foreach ( $patterns_to_register as $file ) {
@@ -58,6 +62,8 @@ function register_plugin_block_patterns(): void {
  *
  * @param string $file The filename of the pattern file to load.
  * @return void
+ *
+ * @since 1.8.0 Initial release.
  */
 function load_and_register_pattern( string $file ): void {
 

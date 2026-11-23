@@ -14,7 +14,10 @@ namespace gardenClubOfMpls\CustomFunctionalityPlugin\Source;
 
 use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_cpt_from_config;
 use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_meta_from_config;
-use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Taxonomy\register_taxonomy_from_config;
+use function gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_cpt_block_templates;
+use gardenClubOfMpls\CustomFunctionalityPlugin\Source\Taxonomy as Taxonomy;
+use gardenClubOfMpls\CustomFunctionalityPlugin\Source\Taxonomy\Config as TaxonomyConfig;
+use WP_HTML_Tag_Processor;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -111,7 +114,7 @@ function initialize_custom_taxonomies(): void {
 		if ( file_exists( $file_path ) ) {
 			$config = require $file_path;
 
-			register_taxonomy_from_config( $config );
+			Taxonomy\register_taxonomy_from_config( $config );
 		}
 	}
 }
@@ -131,6 +134,7 @@ function initialize_custom_post_types(): void {
 	// Array of configuration file paths to load.
 	$cpt_configs = [
 		__DIR__ . '/custom/config/auction-item.php',
+		__DIR__ . '/custom/config/events.php',
 		// Future CPT configs go here: __DIR__ . '/custom/config/members.php',
 	];
 
@@ -142,4 +146,371 @@ function initialize_custom_post_types(): void {
 			register_meta_from_config( $config );
 		}
 	}
+}
+
+add_action( 'init', __NAMESPACE__ . '\register_plugin_taxonomies', 10 );
+add_action( 'init', __NAMESPACE__ . '\seed_plugin_taxonomy_terms', 20 );
+
+/**
+ * Registers all custom taxonomies defined in plugin configuration files.
+ *
+ * @since 2.4.0 Initial release.
+ *
+ * @return void
+ */
+function register_plugin_taxonomies(): void {
+	$taxonomy_configs = [
+		TaxonomyConfig\get_event_category_taxonomy_config(),
+	];
+
+	foreach ( $taxonomy_configs as $config ) {
+		Taxonomy\register_taxonomy_from_config( $config );
+	}
+}
+
+/**
+ * Seeds default terms for all custom taxonomies that define a 'terms' payload.
+ *
+ * @since 2.4.0 Intial release.
+ *
+ * @return void
+ */
+function seed_plugin_taxonomy_terms(): void {
+	$taxonomy_configs = [
+		TaxonomyConfig\get_event_category_taxonomy_config(),
+		// TaxonomyConfig\get_member_role_taxonomy_config(),
+		// TaxonomyConfig\get_photo_category_taxonomy_config(),
+		// TaxonomyConfig\get_newsletter_issue_taxonomy_config(),
+	];
+
+	foreach ( $taxonomy_configs as $config ) {
+		Taxonomy\seed_taxonomy_terms_from_config( $config );
+	}
+}
+
+/**
+ * Registers custom post type block templates with the Site Editor on the `init` hook.
+ *
+ * @since 2.4.0 Initial release.
+ * @see   \gardenClubOfMpls\CustomFunctionalityPlugin\Source\Custom\register_cpt_block_templates()
+ */
+add_action( 'init', register_cpt_block_templates(...) );
+
+add_filter( 'render_block', __NAMESPACE__ . '\inject_event_card_anchor', 10, 2 );
+add_filter( 'render_block', __NAMESPACE__ . '\filter_scheduled_event_blocks', 10, 3 );
+/**
+ * Injects a dynamic HTML anchor ID onto the .custom-tight-card Group block
+ * in single-events.html using '_event_anchor_id' or falling back to the post slug.
+ *
+ * @param string $block_content The rendered HTML of the block.
+ * @param array  $block         The full block array, including name and attributes.
+ * @return string Modified block HTML with the injected id attribute.
+ *
+ * @since 2.4.0 Initial release.
+ *
+ */
+function inject_event_card_anchor( string $block_content, array $block ): string {
+	if (
+		( $block['blockName'] ?? '' ) !== 'core/group' ||
+		empty( $block['attrs']['className'] ) ||
+		! str_contains( $block['attrs']['className'], 'custom-tight-card' )
+	) {
+		return $block_content;
+	}
+
+	if ( ! \is_singular( 'events' ) ) {
+		return $block_content;
+	}
+
+	$post_id = \get_the_ID();
+	if ( ! $post_id ) {
+		return $block_content;
+	}
+
+	$custom_anchor = \get_post_meta( $post_id, '_event_anchor_id', true );
+	$anchor_id     = is_string( $custom_anchor ) && '' !== trim( $custom_anchor )
+		? \sanitize_title( $custom_anchor )
+		: \get_post_field( 'post_name', $post_id );
+
+	if ( empty( $anchor_id ) ) {
+		return $block_content;
+	}
+
+	$tags = new WP_HTML_Tag_Processor( $block_content );
+	if ( $tags->next_tag() ) {
+		$tags->set_attribute( 'id', $anchor_id );
+		$block_content = $tags->get_updated_html();
+	}
+
+	return $block_content;
+}
+
+/**
+ * Controls scheduled visibility for event registration blocks across single events,
+ * archives, and Query Loops, rendering styled before/after status messages when outside
+ * the active registration window.
+ *
+ * @since 2.4.0 Initial release for single `events` posts.
+ * 				Added `\WP_Block $block_instance` context resolution and updated guards
+ *              so registration scheduling runs in Query Loops and archives as well as
+ *              singular `events` views.
+ *
+ * @param string    $block_content  The rendered block HTML.
+ * @param array     $block          The parsed block array.
+ * @param \WP_Block $block_instance The block instance being rendered.
+ * @return string Modified block HTML or custom status message markup.
+ */
+function filter_scheduled_event_blocks( string $block_content, array $block, \WP_Block $block_instance ): string {
+	if ( \is_admin() || empty( $block['attrs']['className'] ) ) {
+		return $block_content;
+	}
+
+	$class_name = $block['attrs']['className'];
+	$is_notice  = str_contains( $class_name, 'dinner-preregistration-notice' );
+	$is_button  = str_contains( $class_name, 'register-button' );
+
+	if ( ! $is_notice && ! $is_button ) {
+		return $block_content;
+	}
+
+	$post_id = $block_instance->context['postId'] ?? \get_the_ID();
+	if ( ! $post_id || 'events' !== \get_post_type( (int) $post_id ) ) {
+		return $block_content;
+	}
+
+	$post_id   = (int) $post_id;
+	$tz        = \wp_timezone();
+	$now       = new \DateTimeImmutable( 'now', $tz );
+	$start_raw = trim( (string) \get_post_meta( $post_id, '_event_registration_start_date', true ) );
+	$stop_raw  = trim( (string) \get_post_meta( $post_id, '_event_registration_stop_date', true ) );
+
+	// 1. Check if current time is BEFORE registration opens.
+	if ( '' !== $start_raw ) {
+		$start_normalized = substr( str_replace( 'T', ' ', $start_raw ), 0, 16 );
+		$start_dt         = 10 === strlen( $start_normalized )
+			? \DateTimeImmutable::createFromFormat( 'Y-m-d H:i:s', $start_normalized . ' 00:00:00', $tz )
+			: \DateTimeImmutable::createFromFormat( 'Y-m-d H:i', $start_normalized, $tz );
+
+		if ( $start_dt && $now < $start_dt ) {
+			// Suppress the preregistration notice before registration opens.
+			if ( $is_notice ) {
+				return '';
+			}
+
+			$custom_before = trim( (string) \get_post_meta( $post_id, '_event_registration_before_message', true ) );
+			$is_midnight   = '00:00' === $start_dt->format( 'H:i' );
+			$formatted     = $is_midnight
+				? \wp_date( 'l, F j, Y', $start_dt->getTimestamp() )
+				: \wp_date( 'l, F j, Y \a\t g:i A', $start_dt->getTimestamp() );
+
+			$message = '' !== $custom_before
+				? $custom_before
+				: sprintf(
+				/* translators: %s: Formatted registration opening date (and optional time) */
+					\__( 'Registration opens %s.', 'custom-functionality' ),
+					$formatted
+				);
+
+			return sprintf(
+				'<p class="event-registration-status is-upcoming wp-block-paragraph">%s</p>',
+				\wp_kses_post( $message )
+			);
+		}
+	}
+
+	// 2. Check if current time is AFTER registration closes.
+	if ( '' !== $stop_raw ) {
+		$stop_normalized = substr( str_replace( 'T', ' ', $stop_raw ), 0, 16 );
+		$stop_dt         = 10 === strlen( $stop_normalized )
+			? \DateTimeImmutable::createFromFormat( 'Y-m-d H:i:s', $stop_normalized . ' 23:59:59', $tz )
+			: \DateTimeImmutable::createFromFormat( 'Y-m-d H:i', $stop_normalized, $tz );
+
+		if ( $stop_dt && $now > $stop_dt ) {
+			// Suppress the preregistration notice after registration closes.
+			if ( $is_notice ) {
+				return '';
+			}
+
+			$custom_after = trim( (string) \get_post_meta( $post_id, '_event_registration_after_message', true ) );
+			$message      = '' !== $custom_after
+				? $custom_after
+				: \__( 'Registration for this event has closed.', 'custom-functionality' );
+
+			return sprintf(
+				'<p class="event-registration-status is-closed wp-block-paragraph">%s</p>',
+				\wp_kses_post( $message )
+			);
+		}
+	}
+
+	return $block_content;
+}
+
+add_action( 'pre_get_posts', __NAMESPACE__ . '\sort_events_front_end_archive' );
+/**
+ * Sorts front-end Events archive and taxonomy queries chronologically and excludes past events.
+ *
+ * Modifies the main front-end query on `events` post type archives and `event-category`
+ * taxonomy archives to order events ascending by `_event_start_date` and filter out
+ * events whose `_event_stop_date` (or `_event_start_date` when no stop date is set)
+ * has already passed in the site's local timezone.
+ *
+ * @since 2.4.0 Initial release.
+ * @since 2.4.0 Added `meta_query` to exclude past events based on `_event_stop_date` or `_event_start_date`.
+ *
+ * @param \WP_Query $query The current WP_Query instance (passed by reference).
+ * @return void
+ */
+function sort_events_front_end_archive( \WP_Query $query ): void {
+	if ( is_admin() || ! $query->is_main_query() ) {
+		return;
+	}
+
+	if ( $query->is_post_type_archive( 'events' ) || $query->is_tax( 'event-category' ) ) {
+		$today = wp_date( 'Y-m-d' );
+
+		$query->set(
+			'meta_query',
+			[
+				'relation'     => 'AND',
+				'start_clause' => [
+					'key'     => '_event_start_date',
+					'compare' => 'EXISTS',
+				],
+				[
+					'relation' => 'OR',
+					// Multi-day event whose stop date is today or in the future.
+					[
+						'key'     => '_event_stop_date',
+						'value'   => $today,
+						'compare' => '>=',
+						'type'    => 'DATE',
+					],
+					// Single-day event (blank or missing stop date) whose start date is today or in the future.
+					[
+						'relation' => 'AND',
+						[
+							'relation' => 'OR',
+							[
+								'key'     => '_event_stop_date',
+								'compare' => 'NOT EXISTS',
+							],
+							[
+								'key'     => '_event_stop_date',
+								'value'   => '',
+								'compare' => '=',
+							],
+						],
+						[
+							'key'     => '_event_start_date',
+							'value'   => $today,
+							'compare' => '>=',
+							'type'    => 'DATE',
+						],
+					],
+				],
+			]
+		);
+
+		$query->set( 'orderby', 'start_clause' );
+		$query->set( 'order', 'ASC' );
+	}
+}
+
+add_filter( 'query_loop_block_query_vars', __NAMESPACE__ . '\filter_events_calendar_query_loop', 10, 2 );
+/**
+ * Filters the standalone Events Query Loop (`events-calendar.php`) to sort chronologically
+ * by `_event_start_date` and exclude events whose stop/start date has passed.
+ *
+ * @since 2.4.0 Initial release.
+ *
+ * @param array     $query Array of WP_Query arguments for the Query Loop block.
+ * @param \WP_Block $block The parsed Query Loop block instance.
+ * @return array Modified WP_Query arguments.
+ */
+function filter_events_calendar_query_loop( array $query, \WP_Block $block ): array {
+	if ( ( $query['post_type'] ?? '' ) !== 'events' ) {
+		return $query;
+	}
+
+	$today = wp_date( 'Y-m-d' );
+
+	$query['meta_query'] = [
+		'relation'     => 'AND',
+		'start_clause' => [
+			'key'     => '_event_start_date',
+			'compare' => 'EXISTS',
+		],
+		[
+			'relation' => 'OR',
+			[
+				'key'     => '_event_stop_date',
+				'value'   => $today,
+				'compare' => '>=',
+				'type'    => 'DATE',
+			],
+			[
+				'relation' => 'AND',
+				[
+					'relation' => 'OR',
+					[
+						'key'     => '_event_stop_date',
+						'compare' => 'NOT EXISTS',
+					],
+					[
+						'key'     => '_event_stop_date',
+						'value'   => '',
+						'compare' => '=',
+					],
+				],
+				[
+					'key'     => '_event_start_date',
+					'value'   => $today,
+					'compare' => '>=',
+					'type'    => 'DATE',
+				],
+			],
+		],
+	];
+
+	$query['orderby'] = 'start_clause';
+	$query['order']   = 'ASC';
+
+	return $query;
+}
+
+add_filter( 'render_block_core/post-excerpt', __NAMESPACE__ . '\render_full_event_description_in_loop', 10, 3 );
+/**
+ * Replaces the core/post-excerpt output with the full formatted event post_content
+ * inside .event-description blocks so secondary sessions and full copy render inside
+ * the collapsible accordion without triggering Gutenberg's editor post-content error.
+ *
+ * @since 2.4.0 Initial release.
+ *
+ * @param string    $block_content The rendered block HTML.
+ * @param array     $block         The full block array.
+ * @param \WP_Block $instance      The block instance with postId context.
+ * @return string
+ */
+function render_full_event_description_in_loop( string $block_content, array $block, \WP_Block $instance ): string {
+	if ( empty( $block['attrs']['className'] ) || ! str_contains( $block['attrs']['className'], 'event-description' ) ) {
+		return $block_content;
+	}
+
+	$post_id = $instance->context['postId'] ?? get_the_ID();
+	if ( ! $post_id ) {
+		return $block_content;
+	}
+
+	$raw_content = get_post_field( 'post_content', (int) $post_id );
+	if ( '' === trim( (string) $raw_content ) ) {
+		return '';
+	}
+
+	$rendered_content = apply_filters( 'the_content', $raw_content );
+
+	return sprintf(
+		'<div class="entry-content event-description wp-block-post-content has-brand-text-main-color has-text-color">%s</div>',
+		$rendered_content
+	);
 }

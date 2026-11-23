@@ -10,8 +10,8 @@
  * Plugin Name:     Custom Functionality
  * Plugin URI:      https://github.com/rgadon107/custom-functionality
  * Description:     A plugin that contains custom functions, scripts, and styles to modify the behavior of WordPress. Built off the `starter-plugin` package developed for KnowTheCode.io.
- * Version:         2.3.5
- * Requires WP:     7.0
+ * Version:         2.4.0
+ * Requires WP:     7.1
  * Requires PHP:    8.3
  * Author:          Robert A Gadon
  * Author URI:      https://github.com/rgadon107/custom-functionality
@@ -96,22 +96,38 @@ function _get_plugin_url(): string	{
  * Checks if this plugin is in development mode.
  *
  * @since  1.0.0
+ * @since  2.4.0 Add environment check for local/development environments.
  * @ignore
  * @access private
  *
  * @return bool
  */
-function _is_in_development_mode(): bool	{
-	return defined( 'WP_DEBUG' ) && WP_DEBUG === true;
+	function _is_in_development_mode(): bool	{
+	// 1. Check if debugging is enabled
+	$is_debug = defined( 'WP_DEBUG' ) && WP_DEBUG === true;
+
+	// 2. Check the environment type (defaults to 'production' if unknown)
+	$env = function_exists( 'wp_get_environment_type' ) ? wp_get_environment_type() : 'production';
+
+	// Return true ONLY if debugging is on AND the environment is local/development
+	return $is_debug && in_array( $env, [ 'local', 'development' ], true );
 }
 
 /**
  * Autoload the plugin's modules and files.
  *
- * @since 1.0.0	Initial release.
+ * @since 1.0.0 Initial release.
  * @since 1.8.0 Modify this function to serve as a module controller for the entire plugin.
- * @since 2.2.0 Add `/shortcodes/member-photo-directory.php`
+ * @since 2.2.0 Add `/shortcodes/member-photo-directory.php`.
  * @since 2.3.1 Add `/admin/auction-item.php`.
+ * @since 2.4.0 Add file paths:
+ *  	- `/src/admin/events.php`
+ *      - `/src/custom/bindings.php`
+ *      - `/src/custom/template-loader.php`
+ *      - `/src/taxonomy/registrar.php`
+ *      - `/src/taxonomy/seeder.php`
+ *      - `/src/taxonomy/config/events.php`
+ * 		- `/src/shortcodes/events-calendar.php`
  *
  * @return void
  */
@@ -121,10 +137,17 @@ function autoload_files(): void	{
 		'/includes/patterns/pattern-loader.php',
 		'/src/asset/handler.php',
 		'/src/admin/auction-item.php',
+		'/src/admin/events.php',
 		'/src/shortcodes/expire-content.php',
 		'/src/shortcodes/current-year.php',
 		'/src/shortcodes/member-photo-directory.php',
+		'/src/shortcodes/events-calendar.php',
+		'/src/custom/template-loader.php',
+		'/src/taxonomy/registrar.php',
+		'/src/taxonomy/seeder.php',
+		'/src/taxonomy/config/events.php',
 		'/src/hooks.php',
+		'/src/custom/bindings.php',
 	];
 
 	foreach ( $plugin_files as $file ) {
@@ -153,15 +176,21 @@ function autoload_files(): void	{
  * Launch the plugin.
  *
  * @since 1.0.0
+ * @since 2.4.0 Load `/sandbox/` module when environment mode is 'local' or 'development'.
  *
  * @return void
  */
 function launch(): void	{
 	autoload_files();
 
+	// Load experimental playground (strictly isolated to LocalWP)
+	if ( _is_in_development_mode() ) {
+		require_once _get_plugin_directory() . '/sandbox/testing.php';
+	}
+
 // Uncomment 'Custom\register_plugin()' below if using `central-hub` plugin to flush rewrites.
 // Remove a call to `rgadon107\CustomFunctionalityPlugin\register_plugin()` when using 'central-hub'.
-//	Custom\register_plugin( __FILE__ );
+//	Custom\register_plugin(__FILE__);
 	register_plugin();
 }
 

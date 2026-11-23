@@ -5,7 +5,7 @@
  * @package     gardenClubOfMpls\CustomFunctionalityPlugin\Asset
  * @since       1.0.0
  * @author      Robert Gadon
- * @link       	https://github.com/rgadon107/custom-functionality
+ * @link        https://github.com/rgadon107/custom-functionality
  * @license     GNU-2.0+
  */
 
@@ -21,63 +21,76 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_scripts', 20 
  * @since 1.0.0
  * @since 2.1.1 Refactor callback to load and loop through a custom configuration of script files.
  * @since 2.2.0 Enqueued 'member-photo-directory-loader'.
+ * @since 2.4.0
+ * 	- Enqueued 'custom-event-accordion-script' conditionally on single 'events' posts.
+ *  - Enqueue 'custom-event-accordion-script' on single event views, event archives, event category archives, and any singular page containing [gcm_events_calendar].
  *
  * @return void
  */
-function enqueue_plugin_scripts(): void	{
+function enqueue_plugin_scripts(): void {
 
-	$events_page_id = 16223;
+	$events_page_id         = 16223;
 	$awards_banquet_page_id = 10424;
-	$is_target_page = is_page($events_page_id) || is_page($awards_banquet_page_id);
+	$is_target_page         = is_page( $events_page_id ) || is_page( $awards_banquet_page_id );
+
+	$current_post             = get_post();
+	$has_events_shortcode     = $current_post instanceof \WP_Post && has_shortcode( $current_post->post_content, 'gcm_events_calendar' );
+	$is_event_accordion_page  = is_singular( 'events' ) || is_post_type_archive( 'events' ) || is_tax( 'event-category' ) || $has_events_shortcode;
 
 	$scripts = [
 		'nf-checkbox-toggle' => [
-			'file' => '/assets/scripts/nf-checkbox-toggle.js',
-			'deps' => ['jquery'],
+			'file'      => '/assets/scripts/nf-checkbox-toggle.js',
+			'deps'      => [ 'jquery' ],
 			'in_footer' => true,
-			'condition' => $is_target_page, // Evaluates to true/false
+			'condition' => $is_target_page, // Evaluates to true/false.
 		],
 		'nf-prevent-early-form-submit-while-using-return-key' => [
-			'file' => '/assets/scripts/nf-prevent-early-form-submit-while-using-return-key.js',
-			'deps' => [],
+			'file'      => '/assets/scripts/nf-prevent-early-form-submit-while-using-return-key.js',
+			'deps'      => [],
 			'in_footer' => true,
-			'condition' => true, // Load globally
+			'condition' => true, // Load globally.
 		],
 		'coblocks-accordion-prevent-vertical-scroll' => [
-			'file' => '/assets/scripts/coblocks-accordion-prevent-vertical-scroll.js',
-			'deps' => [],
+			'file'      => '/assets/scripts/coblocks-accordion-prevent-vertical-scroll.js',
+			'deps'      => [],
 			'in_footer' => true,
 			'condition' => true,
 		],
 		'nf-scroll-fix' => [
-			'file' => '/assets/scripts/nf-scroll-fix.js',
-			'deps' => ['jquery'],
+			'file'      => '/assets/scripts/nf-scroll-fix.js',
+			'deps'      => [ 'jquery' ],
 			'in_footer' => true,
 			'condition' => true,
 		],
 		'member-photo-directory-loader' => [
-			'file' => '/assets/scripts/member-photo-directory-loader.js',
-			'deps' => [],
+			'file'      => '/assets/scripts/member-photo-directory-loader.js',
+			'deps'      => [],
 			'in_footer' => true,
 			'condition' => true,
 		],
-		'accordion-toggle-handler'	=>	[
-			'file'	=> '/assets/scripts/accordion-toggle-handler.js',
-			'deps'	=> [],
+		'accordion-toggle-handler' => [
+			'file'      => '/assets/scripts/accordion-toggle-handler.js',
+			'deps'      => [],
 			'in_footer' => true,
 			'condition' => true,
-		]
+		],
+		'custom-event-accordion-script' => [
+			'file'      => '/assets/scripts/event-accordion.js',
+			'deps'      => [],
+			'in_footer' => true,
+			'condition' => $is_event_accordion_page,
+		],
 	];
 
 	$asset_paths = _get_asset_paths();
 
 	foreach ( $scripts as $handle => $config ) {
 
-		if ( !$config['condition'] ) {
+		if ( ! $config['condition'] ) {
 			continue;
 		}
 
-		if ( file_exists($asset_paths['directory'] . $config['file'] ) ) {
+		if ( file_exists( $asset_paths['directory'] . $config['file'] ) ) {
 			wp_enqueue_script(
 				$handle,
 				$asset_paths['url'] . $config['file'],
@@ -93,32 +106,57 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_styles', 20 )
 /**
  * Enqueues the plugin's styles.
  *
- * @since 1.2.0	Enqueued 'event-registration-notice-styles'
- * @since 1.5.0	Enqueued 'ninja-form-email-signup-form-styles'
- * @since 1.6.0	Refactored callback and enqueued 'coblocks-accordian-fix'.
- * @since 2.2.0 Enqueued 'member-photo-directory-viewer-styles'
+ * @since 1.2.0 Enqueued 'event-registration-notice-styles'.
+ * @since 1.5.0 Enqueued 'ninja-form-email-signup-form-styles'.
+ * @since 1.6.0 Refactored callback and enqueued 'coblocks-accordian-fix'.
+ * @since 2.2.0 Enqueued 'member-photo-directory-viewer-styles'.
+ * @since 2.4.0 Added 'color-variables' dependency to 'event-registration-notice-styles' and enqueued 'custom-event-accordion-style' conditionally on single 'events' posts.
  *
  * @return void
  */
 function enqueue_plugin_styles(): void {
 	$styles = [
-		'event-registration-notice-styles'    	=>	'/assets/styles/event-notices.css',
-		'ninja-form-email-signup-form-styles' 	=>	'/assets/styles/ninja-form-styles.css',
-		'coblocks-accordion-styles'           	=>	'/assets/styles/coblocks-accordion-styles.css',
-		'color-variables'					  	=>	'/assets/styles/color-variables.css',
-		'member-photo-directory-styles'			=>	'/assets/styles/member-photo-directory-styles.css'
+		'color-variables' => [
+			'file' => '/assets/styles/color-variables.css',
+			'deps' => [],
+		],
+		'event-registration-notice-styles' => [
+			'file' => '/assets/styles/event-notices.css',
+			'deps' => [ 'color-variables' ],
+		],
+		'ninja-form-email-signup-form-styles' => [
+			'file' => '/assets/styles/ninja-form-styles.css',
+			'deps' => [],
+		],
+		'coblocks-accordion-styles' => [
+			'file' => '/assets/styles/coblocks-accordion-styles.css',
+			'deps' => [],
+		],
+		'member-photo-directory-styles' => [
+			'file' => '/assets/styles/member-photo-directory-styles.css',
+			'deps' => [],
+		],
+		'custom-event-accordion-style' => [
+			'file'      => '/assets/styles/event-accordion.css',
+			'deps'      => [],
+		],
 	];
 
 	$asset_paths = _get_asset_paths();
 
-	foreach ( $styles as $handle => $file ) {
-		// Defensive check: Verify the file exists on disk before enqueuing
-		if ( file_exists( $asset_paths['directory'] . $file ) ) {
+	foreach ( $styles as $handle => $config ) {
+
+		if ( isset( $config['condition'] ) && ! $config['condition'] ) {
+			continue;
+		}
+
+		// Defensive check: Verify the file exists on disk before enqueuing.
+		if ( file_exists( $asset_paths['directory'] . $config['file'] ) ) {
 			wp_enqueue_style(
 				$handle,
-				$asset_paths['url']. $file,
-				[],
-				_get_asset_version( $file )
+				$asset_paths['url'] . $config['file'],
+				$config['deps'],
+				_get_asset_version( $config['file'] )
 			);
 		}
 	}
@@ -129,21 +167,23 @@ add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_block_edito
  * Enqueues scripts for the WordPress Block Editor.
  *
  * @since 2.3.1 Initial release.
+ * @since 2.4.0 Added configuration for 'event-meta-panel'.
  *
  * @return void
  */
 function enqueue_block_editor_scripts(): void {
 	$screen = get_current_screen();
 
-	// Evaluate target editor post-types
+	// Evaluate target editor post-types.
 	$is_auction_item = $screen && 'auction_item' === $screen->post_type;
+	$is_events       = $screen && 'events' === $screen->post_type;
 
 	$editor_scripts = [
 		'auction-item-meta-panel' => [
 			'file'      => '/assets/scripts/auction-item-meta-panel.js',
 			'deps'      => [
 				'wp-plugins',
-				'wp-edit-post',
+				'wp-editor',
 				'wp-components',
 				'wp-core-data',
 				'wp-data',
@@ -152,7 +192,19 @@ function enqueue_block_editor_scripts(): void {
 			'in_footer' => true,
 			'condition' => $is_auction_item,
 		],
-		// Future editor sidebar/block module scripts go here.
+		'event-meta-panel' => [
+			'file'      => '/assets/scripts/event-meta-panel.js',
+			'deps'      => [
+				'wp-plugins',
+				'wp-editor',
+				'wp-components',
+				'wp-core-data',
+				'wp-data',
+				'wp-element',
+			],
+			'in_footer' => true,
+			'condition' => $is_events,
+		],
 	];
 
 	$asset_paths = _get_asset_paths();
@@ -207,14 +259,14 @@ function _get_asset_paths(): array {
  *
  * @return bool|int
  */
-function _get_asset_version( string $relative_path ): bool|int	{
+function _get_asset_version( string $relative_path ): bool|int {
 	return filemtime( _get_plugin_directory() . $relative_path );
 }
 
 /**
  * Appends a file modification timestamp to the absolute URL of an uploaded file as a version query parameter.
  *
- * @since 2.3.1 Initial release
+ * @since 2.3.1 Initial release.
  *
  * @param string $file_url The public URL of the uploaded media file.
  *
