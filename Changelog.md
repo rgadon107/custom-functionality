@@ -63,6 +63,8 @@ and this project adheres to [Semantic Versioning](https://semver.org).
   - `filter_scheduled_event_blocks()`: Control scheduled visibility for registration blocks in 'single-events.html' and render default or custom before/after status messages when outside the active window.
   - `register_plugin_taxonomies()`: Register all custom taxonomies defined in the plugin configuration files on the `init` hook.
   - `seed_plugin_taxonomy_terms()`: Seeds default terms for all custom taxonomies that define a 'terms' payload.
+  - `sort_events_front_end_archive()`: Register callback to 'pre_get_posts' to order the front-end 'events' post-type archive chronologically by the `_event_start_date` meta_field.
+  - `render_full_event_description_in_loop()`: Replace the 'core/post-excerpt' output with the fully formatted event post_content inside `.event-description blocks`.
 
 - `/includes/patterns/pattern-loader.php`: Register `event-secondary-session` block pattern category, and load and register pattern `event-secondary-session.php`.
 
@@ -116,6 +118,8 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - `/assets/styles/event-notices.css`:
   - Added styles targeting the '_event_registration_before_message' and '_event_registration_after_message' meta_fields shown by 'single-events.html'.
   - Documented the styles remaining targeting messages rendered by the `[expire]` and `[expire_inner]` shortcodes.
+
+- `/src/patterns/events-calendar.php`:  Change `wp.post-content` to `wp.post-excerpt` to clear React parsing error of post-content in archive.
 
 ### Fixed
 - `/src/custom/bindings.php`: Refactored `register_event_block_bindings()` to declare an array and loop through it to register block bindings for metadata.
