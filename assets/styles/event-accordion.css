@@ -42,3 +42,8 @@
 	outline: 2px solid var(--brand-green-dark, currentColor);
 	outline-offset: 2px;
 }
+
+/* Remove Ixion parent theme's `.hentry` padding-bottom property on Events Query Loop items */
+li.wp-block-post.type-events.hentry {
+	padding-bottom: 0;
+}
