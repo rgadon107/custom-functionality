@@ -21,7 +21,9 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_plugin_scripts', 20 
  * @since 1.0.0
  * @since 2.1.1 Refactor callback to load and loop through a custom configuration of script files.
  * @since 2.2.0 Enqueued 'member-photo-directory-loader'.
- * @since 2.4.0 Enqueued 'custom-event-accordion-script' conditionally on single 'events' posts.
+ * @since 2.4.0
+ * 	- Enqueued 'custom-event-accordion-script' conditionally on single 'events' posts.
+ *  - Enqueue 'custom-event-accordion-script' on single event views, event archives, event category archives, and any singular page containing [gcm_events_calendar].
  *
  * @return void
  */
@@ -30,6 +32,10 @@ function enqueue_plugin_scripts(): void {
 	$events_page_id         = 16223;
 	$awards_banquet_page_id = 10424;
 	$is_target_page         = is_page( $events_page_id ) || is_page( $awards_banquet_page_id );
+
+	$current_post             = get_post();
+	$has_events_shortcode     = $current_post instanceof \WP_Post && has_shortcode( $current_post->post_content, 'gcm_events_calendar' );
+	$is_event_accordion_page  = is_singular( 'events' ) || is_post_type_archive( 'events' ) || is_tax( 'event-category' ) || $has_events_shortcode;
 
 	$scripts = [
 		'nf-checkbox-toggle' => [
@@ -72,7 +78,7 @@ function enqueue_plugin_scripts(): void {
 			'file'      => '/assets/scripts/event-accordion.js',
 			'deps'      => [],
 			'in_footer' => true,
-			'condition' => is_singular( 'events' ),
+			'condition' => $is_event_accordion_page,
 		],
 	];
 
