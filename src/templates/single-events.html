@@ -25,7 +25,7 @@
 		<!-- /wp:group -->
 
 		<!-- wp:group {"className":"event-accordion-content event-accordion-hidden","layout":{"type":"flow"}} -->
-		<div id="event-accordion-content" class="wp-block-group event-accordion-content event-accordion-hidden">
+		<div class="wp-block-group event-accordion-content event-accordion-hidden">
 
 			<!-- wp:group {"className":"event-description-group","layout":{"type":"constrained"}} -->
 			<div class="wp-block-group event-description-group">
@@ -53,8 +53,8 @@
 			<p class="dinner-preregistration-notice has-brand-text-main-color has-text-color">Dinner preregistration notice</p>
 			<!-- /wp:paragraph -->
 
-			<!-- wp:buttons {"className":"register-button","style":{"spacing":{"margin":{"bottom":"1.5rem"}}},"layout":{"type":"flex"}} -->
-			<div class="wp-block-buttons register-button" style="margin-bottom:1.5rem">
+			<!-- wp:buttons {"className":"register-button","layout":{"type":"flex"}} -->
+			<div class="wp-block-buttons register-button">
 				<!-- wp:button {"backgroundColor":"brand-green-dark","textColor":"brand-white-lime","fontSize":"small","className":"has-button event-registration-popup-trigger"} -->
 				<div class="wp-block-button has-button event-registration-popup-trigger"><a class="wp-block-button__link has-brand-white-lime-color has-brand-green-dark-background-color has-text-color has-background has-small-font-size wp-element-button" href="#">Register for Dinner</a></div>
 				<!-- /wp:button -->
@@ -65,12 +65,12 @@
 		<!-- /wp:group -->
 
 		<!-- wp:html -->
-		<button type="button" id="event-read-more-btn" class="event-read-more-btn" aria-expanded="false" aria-controls="event-accordion-content">
-			<span id="toggle-label">Read More</span>
-			<svg id="chevron-down" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+		<button type="button" class="event-read-more-btn" aria-expanded="false">
+			<span class="toggle-label">Read More</span>
+			<svg class="chevron-down" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 				<polyline points="6 9 12 15 18 9"></polyline>
 			</svg>
-			<svg id="chevron-up" class="hidden-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+			<svg class="chevron-up hidden-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 				<polyline points="18 15 12 9 6 15"></polyline>
 			</svg>
 		</button>
