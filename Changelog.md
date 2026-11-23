@@ -74,6 +74,8 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 - `/src/patterns/events-calendar.php`: Added custom design pattern to render a header and query loop to display the 'events' archive in an Events Calendar.
 
+- `/src/shortcodes/events-calendar.php`: Register 'events-calendar' shortcode to render events post-archive in the WP editor.
+
 - `/bootstrap.php`: Added the following file paths to the autoload_files() function:
 	- `/src/admin/events.php`
     - `/src/custom/bindings.php`
@@ -81,6 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org).
     - `/src/taxonomy/registrar.php`
     - `/src/taxonomy/seeder.php`
     - `/src/taxonomy/config/events.php`
+    - `/src/shortcodes/events-calendar.php`
 
 ### Changed
 - `/boostrap.php`:
