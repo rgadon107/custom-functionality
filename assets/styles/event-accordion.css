@@ -6,7 +6,7 @@
 }
 
 /* Basic button alignment for text + chevron */
-#event-read-more-btn {
+.event-read-more-btn {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
