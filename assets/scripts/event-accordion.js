@@ -1,39 +1,57 @@
 /**
  * Event Accordion Toggle
  *
- * Handles expanding and collapsing the event details container on the
- * single-events.html template, updating button labels, chevron visibility,
- * and ARIA accessibility states.
+ * Handles expanding and collapsing event details containers across single-event
+ * templates, event archives, and multi-event card Query Loops without duplicate HTML IDs.
  *
  * @package Custom_Functionality
  * @since   2.4.0 Initial release.
  */
 
 document.addEventListener( 'DOMContentLoaded', function () {
-	const toggleBtn = document.getElementById( 'event-read-more-btn' );
-	const content = document.getElementById( 'event-accordion-content' );
-	const label = document.getElementById( 'toggle-label' );
-	const chevronDown = document.getElementById( 'chevron-down' );
-	const chevronUp = document.getElementById( 'chevron-up' );
+	const toggleButtons = document.querySelectorAll( '.event-read-more-btn' );
 
-	if ( toggleBtn && content ) {
+	toggleButtons.forEach( function ( toggleBtn ) {
+		const card = toggleBtn.closest( '.custom-tight-card' );
+		if ( ! card ) {
+			return;
+		}
+
+		const content = card.querySelector( '.event-accordion-content' );
+		const label = toggleBtn.querySelector( '.toggle-label' );
+		const chevronDown = toggleBtn.querySelector( '.chevron-down' );
+		const chevronUp = toggleBtn.querySelector( '.chevron-up' );
+
+		if ( ! content ) {
+			return;
+		}
+
 		toggleBtn.addEventListener( 'click', function () {
-			// Toggle visibility of the wrapper.
 			const isHidden = content.classList.toggle( 'event-accordion-hidden' );
 
 			if ( isHidden ) {
-				// State: Collapsed ("Read More").
-				label.textContent = 'Read More';
-				chevronDown.classList.remove( 'hidden-icon' );
-				chevronUp.classList.add( 'hidden-icon' );
+				if ( label ) {
+					label.textContent = 'Read More';
+				}
+				if ( chevronDown ) {
+					chevronDown.classList.remove( 'hidden-icon' );
+				}
+				if ( chevronUp ) {
+					chevronUp.classList.add( 'hidden-icon' );
+				}
 				toggleBtn.setAttribute( 'aria-expanded', 'false' );
 			} else {
-				// State: Expanded ("Read Less").
-				label.textContent = 'Read Less';
-				chevronDown.classList.add( 'hidden-icon' );
-				chevronUp.classList.remove( 'hidden-icon' );
+				if ( label ) {
+					label.textContent = 'Read Less';
+				}
+				if ( chevronDown ) {
+					chevronDown.classList.add( 'hidden-icon' );
+				}
+				if ( chevronUp ) {
+					chevronUp.classList.remove( 'hidden-icon' );
+				}
 				toggleBtn.setAttribute( 'aria-expanded', 'true' );
 			}
 		} );
-	}
+	} );
 } );
