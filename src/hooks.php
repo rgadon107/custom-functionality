@@ -411,6 +411,68 @@ function sort_events_front_end_archive( \WP_Query $query ): void {
 	}
 }
 
+add_filter( 'query_loop_block_query_vars', __NAMESPACE__ . '\filter_events_calendar_query_loop', 10, 2 );
+/**
+ * Filters the standalone Events Query Loop (`events-calendar.php`) to sort chronologically
+ * by `_event_start_date` and exclude events whose stop/start date has passed.
+ *
+ * @since 2.4.0 Initial release.
+ *
+ * @param array     $query Array of WP_Query arguments for the Query Loop block.
+ * @param \WP_Block $block The parsed Query Loop block instance.
+ * @return array Modified WP_Query arguments.
+ */
+function filter_events_calendar_query_loop( array $query, \WP_Block $block ): array {
+	if ( ( $query['post_type'] ?? '' ) !== 'events' ) {
+		return $query;
+	}
+
+	$today = wp_date( 'Y-m-d' );
+
+	$query['meta_query'] = [
+		'relation'     => 'AND',
+		'start_clause' => [
+			'key'     => '_event_start_date',
+			'compare' => 'EXISTS',
+		],
+		[
+			'relation' => 'OR',
+			[
+				'key'     => '_event_stop_date',
+				'value'   => $today,
+				'compare' => '>=',
+				'type'    => 'DATE',
+			],
+			[
+				'relation' => 'AND',
+				[
+					'relation' => 'OR',
+					[
+						'key'     => '_event_stop_date',
+						'compare' => 'NOT EXISTS',
+					],
+					[
+						'key'     => '_event_stop_date',
+						'value'   => '',
+						'compare' => '=',
+					],
+				],
+				[
+					'key'     => '_event_start_date',
+					'value'   => $today,
+					'compare' => '>=',
+					'type'    => 'DATE',
+				],
+			],
+		],
+	];
+
+	$query['orderby'] = 'start_clause';
+	$query['order']   = 'ASC';
+
+	return $query;
+}
+
 add_filter( 'render_block_core/post-excerpt', __NAMESPACE__ . '\render_full_event_description_in_loop', 10, 3 );
 /**
  * Replaces the core/post-excerpt output with the full formatted event post_content
