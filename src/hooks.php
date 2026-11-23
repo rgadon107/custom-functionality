@@ -197,7 +197,7 @@ function seed_plugin_taxonomy_terms(): void {
 add_action( 'init', register_cpt_block_templates(...) );
 
 add_filter( 'render_block', __NAMESPACE__ . '\inject_event_card_anchor', 10, 2 );
-add_filter( 'render_block', __NAMESPACE__ . '\filter_scheduled_event_blocks', 10, 2 );
+add_filter( 'render_block', __NAMESPACE__ . '\filter_scheduled_event_blocks', 10, 3 );
 /**
  * Injects a dynamic HTML anchor ID onto the .custom-tight-card Group block
  * in single-events.html using '_event_anchor_id' or falling back to the post slug.
@@ -246,22 +246,22 @@ function inject_event_card_anchor( string $block_content, array $block ): string
 }
 
 /**
- * Controls scheduled visibility for registration blocks in single-events.html
- * and renders styled before/after status messages when outside the active window.
+ * Controls scheduled visibility for event registration blocks across single events,
+ * archives, and Query Loops, rendering styled before/after status messages when outside
+ * the active registration window.
  *
- * @since 2.4.0
+ * @since 2.4.0 Initial release for single `events` posts.
+ * 				Added `\WP_Block $block_instance` context resolution and updated guards
+ *              so registration scheduling runs in Query Loops and archives as well as
+ *              singular `events` views.
  *
- * @param string $block_content The rendered block HTML.
- * @param array  $block         The parsed block array.
+ * @param string    $block_content  The rendered block HTML.
+ * @param array     $block          The parsed block array.
+ * @param \WP_Block $block_instance The block instance being rendered.
  * @return string Modified block HTML or custom status message markup.
  */
-function filter_scheduled_event_blocks( string $block_content, array $block ): string {
-	if ( ! \is_singular( 'events' ) || empty( $block['attrs']['className'] ) ) {
-		return $block_content;
-	}
-
-	$post_id = \get_the_ID();
-	if ( ! $post_id ) {
+function filter_scheduled_event_blocks( string $block_content, array $block, \WP_Block $block_instance ): string {
+	if ( \is_admin() || empty( $block['attrs']['className'] ) ) {
 		return $block_content;
 	}
 
@@ -273,12 +273,18 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 		return $block_content;
 	}
 
+	$post_id = $block_instance->context['postId'] ?? \get_the_ID();
+	if ( ! $post_id || 'events' !== \get_post_type( (int) $post_id ) ) {
+		return $block_content;
+	}
+
+	$post_id   = (int) $post_id;
 	$tz        = \wp_timezone();
 	$now       = new \DateTimeImmutable( 'now', $tz );
 	$start_raw = trim( (string) \get_post_meta( $post_id, '_event_registration_start_date', true ) );
 	$stop_raw  = trim( (string) \get_post_meta( $post_id, '_event_registration_stop_date', true ) );
 
-	// 1. Check if current time is BEFORE registration opens
+	// 1. Check if current time is BEFORE registration opens.
 	if ( '' !== $start_raw ) {
 		$start_normalized = substr( str_replace( 'T', ' ', $start_raw ), 0, 16 );
 		$start_dt         = 10 === strlen( $start_normalized )
@@ -286,14 +292,14 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 			: \DateTimeImmutable::createFromFormat( 'Y-m-d H:i', $start_normalized, $tz );
 
 		if ( $start_dt && $now < $start_dt ) {
-			// Suppress the preregistration notice before registration opens
+			// Suppress the preregistration notice before registration opens.
 			if ( $is_notice ) {
 				return '';
 			}
 
 			$custom_before = trim( (string) \get_post_meta( $post_id, '_event_registration_before_message', true ) );
-			$is_midnight = '00:00' === $start_dt->format( 'H:i' );
-			$formatted   = $is_midnight
+			$is_midnight   = '00:00' === $start_dt->format( 'H:i' );
+			$formatted     = $is_midnight
 				? \wp_date( 'l, F j, Y', $start_dt->getTimestamp() )
 				: \wp_date( 'l, F j, Y \a\t g:i A', $start_dt->getTimestamp() );
 
@@ -312,7 +318,7 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 		}
 	}
 
-	// 2. Check if current time is AFTER registration closes
+	// 2. Check if current time is AFTER registration closes.
 	if ( '' !== $stop_raw ) {
 		$stop_normalized = substr( str_replace( 'T', ' ', $stop_raw ), 0, 16 );
 		$stop_dt         = 10 === strlen( $stop_normalized )
@@ -320,7 +326,7 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 			: \DateTimeImmutable::createFromFormat( 'Y-m-d H:i', $stop_normalized, $tz );
 
 		if ( $stop_dt && $now > $stop_dt ) {
-			// Suppress the preregistration notice after registration closes
+			// Suppress the preregistration notice after registration closes.
 			if ( $is_notice ) {
 				return '';
 			}
