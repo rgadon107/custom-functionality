@@ -342,11 +342,17 @@ function filter_scheduled_event_blocks( string $block_content, array $block ): s
 
 add_action( 'pre_get_posts', __NAMESPACE__ . '\sort_events_front_end_archive' );
 /**
- * Orders the front-end 'events' post type archive chronologically by the `_event_start_date` meta_field.
+ * Sorts front-end Events archive and taxonomy queries chronologically and excludes past events.
  *
- * @since 2.4.0 Initial release
+ * Modifies the main front-end query on `events` post type archives and `event-category`
+ * taxonomy archives to order events ascending by `_event_start_date` and filter out
+ * events whose `_event_stop_date` (or `_event_start_date` when no stop date is set)
+ * has already passed in the site's local timezone.
  *
- * @param \WP_Query $query The WP_Query instance (passed by reference).
+ * @since 2.4.0 Initial release.
+ * @since 2.4.0 Added `meta_query` to exclude past events based on `_event_stop_date` or `_event_start_date`.
+ *
+ * @param \WP_Query $query The current WP_Query instance (passed by reference).
  * @return void
  */
 function sort_events_front_end_archive( \WP_Query $query ): void {
@@ -355,8 +361,52 @@ function sort_events_front_end_archive( \WP_Query $query ): void {
 	}
 
 	if ( $query->is_post_type_archive( 'events' ) || $query->is_tax( 'event-category' ) ) {
-		$query->set( 'meta_key', '_event_start_date' );
-		$query->set( 'orderby', 'meta_value' );
+		$today = wp_date( 'Y-m-d' );
+
+		$query->set(
+			'meta_query',
+			[
+				'relation'     => 'AND',
+				'start_clause' => [
+					'key'     => '_event_start_date',
+					'compare' => 'EXISTS',
+				],
+				[
+					'relation' => 'OR',
+					// Multi-day event whose stop date is today or in the future.
+					[
+						'key'     => '_event_stop_date',
+						'value'   => $today,
+						'compare' => '>=',
+						'type'    => 'DATE',
+					],
+					// Single-day event (blank or missing stop date) whose start date is today or in the future.
+					[
+						'relation' => 'AND',
+						[
+							'relation' => 'OR',
+							[
+								'key'     => '_event_stop_date',
+								'compare' => 'NOT EXISTS',
+							],
+							[
+								'key'     => '_event_stop_date',
+								'value'   => '',
+								'compare' => '=',
+							],
+						],
+						[
+							'key'     => '_event_start_date',
+							'value'   => $today,
+							'compare' => '>=',
+							'type'    => 'DATE',
+						],
+					],
+				],
+			]
+		);
+
+		$query->set( 'orderby', 'start_clause' );
 		$query->set( 'order', 'ASC' );
 	}
 }
