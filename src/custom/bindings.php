@@ -40,6 +40,10 @@ function register_event_block_bindings(): void {
 			'label'    => __( 'Event Card Composite Field', 'custom-functionality' ),
 			'callback' => 'get_event_card_composite_binding',
 		],
+		'gcm/event-category-badge' => [
+			'label'    => __( 'Event Category Badge (Meetings & Tours)', 'custom-functionality' ),
+			'callback' => 'get_event_category_badge_binding',
+		],
 	];
 
 	foreach ( $binding_sources as $source_name => $config ) {
@@ -190,4 +194,50 @@ function get_event_card_composite_binding( array $source_args, \WP_Block $block_
 		default:
 			return null;
 	}
+}
+
+/**
+ * Returns formatted `event-category` taxonomy term name(s) only when the event
+ * belongs to a designated display category (such as Club Meetings or Tours).
+ *
+ * Returns an empty string for self-explanatory categories (e.g., Plant Sale,
+ * Awards Banquet) so no badge is rendered on those cards.
+ *
+ * @since 2.4.0 Initial release.
+ *
+ * @param array     $source_args    Arguments passed from the block binding attributes.
+ * @param \WP_Block $block_instance The block instance being rendered.
+ * @return string|null Formatted term HTML, empty string if excluded/none, or null if invalid.
+ */
+function get_event_category_badge_binding( array $source_args, \WP_Block $block_instance ): ?string {
+	$post_id = $block_instance->context['postId'] ?? get_the_ID();
+	if ( ! $post_id ) {
+		return null;
+	}
+
+	// Slugs of event-category terms that should display a badge on the front end.
+	$allowed_slugs = $source_args['slugs'] ?? [
+		'club-meeting',
+		'tour',
+		'members-only-event',
+		'public-event'
+	];
+
+	$terms = get_the_terms( (int) $post_id, 'event-category' );
+	if ( empty( $terms ) || is_wp_error( $terms ) ) {
+		return '';
+	}
+
+	$matched_names = [];
+	foreach ( $terms as $term ) {
+		if ( in_array( $term->slug, $allowed_slugs, true ) ) {
+			$matched_names[] = esc_html( $term->name );
+		}
+	}
+
+	if ( empty( $matched_names ) ) {
+		return '';
+	}
+
+	return implode( ', ', $matched_names );
 }
