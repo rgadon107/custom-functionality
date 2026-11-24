@@ -5,16 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased Version 2.4.1 - 2026-XX-XX](https://github.com/rgadon107/custom-functionality/pull/33)
-
-### Added
+## [Version 2.4.1 - 2026-11-24](https://github.com/rgadon107/custom-functionality/pull/33)
 
 ### Changed
 - `/bootstrap.php`: Update plugin version number to 2.4.1.
 
-### Fixed
+- `/src/custom/bindings.php`:
+  - Update `get_event_category_badge_binding()` to get select taxonomy terms and display as separate badges on font-end.
 
-### Corrections
+- `/assets/styles/event-notices.css`: Update stylesheet to style individual taxonomy term badges in event card.
 
 ## [Version 2.4.0 - 2026-11-23](https://github.com/rgadon107/custom-functionality/pull/32)
 
