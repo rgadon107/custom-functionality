@@ -11,7 +11,7 @@ Updates targeted at the Quick Edit view for the Events admin table.
 - Removed duplicate 'menu_order' by field.
 - Moved HTML in the `/src/admin/events.php` file into a view.
 - Move jQuery in the `/src/admin/events.php` file into a script file and enqueued the script.
-- Restored the 'Private' checkbox for single events in the 'Events' admin table.
+- Restored the 'Private' checkbox for single events in the Quick Edit view of the 'Events' admin table.
 
 Fixed select 'events-category' taxonomy terms so that they appear as separate badges in an event card.
 
@@ -19,7 +19,6 @@ Fixed select 'events-category' taxonomy terms so that they appear as separate ba
 
 - `/src/admin/views/events-quick-edit.php`:
   - Added Quick Edit fieldset view for the 'events' custom post-type.
-  - Fixed code to ensure that when 'Status' === 'Private' in Quick Edit view, the status persists and is not changed by WordPress to 'Published'.
 
 -`/src/asset/handler.php`:
   - Added `enqueue_admin_scripts()` hooked to 'admin_enqueue_scripts'.
