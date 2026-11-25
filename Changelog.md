@@ -7,8 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 
 ## [Version 2.4.1 - 2026-11-24](https://github.com/rgadon107/custom-functionality/pull/33)
 
+Updates targeted at the Quick Edit view for the Events admin table.
+- Removed duplicate 'menu_order' by field.
+- Moved HTML in the `/src/admin/events.php` file into a view.
+- Move jQuery in the `/src/admin/events.php` file into a script file and enqueued the script.
+- Restored the 'Private' checkbox for single events in the 'Events' admin table.
+- Added 'Private' and 'Scheduled' as 'Status' options in the Quick Edit view.
+
+Fixed select 'events-category' taxonomy terms so that they appear as separate badges in an event card.
+
+### Added
+
+- `/src/admin/views/events-quick-edit.php`:
+  - Added Quick Edit fieldset view for the 'events' custom post-type.
+  - Fixed code to ensure that when 'Status' === 'Private' in Quick Edit view, the status persists and is not changed by WordPress to 'Published'.
+
+-`/src/asset/handler.php`:
+  - Added `enqueue_admin_scripts()` hooked to 'admin_enqueue_scripts'.
+  - Refactored to use a configuration array and loop for multi-CPT scalability.
+
 ### Changed
 - `/bootstrap.php`: Update plugin version number to 2.4.1.
+
+- `/src/admin/events.php`: File changes:
+	- `custom_events_quick_edit_fields()`: Removed duplicate 'menu_order' input displayed on Quick Edit view to prevent selector collision with core.
+	- `custom_events_quick_edit_fields()`: Removed HTML from within callback and called it from '/views/events-quick-edit.php'.
+	- Deleted callback `custom_events_quick_edit_js()`. The jQuery script was moved to `/assets/scripts/events-quick-edit.js` and enqueued in `/src/asset/handler.php`.
 
 - `/src/custom/bindings.php`:
   - Update `get_event_category_badge_binding()` to get select taxonomy terms and display as separate badges on font-end.
