@@ -227,6 +227,67 @@ function enqueue_block_editor_scripts(): void {
 	}
 }
 
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\enqueue_admin_scripts' );
+/**
+ * Enqueues scripts for WordPress admin list tables and screens.
+ *
+ * Evaluates screen-specific conditions against a configuration array so multiple
+ * CPT admin scripts can be conditionally registered and enqueued via a single loop.
+ *
+ * @since 2.4.1 Intial release. Refactored to use a configuration array and loop for multi-CPT scalability.
+ *
+ * @param string $hook_suffix The current admin page hook suffix.
+ * @return void
+ */
+function enqueue_admin_scripts( string $hook_suffix ): void {
+	// Only evaluate list-table scripts on edit.php.
+	if ( 'edit.php' !== $hook_suffix ) {
+		return;
+	}
+
+	$screen = get_current_screen();
+	if ( ! $screen ) {
+		return;
+	}
+
+	// Evaluate target admin list-table post types.
+	$is_events_list  = 'events' === $screen->post_type;
+	$is_members_list = 'members' === $screen->post_type; // Example future CPT.
+
+	$admin_scripts = [
+		'gcm-events-quick-edit'  => [
+			'file'      => '/assets/scripts/events-quick-edit.js',
+			'deps'      => [ 'jquery', 'inline-edit-post' ],
+			'in_footer' => true,
+			'condition' => $is_events_list,
+		],
+		'gcm-members-quick-edit' => [
+			'file'      => '/assets/scripts/members-quick-edit.js',
+			'deps'      => [ 'jquery', 'inline-edit-post' ],
+			'in_footer' => true,
+			'condition' => $is_members_list,
+		],
+	];
+
+	$asset_paths = _get_asset_paths();
+
+	foreach ( $admin_scripts as $handle => $config ) {
+		if ( ! $config['condition'] ) {
+			continue;
+		}
+
+		if ( file_exists( $asset_paths['directory'] . $config['file'] ) ) {
+			wp_enqueue_script(
+				$handle,
+				$asset_paths['url'] . $config['file'],
+				$config['deps'],
+				_get_asset_version( $config['file'] ),
+				$config['in_footer']
+			);
+		}
+	}
+}
+
 /**
  * Gets reusable plugin asset paths.
  *

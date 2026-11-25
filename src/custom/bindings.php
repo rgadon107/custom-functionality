@@ -206,23 +206,25 @@ function get_event_card_composite_binding( array $source_args, WP_Block $block_i
  * Awards Banquet) so no badge is rendered on those cards.
  *
  * @since 2.4.0 Initial release.
+ * @since 2.4.1 Updated to return separate `<span>` pill elements per matched taxonomy term for
+ * 				Club Meeting, Tour, Members Only Event, and Public Event.
  *
  * @param array     $source_args    Arguments passed from the block binding attributes.
  * @param WP_Block $block_instance The block instance being rendered.
  * @return string|null Formatted term HTML, empty string if excluded/none, or null if invalid.
  */
-function get_event_category_badge_binding( array $source_args, WP_Block $block_instance ): ?string {
+function get_event_category_badge_binding( array $source_args, \WP_Block $block_instance ): ?string {
 	$post_id = $block_instance->context['postId'] ?? get_the_ID();
 	if ( ! $post_id ) {
 		return null;
 	}
 
-	// Slugs of event-category terms that should display a badge on the front end.
+	// Slugs of event-category terms that should display as individual pill badges.
 	$allowed_slugs = $source_args['slugs'] ?? [
 		'club-meeting',
 		'tour',
 		'members-only-event',
-		'public-event'
+		'public-event',
 	];
 
 	$terms = get_the_terms( (int) $post_id, 'event-category' );
@@ -230,16 +232,16 @@ function get_event_category_badge_binding( array $source_args, WP_Block $block_i
 		return '';
 	}
 
-	$matched_names = [];
+	$badges = [];
 	foreach ( $terms as $term ) {
 		if ( in_array( $term->slug, $allowed_slugs, true ) ) {
-			$matched_names[] = esc_html( $term->name );
+			$badges[] = '<span class="event-category-pill">' . esc_html( $term->name ) . '</span>';
 		}
 	}
 
-	if ( empty( $matched_names ) ) {
+	if ( empty( $badges ) ) {
 		return '';
 	}
 
-	return implode( ', ', $matched_names );
+	return implode( '', $badges );
 }

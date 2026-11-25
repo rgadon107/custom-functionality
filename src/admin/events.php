@@ -203,103 +203,38 @@ add_action( 'quick_edit_custom_box', __NAMESPACE__ . '\custom_events_quick_edit_
 /**
  * Render custom fields in the Quick Edit panel for 'events'.
  *
- * Fires once per custom column registered on the list table.
+ * WordPress core natively renders the 'Order' (menu_order) input when 'page-attributes'
+ * is supported, so only '_event_start_date' needs a custom Quick Edit box.
  *
  * @since 2.4.0 Initial release
+ * @since 2.4.1 Removed duplicate 'menu_order' input to prevent selector collision with core.
+ * @since 2.4.1 Removed HTML from within callback and called it instead from '/views/events-quick-edit.php'.
  *
  * @param string $column_name The name of the column being rendered.
  * @param string $post_type   The current post type slug.
  * @return void
  */
 function custom_events_quick_edit_fields( string $column_name, string $post_type ): void {
-	if ( 'events' !== $post_type ) {
+	if ( 'events' !== $post_type || 'event_start_date' !== $column_name ) {
 		return;
 	}
 
-	if ( 'event_start_date' === $column_name ) {
-		wp_nonce_field( 'gcm_events_quick_edit_nonce', 'gcm_events_quick_edit_nonce_field' );
-		?>
-		<fieldset class="inline-edit-col-right">
-			<div class="inline-edit-col">
-				<label>
-					<span class="title"><?php esc_html_e( 'Start Date', 'custom-functionality' ); ?></span>
-					<span class="input-text-wrap">
-						<input type="date" name="event_start_date" value="" />
-					</span>
-				</label>
-			</div>
-		</fieldset>
-		<?php
-	}
-
-	if ( 'menu_order' === $column_name ) {
-		?>
-		<fieldset class="inline-edit-col-right">
-			<div class="inline-edit-col">
-				<label>
-					<span class="title"><?php esc_html_e( 'Page Order', 'custom-functionality' ); ?></span>
-					<span class="input-text-wrap">
-						<input type="number" name="menu_order" value="0" step="1" />
-					</span>
-				</label>
-			</div>
-		</fieldset>
-		<?php
-	}
-}
-
-add_action( 'admin_footer-edit.php', __NAMESPACE__ . '\custom_events_quick_edit_js' );
-/**
- * Populate Quick Edit fields with existing row data when 'Quick Edit' is clicked.
- *
- * @since 2.4.0 Initial release
- *
- * @return void
- */
-function custom_events_quick_edit_js(): void {
-	global $typenow;
-
-	if ( 'events' !== $typenow ) {
+	$view_file = __DIR__ . '/views/events-quick-edit.php';
+	if ( ! file_exists( $view_file ) ) {
 		return;
 	}
-	?>
-	<script>
-		( function( $ ) {
-			if ( typeof inlineEditPost === 'undefined' ) {
-				return;
-			}
 
-			const originalEdit = inlineEditPost.edit;
+	wp_nonce_field( 'gcm_events_quick_edit_nonce', 'gcm_events_quick_edit_nonce_field' );
 
-			inlineEditPost.edit = function( id ) {
-				originalEdit.apply( this, arguments );
-
-				let postId = 0;
-				if ( typeof id === 'object' ) {
-					postId = parseInt( this.getId( id ), 10 );
-				}
-
-				if ( postId > 0 ) {
-					const $postRow = $( '#post-' + postId );
-					const $editRow = $( '#edit-' + postId );
-
-					const rawStartDate = $postRow.find( '.event-start-date-raw' ).text().trim();
-					const menuOrder    = $postRow.find( '.menu_order' ).text().trim();
-
-					$editRow.find( 'input[name="event_start_date"]' ).val( rawStartDate );
-					$editRow.find( 'input[name="menu_order"]' ).val( menuOrder !== '' ? menuOrder : 0 );
-				}
-			};
-		} )( jQuery );
-	</script>
-	<?php
+	require $view_file;
 }
 
 add_action( 'save_post_events', __NAMESPACE__ . '\custom_events_save_quick_edit' );
 /**
- * Save Quick Edit values for '_event_start_date' and 'menu_order'.
+ * Save Quick Edit values for '_event_start_date'.
  *
  * @since 2.4.0 Initial release
+ * @since 2.4.1 Removed redundant 'menu_order' update handled natively by WordPress core.
  *
  * @param int $post_id The ID of the post being saved.
  * @return void
@@ -331,21 +266,5 @@ function custom_events_save_quick_edit( int $post_id ): void {
 		} elseif ( preg_match( '/^\d{4}-\d{2}-\d{2}$/', $raw_date ) ) {
 			update_post_meta( $post_id, '_event_start_date', $raw_date );
 		}
-	}
-
-	// Update native 'menu_order' on the post object (unhooking first to prevent recursion).
-	if ( isset( $_POST['menu_order'] ) ) {
-		$menu_order = intval( wp_unslash( $_POST['menu_order'] ) );
-
-		remove_action( 'save_post_events', __NAMESPACE__ . '\custom_events_save_quick_edit' );
-
-		wp_update_post(
-			array(
-				'ID'         => $post_id,
-				'menu_order' => $menu_order,
-			)
-		);
-
-		add_action( 'save_post_events', __NAMESPACE__ . '\custom_events_save_quick_edit' );
 	}
 }
