@@ -12,7 +12,6 @@ Updates targeted at the Quick Edit view for the Events admin table.
 - Moved HTML in the `/src/admin/events.php` file into a view.
 - Move jQuery in the `/src/admin/events.php` file into a script file and enqueued the script.
 - Restored the 'Private' checkbox for single events in the 'Events' admin table.
-- Added 'Private' and 'Scheduled' as 'Status' options in the Quick Edit view.
 
 Fixed select 'events-category' taxonomy terms so that they appear as separate badges in an event card.
 
