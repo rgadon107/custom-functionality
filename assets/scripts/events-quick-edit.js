@@ -2,8 +2,10 @@
  * Events Admin Quick Edit Handler
  *
  * Extends WordPress core's `inlineEditPost.edit` to populate the custom
- * `event_start_date` field from the row's hidden `.event-start-date-raw` span
- * and configures core's native `menu_order` input as a step-1 number field.
+ * `event_start_date` field from the row's hidden `.event-start-date-raw` span,
+ * configures core's native `menu_order` input as a step-1 number field, and
+ * ensures `Private` and `Scheduled` statuses remain selectable and synced in
+ * the Quick Edit Status dropdown.
  *
  * Enqueued script dependencies (registered via PHP in /src/asset/handler.php):
  * - jquery
@@ -12,6 +14,7 @@
  * @package    gardenClubOfMpls\CustomFunctionalityPlugin
  * @subpackage Assets\Scripts
  * @since      2.4.1 Initial release.
+ * @since      2.4.2 Read `.post_status` from `#inline_{postId}` so `Private` persists in Quick Edit.
  */
 
 /* global inlineEditPost */
@@ -33,8 +36,9 @@
 		if ( postId > 0 ) {
 			const $postRow      = $( '#post-' + postId );
 			const $editRow      = $( '#edit-' + postId );
+			const $inlineData   = $( '#inline_' + postId );
 			const rawStartDate  = $postRow.find( '.event-start-date-raw' ).text().trim();
-			const postStatus    = $postRow.find( '.post_status' ).text().trim();
+			const postStatus    = $inlineData.find( '.post_status' ).text().trim();
 			const $statusSelect = $editRow.find( 'select[name="_status"]' );
 
 			$editRow.find( 'input[name="event_start_date"]' ).val( rawStartDate );
@@ -50,8 +54,10 @@
 				$statusSelect.append( $( '<option>', { value: 'future', text: 'Scheduled' } ) );
 			}
 
-			// Sync the selected option to the row's current status.
-			if ( postStatus && $statusSelect.find( 'option[value="' + postStatus + '"]' ).length ) {
+			// Explicitly sync the Status dropdown when the post is Private (or another valid status).
+			if ( 'private' === postStatus ) {
+				$statusSelect.val( 'private' );
+			} else if ( postStatus && $statusSelect.find( 'option[value="' + postStatus + '"]' ).length ) {
 				$statusSelect.val( postStatus );
 			}
 		}
